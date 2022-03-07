@@ -6,4 +6,8 @@
     <string name="all_label_signup">Signup</string>
     <string name="all_logo_description">Logo for the BTC app</string>
     <string name="login_lostpasswordmessageplaceholder">Lost your username or password? Too bad.</string>
+    <string name="all_label_confirm_password">Confirm Password</string>
+    <string name="all_label_school">School</string>
+    <string name="all_cancel">Cancel</string>
+    <string name="signup_helpmessageplaceholder">Your username will be auto generated and you can’t reset your password after account creation to maintain anonymity.</string>
 </resources>

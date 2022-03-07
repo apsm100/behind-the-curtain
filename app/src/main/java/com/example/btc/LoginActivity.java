@@ -1,6 +1,5 @@
 package com.example.btc;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -16,8 +15,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Get input text
-        TextInputLayout textInputLayoutUsername = findViewById(R.id.TextView_login_username);
-        TextInputLayout textInputLayoutPassword = findViewById(R.id.TextView_login_password);
+        TextInputLayout textInputLayoutUsername = findViewById(R.id.AutoCompleteTextView_signup_school);
+        TextInputLayout textInputLayoutPassword = findViewById(R.id.TextView_signup_confirm_password);
 
 
 
