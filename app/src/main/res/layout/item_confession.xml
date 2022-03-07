@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="1dp"
+        app:cardCornerRadius="4dp"
+        app:strokeColor="@color/BTCPrimary"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1C1B1F"
+            android:backgroundTint="#14D0BCFF"
+            android:backgroundTintMode="src_over"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView_itemconfession_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:paddingTop="12dp"
+                    android:text="@string/item_confession_usernameplaceholder"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    android:textColor="#E6E1E5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/Button_itemconfession_comment"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="2"
+                        android:text="@string/item_confession_commentplaceholder"
+                        android:textColor="#E6E1E5"
+                        app:icon="@drawable/chat_bubble_outline"
+                        app:iconTint="#E6E1E5" />
+
+                    <Button
+                        android:id="@+id/Button_itemconfession_heart"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/item_confession_heartplaceholder"
+                        android:textColor="#E6E1E5"
+                        app:icon="@drawable/heart_outline"
+                        app:iconTint="#E6E1E5" />
+
+                    <Button
+                        android:id="@+id/Button_itemconfession_more"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        app:icon="@drawable/ic_baseline_more_vert_16"
+                        app:iconTint="#E6E1E5"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView_itemconfession_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/item_confession_textplaceholder"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="#E6E1E5" />
+
+            <!-- Buttons -->
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

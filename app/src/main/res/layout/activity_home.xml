@@ -1,9 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1C1B1F"
+    android:backgroundTint="#14D0BCFF"
+    android:backgroundTintMode="screen"
+    android:orientation="vertical"
+    android:theme="@style/Theme.BTC"
     tools:context=".HomeActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="0.4"
+        android:backgroundTint="#00C80000"
+        app:icon="@drawable/ic_baseline_person_outline_24"
+        app:iconPadding="0dp"
+        app:iconSize="30dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="0.5"
+        android:background="#001C1B1F"
+        tools:layout_editor_absoluteY="75dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_trending_up_24"
+            android:text="@string/main_tabbarpopular" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_refresh_24"
+            android:text="@string/main_tabbarrecent"
+            tools:ignore="ImageContrastCheck" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/FragmentContainerView_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="3.5"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="165dp" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.01" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.4"
+        android:backgroundTint="#4A4458"
+        android:textColor="#E8DEF8"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="32dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.2"
+        android:text="@string/main_newconfessionplaceholder"
+        android:textColor="#E8DEF8" />
 
 </LinearLayout>

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
@@ -15,7 +14,6 @@
     tools:context=".SignupActivity">
 
     <ImageView
-        android:id="@+id/imageView_login_logo"
         android:layout_width="250dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
@@ -31,7 +29,6 @@
         tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TextView_signup_school"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +56,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TextView_signup_username"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_gravity="center_horizontal"
@@ -82,7 +78,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TextView_signup_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -133,7 +128,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/Button_login_cancel"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -144,7 +138,6 @@
             android:layout_width="wrap_content" />
 
         <Button
-            android:id="@+id/Button_signup_signup"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -156,7 +149,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView_login_lostpasswordmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
