@@ -9,40 +9,31 @@
     android:backgroundTint="#14D0BCFF"
     android:backgroundTintMode="screen"
     android:orientation="vertical"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
     android:theme="@style/Theme.BTC"
     tools:context=".LoginActivity">
-
-    <Space
-        android:id="@+id/login_spacer_1"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="0.2" />
 
     <ImageView
         android:id="@+id/imageView_login_logo"
         android:layout_width="250dp"
-        android:layout_height="136dp"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="58dp"
+        android:layout_weight="1"
         android:contentDescription="@string/all_logo_description"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo"
         tools:ignore="ImageContrastCheck" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="0.1"/>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/AutoCompleteTextView_signup_school"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="0.1"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -53,7 +44,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="text"
             android:textColor="@color/white" />
 
@@ -64,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_weight="0.1"
         android:hint="@string/all_label_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -76,56 +66,44 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:inputType="textPassword"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="0.6" />
-
     <Button
         android:id="@+id/Button_signup_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.5"
         android:backgroundTint="@color/BTCPrimary"
         android:text="@string/all_label_login"
         android:textColor="#381E72" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="0.2"/>
-
     <Button
         android:id="@+id/Button_login_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:layout_weight="0.5"
         android:backgroundTint="#4A4458"
         android:text="@string/all_label_signup"
         android:textColor="#E8DEF8" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1"/>
-
     <TextView
         android:id="@+id/textView_login_lostpasswordmessage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
         android:text="@string/login_lostpasswordmessageplaceholder"
         android:textColor="#848083"
         tools:ignore="TextContrastCheck" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1"/>
 </LinearLayout>
