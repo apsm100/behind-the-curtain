@@ -79,6 +79,7 @@
         android:layout_marginBottom="10dp"
         android:layout_weight="0.5"
         android:backgroundTint="@color/BTCPrimary"
+        android:onClick="login"
         android:text="@string/all_label_login"
         android:textColor="#381E72" />
 
@@ -89,6 +90,7 @@
         android:layout_marginBottom="100dp"
         android:layout_weight="0.5"
         android:backgroundTint="#4A4458"
+        android:onClick="signup"
         android:text="@string/all_label_signup"
         android:textColor="#E8DEF8" />
 
