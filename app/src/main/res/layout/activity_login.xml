@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayoutCompat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
     android:backgroundTint="#14D0BCFF"
     android:backgroundTintMode="screen"
+    android:orientation="vertical"
     android:theme="@style/Theme.BTC"
     tools:context=".LoginActivity">
 
+    <Space
+        android:id="@+id/login_spacer_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="0.2" />
+
     <ImageView
         android:id="@+id/imageView_login_logo"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginBottom="82dp"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/TextView_login_username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@drawable/logo" />
+        android:layout_width="250dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="58dp"
+        android:contentDescription="@string/all_logo_description"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="ImageContrastCheck" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="0.1"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextView_login_username"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
         app:endIconMode="clear_text"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:layout_constraintBottom_toTopOf="@+id/TextView_login_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_login_logo"
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -53,21 +61,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextView_login_password"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="64dp"
         android:hint="@string/all_label_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
         app:endIconMode="password_toggle"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:layout_constraintBottom_toTopOf="@+id/Button_login_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_login_username"
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,30 +82,50 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="0.6" />
+
     <Button
         android:id="@+id/Button_login_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="25dp"
+        android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/BTCPrimary"
         android:text="@string/all_label_login"
-        android:textColor="#381E72"
-        app:layout_constraintBottom_toTopOf="@+id/Button_login_signup"
-        app:layout_constraintStart_toStartOf="@+id/Button_login_signup"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_login_password" />
+        android:textColor="#381E72" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="0.2"/>
 
     <Button
         android:id="@+id/Button_login_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
+        android:layout_gravity="center_horizontal"
         android:backgroundTint="#4A4458"
         android:text="@string/all_label_signup"
-        android:textColor="#E8DEF8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Button_login_login" />
+        android:textColor="#E8DEF8" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/textView_login_lostpasswordmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login_lostpasswordmessageplaceholder"
+        android:textColor="#848083"
+        tools:ignore="TextContrastCheck" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
