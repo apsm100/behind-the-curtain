@@ -28,26 +28,28 @@ public class HomeActivity extends AppCompatActivity {
                 new Confession("SFU#3849839", "THIS IS MESSAGE 2", heartsArray, commentsArray)
         };
 
-//        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.FragmentContainerView_home, ItemsFragment.newInstance(confessions));
-//        fragmentTransaction.commit();
-//
 
+        ViewPager2 viewPager2 = findViewById(R.id.ViewPager_home);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, confessions);
+        viewPager2.setAdapter(viewPagerAdapter);
 
-//        ViewPager2 viewPager2 = findViewById(R.id.ViewPager_home);
-//        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, confessions);
-//        viewPager2.setAdapter(viewPagerAdapter);
-//
-//        TabLayout tabLayout = findViewById(R.id.tabLayout_home);
-//        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
-//                new TabLayoutMediator.TabConfigurationStrategy() {
-//                    @Override
-//                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-//
-//                    }
-//                });
-//
-//        tabLayoutMediator.attach();
+        TabLayout tabLayout = findViewById(R.id.TabLayout_home);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                        if (position == 0){
+                            tab.setText("Popular");
+                            tab.setIcon(R.drawable.ic_baseline_trending_up_24);
+                        }else {
+                            tab.setText("Popular");
+                            tab.setIcon(R.drawable.ic_baseline_refresh_24);
+
+                        }
+                    }
+                });
+
+        tabLayoutMediator.attach();
 
     }
 }

@@ -26,6 +26,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TabLayout_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="30dp"
@@ -49,8 +50,8 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/FragmentContainerView_home"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/ViewPager_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -70,15 +71,15 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="0.4"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="0.35"
         android:backgroundTint="#4A4458"
         android:textColor="#E8DEF8"
         app:icon="@drawable/ic_baseline_add_24"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="32dp"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="wrap_content"
