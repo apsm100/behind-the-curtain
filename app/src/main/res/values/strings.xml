@@ -18,4 +18,11 @@
     <string name="item_confession_usernameplaceholder">BCIT#801748</string>
     <string name="item_confession_heartplaceholder">20</string>
     <string name="main_newconfessionplaceholder">New Confession</string>
+    <string name="profile_remindermessageplaceholder">Make sure to screenshot this in case you forget your username</string>
+    <string name="profile_button_update">Update</string>
+    <string name="profile_button_cancel">Cancel</string>
+    <string name="profile_button_signout">Sign out</string>
+    <string name="text_oldPass">Old Password</string>
+    <string name="all_label_oldPassword">Old Password</string>
+    <string name="all_label_newPassword">New Password</string>
 </resources>

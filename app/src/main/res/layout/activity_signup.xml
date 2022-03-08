@@ -60,6 +60,7 @@
         android:layout_height="59dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
+        android:enabled="false"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -69,6 +70,7 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_signup_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="true"
@@ -113,6 +115,7 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_signup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -128,23 +131,25 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button_signup_cancel"
             style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:backgroundTint="#4A4458"
             android:text="@string/all_cancel"
-            android:textColor="#E8DEF8"
-            android:layout_width="wrap_content" />
+            android:textColor="#E8DEF8" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/BTCPrimary"
+            android:onClick="onClick"
             android:text="@string/all_label_signup"
-            android:textColor="#381E72"
-            android:layout_width="wrap_content" />
+            android:textColor="#381E72" />
 
     </LinearLayout>
 
