@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -117,6 +118,9 @@ public class SignupActivity extends AppCompatActivity {
                     "Please fill all fields", Snackbar.LENGTH_SHORT).show();
             return;
         }
+
+        showLoadingIndicator();
+
         String customEmail = name + "_" + "@btc.com";
         mAuth.createUserWithEmailAndPassword(customEmail, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -160,6 +164,11 @@ public class SignupActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void showLoadingIndicator() {
+        CircularProgressIndicator loader = findViewById(R.id.progressIndicator_signup);
+        loader.setVisibility(View.VISIBLE);
     }
 
     public static String generateString() {
