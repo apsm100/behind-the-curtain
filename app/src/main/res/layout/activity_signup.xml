@@ -103,6 +103,7 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_signup_password_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -111,7 +112,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TextView_signup_confirm_password"
+        android:id="@+id/TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

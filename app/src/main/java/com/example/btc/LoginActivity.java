@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         // Get input text
         mAuth = FirebaseAuth.getInstance();
         TextInputLayout textInputLayoutUsername = findViewById(R.id.AutoCompleteTextView_signup_school);
-        TextInputLayout textInputLayoutPassword = findViewById(R.id.TextView_signup_confirm_password);
+        TextInputLayout textInputLayoutPassword = findViewById(R.id.TextInputLayout);
 
     }
 

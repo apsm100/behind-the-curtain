@@ -107,7 +107,9 @@ public class SignupActivity extends AppCompatActivity {
         EditText editTextName = findViewById(R.id.editText_signup_username);
         String name = editTextName.getText().toString();
         EditText editTextPassword = findViewById(R.id.editText_signup_password);
+        EditText editTextPasswordConfirm = findViewById(R.id.editText_signup_password_confirm);
         String password = editTextPassword.getText().toString();
+        String passwordConfirm = editTextPasswordConfirm.getText().toString();
 
         System.out.println(name);
         System.out.println(password);
@@ -118,6 +120,13 @@ public class SignupActivity extends AppCompatActivity {
                     "Please fill all fields", Snackbar.LENGTH_SHORT).show();
             return;
         }
+
+        if (!password.equals(passwordConfirm)) {
+            Snackbar.make(findViewById(R.id.LinearLayout_signupactivity),
+                    "Passwords do not match", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
 
         showLoadingIndicator();
 
