@@ -2,9 +2,6 @@ package com.example.btc;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,156 +11,221 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends FirebaseAuthentication {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
     String[] listOfSchools = new String[]{"BCIT", "SFU", "UBC"};
     String currentlySelectedSchool;
-    String customToken;
+
+    LinearProgressIndicator progressBar;
+    AutoCompleteTextView autoCompleteTextViewSchool;
+    TextInputLayout autoCompleteTextViewSchoolInputLayout;
+    TextInputLayout usernameTextInputLayout;
+    TextInputLayout passwordTextInputLayout;
+    TextInputLayout passwordConfirmTextInputLayout;
+    Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-//        Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        initializeViews();
+    }
 
-//        Generate custom token
-        customToken = generateString();
+    private void initializeViews() {
 
-        EditText editTextName = findViewById(R.id.editText_signup_username);
-        editTextName.setText(generateString());
-        editTextName.setFocusable(false);
+        // PROGRESS BAR
+        progressBar = findViewById(R.id.ProgressBar_signup);
+        showProgressBar(false);
 
-        AutoCompleteTextView autoCompleteTextViewUserName = findViewById(R.id.AutoCompleteTextView_signup_school);
+        // SCHOOL NAME
+        autoCompleteTextViewSchool = findViewById(R.id.AutoCompleteTextView_signup_school);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listOfSchools);
-        autoCompleteTextViewUserName.setAdapter(adapter);
-        autoCompleteTextViewUserName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                currentlySelectedSchool = autoCompleteTextViewUserName.getAdapter().getItem(i).toString();
-            }
-        });
+        autoCompleteTextViewSchool.setAdapter(adapter);
+        autoCompleteTextViewSchool.setOnItemClickListener(this::schoolNameSelected);
 
+        autoCompleteTextViewSchoolInputLayout = findViewById(R.id.AutoCompleteTextViewLayout_signup_school);
+
+        // USERNAME //
+        usernameTextInputLayout = findViewById(R.id.editTextLayout_signup_username);
+        usernameTextInputLayout.getEditText().setText(getRandomNumberString());
+        usernameTextInputLayout.setHelperText("Username should be a 6 digit number");
+        usernameTextInputLayout.setFocusable(false);
+
+        // PASSWORD
+        passwordTextInputLayout = findViewById(R.id.editTextLayout_signup_password);
+        passwordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
+
+        // CONFIRM PASSWORD
+        passwordConfirmTextInputLayout = findViewById(R.id.editTextLayout_signup_confirm_password);
+        passwordConfirmTextInputLayout.setHelperText("Password must match password entered above");
+
+        // Cancel Button
         Button cancelButton = findViewById(R.id.button_signup_cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        cancelButton.setOnClickListener(this::cancelButtonClicked);
+
+        // Signup Button
+        signupButton = findViewById(R.id.button_signup_signup);
+        signupButton.setOnClickListener(this::signUpButtonClicked);
+
     }
+
+    private void schoolNameSelected(AdapterView<?> schoolNameList, View view, int position, long l) {
+        currentlySelectedSchool = schoolNameList.getItemAtPosition(position).toString();
+    }
+
+    private void cancelButtonClicked(View view) {
+        finish();
+    }
+
+
+    private void signUpButtonClicked(View view) {
+        String username = usernameTextInputLayout.getEditText().getText().toString();
+        String password = passwordTextInputLayout.getEditText().getText().toString();
+        String confirmPassword = passwordConfirmTextInputLayout.getEditText().getText().toString();
+
+        boolean allValid = true;
+
+        if (currentlySelectedSchool == null) {
+            autoCompleteTextViewSchoolInputLayout.setError("You must select a school");
+            allValid = false;
+        } else {
+            autoCompleteTextViewSchoolInputLayout.setError("");
+        }
+
+        if (!isUsernameValid(username)) {
+            usernameTextInputLayout.setError("Username must be exactly a 6 digit number");
+            allValid = false;
+        } else {
+            usernameTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (!isPasswordValid(password)) {
+            passwordTextInputLayout.setError("Password must be between 6 to 15 characters long");
+            allValid = false;
+        } else {
+            passwordTextInputLayout.setErrorEnabled(false);
+        }
+
+
+        if (!isPasswordMatch(password, confirmPassword)) {
+            passwordConfirmTextInputLayout.setError("Passwords do not match");
+            allValid = false;
+        } else {
+            passwordConfirmTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (allValid) {
+            String email = username + "@btc.com";
+            String displayName = currentlySelectedSchool + "#" + username;
+            User user = new User(username, email, currentlySelectedSchool, displayName);
+            disableSignUpButton();
+            showProgressBar(true);
+            registerUser(user, password);
+        }
+
+    }
+
+    private void showProgressBar(Boolean value) {
+        if (value) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void setErrorMessageFromException(Exception exception) {
+
+        try {
+            throw exception;
+        } catch (FirebaseAuthUserCollisionException e) {
+            usernameTextInputLayout.setError("This username is already in use");
+            usernameTextInputLayout.requestFocus();
+            enableSignUpButton();
+            showProgressBar(false);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    private void disableSignUpButton() {
+        signupButton.setEnabled(false);
+        signupButton.setAlpha((float) 0.2);
+    }
+
+    private void enableSignUpButton() {
+        signupButton.setEnabled(true);
+        signupButton.setAlpha(1);
+    }
+
+    private boolean isPasswordValid(String password) {
+        // Matches exactly between 6 to 15 digits
+        Pattern validPasswordPattern = Pattern.compile("(?=.*[0-9a-zA-Z]).{6,15}");
+        return validPasswordPattern.matcher(password).matches();
+    }
+
+    private boolean isUsernameValid(String username) {
+        // Matches exactly 6 digits
+        Pattern validUsernamePattern = Pattern.compile("[0-9]{6}");
+        return validUsernamePattern.matcher(username).matches();
+    }
+
+
+    private boolean isPasswordMatch(String password, String confirmPassword) {
+        return password.equals(confirmPassword) & password.length() > 0;
+    }
+
+
+    protected void registerUser(User user, String password) {
+        auth.createUserWithEmailAndPassword(user.getEmail(), password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        showProgressBar(true);
+                        addUserToCollection(user);
+                    } else {
+                        setErrorMessageFromException(task.getException());
+                    }
+                });
+
+    }
+
+
+    private void addUserToCollection(User user) {
+        db.collection("users")
+                .document(user.getUsername())
+                .set(user)
+                .addOnSuccessListener(success -> {
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Snackbar.make(findViewById(R.id.LinearLayout_signupactivity), e.toString(), Snackbar.LENGTH_SHORT).show();
+                    EditText editTextName = findViewById(R.id.editText_signup_username);
+                    editTextName.setText(user.getUsername());
+                });
+
+        showProgressBar(false);
+    }
+
 
     @Override
     public void onStart() {
         super.onStart();
-
-        Bundle extras = getIntent().getExtras();
-        boolean exit = true;
-        if (extras != null) {
-            exit = extras.getBoolean("Exit");
-        }
-        System.out.println(exit);
-        if (!exit) {
-            return;
-        }
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            System.out.println("New user signed in: " + currentUser.getEmail());
-        } else {
-            System.out.println("No user signed in\nBringing back to sign in page");
-            super.finish();
-        }
     }
 
-    public void onClick(View v) {
-
-        EditText editTextName = findViewById(R.id.editText_signup_username);
-        String name = editTextName.getText().toString();
-        EditText editTextPassword = findViewById(R.id.editText_signup_password);
-        String password = editTextPassword.getText().toString();
-
-        System.out.println(name);
-        System.out.println(password);
-
-        if (name.isEmpty() || password.isEmpty() || currentlySelectedSchool == null) {
-
-            Snackbar.make(findViewById(R.id.LinearLayout_signupactivity),
-                    "Please fill all fields", Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-        String customEmail = name + "_" + "@btc.com";
-        mAuth.createUserWithEmailAndPassword(customEmail, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("Username", customToken);
-                            user.put("Email", customEmail);
-                            user.put("School", currentlySelectedSchool);
-                            user.put("DisplayName", currentlySelectedSchool + "#" + customToken);
-
-                            db.collection("users")
-                                    .document(customToken)
-                                    .set(user)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "User added!");
-                                            Log.d(TAG, "createUserWithEmail:success");
-                                            customToken = generateString();
-                                            Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error, User not added", e);
-                                            Snackbar.make(findViewById(R.id.LinearLayout_signupactivity), e.toString(), Snackbar.LENGTH_LONG).show();
-                                            EditText editTextName = findViewById(R.id.editText_signup_username);
-                                            editTextName.setText(customToken);
-                                        }
-                                    });
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        }
-                    }
-                });
-
-
-    }
-
-    public static String generateString() {
-        String uuid = UUID.randomUUID().toString().substring(0, 12);
-        return uuid.replace("-", "");
+    public static String getRandomNumberString() {
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        return String.valueOf(number);
     }
 }
