@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,7 +54,7 @@ public class SignupActivity extends AppCompatActivity {
         customToken = generateString();
 
         EditText editTextName = findViewById(R.id.editText_signup_username);
-        editTextName.setText(customToken);
+        editTextName.setText(generateString());
         editTextName.setFocusable(false);
 
         AutoCompleteTextView autoCompleteTextViewUserName = findViewById(R.id.AutoCompleteTextView_signup_school);
@@ -91,9 +93,9 @@ public class SignupActivity extends AppCompatActivity {
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null){
+        if (currentUser != null) {
             System.out.println("New user signed in: " + currentUser.getEmail());
-        } else{
+        } else {
             System.out.println("No user signed in\nBringing back to sign in page");
             super.finish();
         }
@@ -109,8 +111,10 @@ public class SignupActivity extends AppCompatActivity {
         System.out.println(name);
         System.out.println(password);
 
-        if (name.isEmpty() || password.isEmpty() || currentlySelectedSchool.isEmpty()){
-            System.out.println("Please fill all fields");
+        if (name.isEmpty() || password.isEmpty() || currentlySelectedSchool == null) {
+
+            Snackbar.make(findViewById(R.id.LinearLayout_signupactivity),
+                    "Please fill all fields", Snackbar.LENGTH_SHORT).show();
             return;
         }
         String customEmail = name + "_" + "@btc.com";
@@ -124,6 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                             user.put("Username", customToken);
                             user.put("Email", customEmail);
                             user.put("School", currentlySelectedSchool);
+                            user.put("DisplayName", currentlySelectedSchool + "#" + customToken);
 
                             db.collection("users")
                                     .document(customToken)
@@ -143,7 +148,7 @@ public class SignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w(TAG, "Error, User not added", e);
-                                            customToken = generateString();
+                                            Snackbar.make(findViewById(R.id.LinearLayout_signupactivity), e.toString(), Snackbar.LENGTH_LONG).show();
                                             EditText editTextName = findViewById(R.id.editText_signup_username);
                                             editTextName.setText(customToken);
                                         }
@@ -153,6 +158,7 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+
 
     }
 
