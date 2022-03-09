@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -80,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             System.out.println("New user signed in: " + currentUser.getEmail());
         } else{
             System.out.println("No user signed in\nBringing back to sign in page");
-            super.finish();
+            finish();
         }
     }
 }

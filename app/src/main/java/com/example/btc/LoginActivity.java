@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
                             editText_login_username.setText("");
                             editText_login_password.setText("");
                         }
