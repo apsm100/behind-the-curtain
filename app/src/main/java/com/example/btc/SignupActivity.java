@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,10 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+
 
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -60,14 +65,79 @@ public class SignupActivity extends FirebaseAuthentication {
         usernameTextInputLayout.getEditText().setText(getRandomNumberString());
         usernameTextInputLayout.setHelperText("Username should be a 6 digit number");
         usernameTextInputLayout.setFocusable(false);
+        usernameTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!isUsernameValid(s.toString())) {
+                    usernameTextInputLayout.setError("Username must be exactly a 6 digit number");
+                } else {
+                    usernameTextInputLayout.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
+
+
 
         // PASSWORD
         passwordTextInputLayout = findViewById(R.id.editTextLayout_signup_password);
         passwordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
+        passwordTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!isUsernameValid(s.toString())) {
+                    passwordTextInputLayout.setError("Password must be between 6 to 15 characters long");
+                } else {
+                    passwordTextInputLayout.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
 
         // CONFIRM PASSWORD
         passwordConfirmTextInputLayout = findViewById(R.id.editTextLayout_signup_confirm_password);
         passwordConfirmTextInputLayout.setHelperText("Password must match password entered above");
+        passwordConfirmTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!isUsernameValid(s.toString())) {
+                    passwordConfirmTextInputLayout.setError("Passwords do not match");
+                } else {
+                    passwordConfirmTextInputLayout.setError(null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
 
         // Cancel Button
         Button cancelButton = findViewById(R.id.button_signup_cancel);
