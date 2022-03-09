@@ -1,8 +1,9 @@
 package com.example.btc;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+public class Comment  implements Serializable {
     private final String userId;
     private final Date date;
     private final String data;
