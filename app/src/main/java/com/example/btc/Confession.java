@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class Confession implements Serializable {
     private final String username;
     private final String text;
-    private final String[] comments;
-    private final String[] hearts;
+    private final Comment[] comments;
+    private final Heart[] hearts;
 
 
-    public Confession(String username, String message, String[] comments, String[] hearts) {
+    public Confession(String username, String message, Comment[] comments, Heart[] hearts) {
         this.username = username;
         this.text = message;
         this.comments = comments;
@@ -28,11 +28,11 @@ public class Confession implements Serializable {
         return text;
     }
 
-    public String[] getComments() {
+    public Comment[] getComments() {
         return comments;
     }
 
-    public String[] getHearts() {
+    public Heart[] getHearts() {
         return hearts;
     }
 }

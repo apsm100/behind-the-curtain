@@ -29,13 +29,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        String[] heartsArray = new String[]{"user1", "user2", "user 3", "user 4"};
-        String[] commentsArray = new String[]{"user5", "user55", "user23423", "user234234"};
+        Heart[] heartsArray = new Heart[]{new Heart("abcdefg"), new Heart("abcdefg")};
+        Comment[] commentsArray = new Comment[]{new Comment("abcedfg", "Wow this is a great app.")};
 
 
         Confession[] confessions = {
-                new Confession("BCIT#102043", "THIS IS MESSAGE 1", heartsArray, commentsArray),
-                new Confession("SFU#3849839", "THIS IS MESSAGE 2", heartsArray, commentsArray)
+                new Confession("BCIT#102043", "THIS IS MESSAGE 1", commentsArray, heartsArray),
+                new Confession("SFU#3849839", "THIS IS MESSAGE 2", commentsArray, heartsArray)
         };
 
 
