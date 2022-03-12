@@ -16,7 +16,6 @@ import android.widget.EditText;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
@@ -49,7 +48,7 @@ public class SignupActivity extends FirebaseAuthentication {
 
         // PROGRESS BAR
         progressBar = findViewById(R.id.ProgressBar_signup);
-        showProgressBar(false);
+        setProgressBar(false);
 
         // SCHOOL NAME
         autoCompleteTextViewSchool = findViewById(R.id.AutoCompleteTextView_signup_school);
@@ -84,10 +83,6 @@ public class SignupActivity extends FirebaseAuthentication {
             }
         });
 
-
-
-
-
         // PASSWORD
         passwordTextInputLayout = findViewById(R.id.editTextLayout_signup_password);
         passwordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
@@ -99,15 +94,11 @@ public class SignupActivity extends FirebaseAuthentication {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!isUsernameValid(s.toString())) {
-                    passwordTextInputLayout.setError("Password must be between 6 to 15 characters long");
-                } else {
-                    passwordTextInputLayout.setError(null);
-                }
+
             }
             @Override
             public void afterTextChanged(Editable s) {
-
+                isValidSignup();
             }
         });
 
@@ -124,20 +115,13 @@ public class SignupActivity extends FirebaseAuthentication {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!isUsernameValid(s.toString())) {
-                    passwordConfirmTextInputLayout.setError("Passwords do not match");
-                } else {
-                    passwordConfirmTextInputLayout.setError(null);
-                }
+
             }
             @Override
             public void afterTextChanged(Editable s) {
-
+                isValidSignup();
             }
         });
-
-
-
 
         // Cancel Button
         Button cancelButton = findViewById(R.id.button_signup_cancel);
@@ -161,51 +145,55 @@ public class SignupActivity extends FirebaseAuthentication {
     private void signUpButtonClicked(View view) {
         String username = usernameTextInputLayout.getEditText().getText().toString();
         String password = passwordTextInputLayout.getEditText().getText().toString();
+
+        boolean isValid = isValidSignup();
+
+        if (isValid) {
+            String email = username + "@btc.com";
+            String displayName = currentlySelectedSchool + "#" + username;
+            User user = new User(username, email, currentlySelectedSchool, displayName);
+            disableSignUpButton();
+            setProgressBar(true);
+            registerUser(user, password);
+        }
+
+    }
+
+    public boolean isValidSignup() {
+        String username = usernameTextInputLayout.getEditText().getText().toString();
+        String password = passwordTextInputLayout.getEditText().getText().toString();
         String confirmPassword = passwordConfirmTextInputLayout.getEditText().getText().toString();
-
-        boolean allValid = true;
-
+        boolean isValid = true;
         if (currentlySelectedSchool == null) {
             autoCompleteTextViewSchoolInputLayout.setError("You must select a school");
-            allValid = false;
+            isValid = false;
         } else {
             autoCompleteTextViewSchoolInputLayout.setError("");
         }
-
         if (!isUsernameValid(username)) {
             usernameTextInputLayout.setError("Username must be exactly a 6 digit number");
-            allValid = false;
+            isValid = false;
         } else {
             usernameTextInputLayout.setErrorEnabled(false);
         }
 
         if (!isPasswordValid(password)) {
             passwordTextInputLayout.setError("Password must be between 6 to 15 characters long");
-            allValid = false;
+            return false;
         } else {
             passwordTextInputLayout.setErrorEnabled(false);
         }
 
-
         if (!isPasswordMatch(password, confirmPassword)) {
             passwordConfirmTextInputLayout.setError("Passwords do not match");
-            allValid = false;
+            isValid = false;
         } else {
             passwordConfirmTextInputLayout.setErrorEnabled(false);
         }
-
-        if (allValid) {
-            String email = username + "@btc.com";
-            String displayName = currentlySelectedSchool + "#" + username;
-            User user = new User(username, email, currentlySelectedSchool, displayName);
-            disableSignUpButton();
-            showProgressBar(true);
-            registerUser(user, password);
-        }
-
+        return isValid;
     }
 
-    private void showProgressBar(Boolean value) {
+    private void setProgressBar(Boolean value) {
         if (value) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
@@ -221,7 +209,7 @@ public class SignupActivity extends FirebaseAuthentication {
             usernameTextInputLayout.setError("This username is already in use");
             usernameTextInputLayout.requestFocus();
             enableSignUpButton();
-            showProgressBar(false);
+            setProgressBar(false);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
@@ -259,7 +247,6 @@ public class SignupActivity extends FirebaseAuthentication {
         auth.createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        showProgressBar(true);
                         addUserToCollection(user);
                     } else {
                         setErrorMessageFromException(task.getException());
@@ -274,17 +261,17 @@ public class SignupActivity extends FirebaseAuthentication {
                 .document(user.getUsername())
                 .set(user)
                 .addOnSuccessListener(success -> {
+                    setProgressBar(false);
                     Intent intent = new Intent(this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 })
                 .addOnFailureListener(e -> {
+                    setProgressBar(false);
                     Snackbar.make(findViewById(R.id.LinearLayout_signupactivity), e.toString(), Snackbar.LENGTH_SHORT).show();
                     EditText editTextName = findViewById(R.id.editText_signup_username);
                     editTextName.setText(user.getUsername());
                 });
-
-        showProgressBar(false);
     }
 
 

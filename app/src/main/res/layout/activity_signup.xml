@@ -45,15 +45,14 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.20"
+        android:layout_weight="0.25"
         android:hint="@string/all_label_school"
         android:textColorHint="#D0BCFF"
         app:boxStrokeColor="#D0BCFF"
         app:boxStrokeWidth="2dp"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:placeholderTextColor="#4C00FF"
-        >
+        app:placeholderTextColor="#4C00FF">
 
         <AutoCompleteTextView
             android:id="@+id/AutoCompleteTextView_signup_school"
@@ -61,9 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:dropDownHeight="wrap_content"
+            android:enabled="false"
             android:hint="@string/all_label_school"
             android:isScrollContainer="false"
-            android:enabled="false"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +73,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.20"
+        android:layout_weight="0.25"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -98,7 +97,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.20"
+        android:layout_weight="0.25"
         android:hint="@string/all_label_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -122,7 +121,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.20"
+        android:layout_weight="0.25"
         android:hint="@string/all_label_confirm_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
