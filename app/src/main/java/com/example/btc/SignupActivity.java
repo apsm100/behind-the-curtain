@@ -282,7 +282,7 @@ public class SignupActivity extends FirebaseAuthentication {
 
     public static String getRandomNumberString() {
         Random rnd = new Random();
-        int number = rnd.nextInt(999999);
+        int number = rnd.nextInt(999999 - 100000) + 100000;
         return String.valueOf(number);
     }
 }
