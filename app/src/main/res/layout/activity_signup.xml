@@ -132,6 +132,7 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:nextFocusDown="@+id/button_signup_signup"
             android:id="@+id/editText_signup_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
