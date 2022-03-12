@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1B1F"
+    android:backgroundTint="#14D0BCFF"
+    android:backgroundTintMode="screen"
+    android:orientation="vertical"
+    android:theme="@style/Theme.BTC"
+    tools:context=".HomeActivity">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_weight="4.5"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/BTCPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1C1B1F"
+            android:backgroundTint="#14D0BCFF"
+            android:backgroundTintMode="src_over"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:id="@+id/textView_new_confession_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:paddingTop="12dp"
+                android:text="@string/item_confession_usernameplaceholder"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="#E6E1E5" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine_new_confession"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/new_confession_enter_text"
+                android:inputType="textMultiLine"
+                android:textColorHint="@color/BTCPrimary" />
+
+            <!-- Buttons -->
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.001" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".75"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/button_new_confession_close"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:backgroundTint="#4A4458"
+            android:onClick="closeClick"
+            android:text="@string/new_confession_close"
+            android:textColor="#E8DEF8" />
+
+        <Button
+            android:id="@+id/button_new_confession_post"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/BTCPrimary"
+            android:text="@string/new_confession_post"
+            android:textColor="#381E72" />
+
+    </LinearLayout>
+
+</LinearLayout>

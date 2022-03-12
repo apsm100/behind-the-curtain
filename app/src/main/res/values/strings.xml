@@ -25,6 +25,9 @@
     <string name="text_oldPass">Old Password</string>
     <string name="all_label_oldPassword">Old Password</string>
     <string name="all_label_newPassword">New Password</string>
+    <string name="new_confession_enter_text">Enter your confession here…</string>
+    <string name="new_confession_post">Post</string>
+    <string name="new_confession_close">Close</string>
     <string name="login_errormessageplaceholder">Error Message Placeholder</string>
     <string name="login_blockedmessage">We have blocked all request from this device due to unusual activity. Try again later</string>
 </resources>

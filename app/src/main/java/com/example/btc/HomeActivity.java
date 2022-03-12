@@ -84,4 +84,9 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    public void newConfession(View view) {
+        Intent intent = new Intent(HomeActivity.this, NewConfessionActivity.class);
+        startActivity(intent);
+    }
 }
