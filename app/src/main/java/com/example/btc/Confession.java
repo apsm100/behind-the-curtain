@@ -1,23 +1,26 @@
 package com.example.btc;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Confession implements Serializable {
-    private final String username;
+    private final User user;
     private final String text;
     private final Comment[] comments;
     private final Heart[] hearts;
+    private final Date date;
 
 
-    public Confession(String username, String message, Comment[] comments, Heart[] hearts) {
-        this.username = username;
+    public Confession(User user, String message, Comment[] comments, Heart[] hearts) {
+        this.date = new Date(System.currentTimeMillis());
+        this.user = user;
         this.text = message;
         this.comments = comments;
         this.hearts = hearts;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
     public String getMessage() {

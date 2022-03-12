@@ -31,11 +31,11 @@ public class HomeActivity extends AppCompatActivity {
 
         Heart[] heartsArray = new Heart[]{new Heart("abcdefg"), new Heart("abcdefg")};
         Comment[] commentsArray = new Comment[]{new Comment("abcedfg", "Wow this is a great app.")};
-
+        User user = new User("123456", "123456", "BCIT", "BCIT#123456");
 
         Confession[] confessions = {
-                new Confession("BCIT#102043", "THIS IS MESSAGE 1", commentsArray, heartsArray),
-                new Confession("SFU#3849839", "THIS IS MESSAGE 2", commentsArray, heartsArray)
+                new Confession(user, "THIS IS MESSAGE 1", commentsArray, heartsArray),
+                new Confession(user, "THIS IS MESSAGE 2", commentsArray, heartsArray)
         };
 
 
