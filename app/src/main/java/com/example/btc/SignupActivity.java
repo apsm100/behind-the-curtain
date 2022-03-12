@@ -35,6 +35,10 @@ public class SignupActivity extends FirebaseAuthentication {
     TextInputLayout usernameTextInputLayout;
     TextInputLayout passwordTextInputLayout;
     TextInputLayout passwordConfirmTextInputLayout;
+    EditText usernameTextView;
+    EditText passwordTextView;
+    EditText passwordConfirmTextView;
+
     Button signupButton;
 
     @Override
@@ -52,7 +56,7 @@ public class SignupActivity extends FirebaseAuthentication {
 
         // SCHOOL NAME
         autoCompleteTextViewSchool = findViewById(R.id.AutoCompleteTextView_signup_school);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, listOfSchools);
         autoCompleteTextViewSchool.setAdapter(adapter);
         autoCompleteTextViewSchool.setOnItemClickListener(this::schoolNameSelected);
@@ -61,7 +65,9 @@ public class SignupActivity extends FirebaseAuthentication {
 
         // USERNAME //
         usernameTextInputLayout = findViewById(R.id.editTextLayout_signup_username);
-        usernameTextInputLayout.getEditText().setText(getRandomNumberString());
+        usernameTextView = usernameTextInputLayout.getEditText();
+        usernameTextView.setText(getRandomNumberString());
+
         usernameTextInputLayout.setHelperText("Username should be a 6 digit number");
         usernameTextInputLayout.setFocusable(false);
         usernameTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
@@ -86,7 +92,8 @@ public class SignupActivity extends FirebaseAuthentication {
         // PASSWORD
         passwordTextInputLayout = findViewById(R.id.editTextLayout_signup_password);
         passwordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
-        passwordTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+        passwordTextView = passwordTextInputLayout.getEditText();
+        passwordTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -107,7 +114,8 @@ public class SignupActivity extends FirebaseAuthentication {
         // CONFIRM PASSWORD
         passwordConfirmTextInputLayout = findViewById(R.id.editTextLayout_signup_confirm_password);
         passwordConfirmTextInputLayout.setHelperText("Password must match password entered above");
-        passwordConfirmTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+        passwordConfirmTextView = passwordConfirmTextInputLayout.getEditText();
+        passwordConfirmTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -143,8 +151,8 @@ public class SignupActivity extends FirebaseAuthentication {
 
 
     private void signUpButtonClicked(View view) {
-        String username = usernameTextInputLayout.getEditText().getText().toString();
-        String password = passwordTextInputLayout.getEditText().getText().toString();
+        String username = usernameTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
 
         boolean isValid = isValidSignup();
 
@@ -160,9 +168,9 @@ public class SignupActivity extends FirebaseAuthentication {
     }
 
     public boolean isValidSignup() {
-        String username = usernameTextInputLayout.getEditText().getText().toString();
-        String password = passwordTextInputLayout.getEditText().getText().toString();
-        String confirmPassword = passwordConfirmTextInputLayout.getEditText().getText().toString();
+        String username = usernameTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
+        String confirmPassword = passwordConfirmTextView.getText().toString();
         boolean isValid = true;
         if (currentlySelectedSchool == null) {
             autoCompleteTextViewSchoolInputLayout.setError("You must select a school");
