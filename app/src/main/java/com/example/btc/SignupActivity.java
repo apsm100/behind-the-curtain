@@ -143,6 +143,7 @@ public class SignupActivity extends FirebaseAuthentication {
 
     private void schoolNameSelected(AdapterView<?> schoolNameList, View view, int position, long l) {
         currentlySelectedSchool = schoolNameList.getItemAtPosition(position).toString();
+        autoCompleteTextViewSchoolInputLayout.setError("");
     }
 
     private void cancelButtonClicked(View view) {
