@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText editText_login_username = findViewById(R.id.editText_login_username);
         EditText editText_login_password = findViewById(R.id.editText_login_password);
-        String email = editText_login_username.getText().toString() + "_@btc.com".trim();
+        String email = editText_login_username.getText().toString() + "@btc.com".trim();
         String password = editText_login_password.getText().toString();
 
 

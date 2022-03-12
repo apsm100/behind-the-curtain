@@ -34,9 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (currentUser != null && currentUser.getEmail() != null) {
             email = currentUser.getEmail();
         }
-        if (email.length() >= 12) {
-            email = email.substring(0, 12);
-        }
+        email = email.substring(0, 6);
 
         EditText editText_profile_username = findViewById(R.id.editText_profile_username);
         editText_profile_username.setText(email);
