@@ -60,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:dropDownHeight="wrap_content"
-            android:enabled="false"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:hint="@string/all_label_school"
             android:isScrollContainer="false"
             android:textColor="@color/white" />
