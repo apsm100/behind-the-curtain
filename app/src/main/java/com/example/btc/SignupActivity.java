@@ -155,9 +155,7 @@ public class SignupActivity extends FirebaseAuthentication {
         String username = usernameTextView.getText().toString();
         String password = passwordTextView.getText().toString();
 
-        boolean isValid = isValidSignup();
-
-        if (isValid) {
+        if (isValidSignup()) {
             String email = username + "@btc.com";
             String displayName = currentlySelectedSchool + "#" + username;
             User user = new User(username, email, currentlySelectedSchool, displayName);
@@ -211,7 +209,6 @@ public class SignupActivity extends FirebaseAuthentication {
     }
 
     public void setErrorMessageFromException(Exception exception) {
-
         try {
             throw exception;
         } catch (FirebaseAuthUserCollisionException e) {
@@ -221,6 +218,8 @@ public class SignupActivity extends FirebaseAuthentication {
             setProgressBar(false);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
+            enableSignUpButton();
+            setProgressBar(false);
         }
     }
 

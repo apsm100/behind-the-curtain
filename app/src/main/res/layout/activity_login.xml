@@ -14,24 +14,32 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="30dp"
         android:layout_weight="1"
         android:contentDescription="@string/all_logo_description"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo"
         tools:ignore="ImageContrastCheck" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/AutoCompleteTextView_signup_school"
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/ProgressBar_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:indeterminate="true"
+        app:indicatorColor="@color/purple_200"
+        app:trackColor="@color/BTCPrimary" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TextInputLayout_login_username"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.88"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -43,18 +51,18 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_login_username"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="text"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TextViewLayout_signup_confirm_password"
+        android:id="@+id/TextInputLayout_login_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.1"
+        android:layout_weight="0.88"
         android:hint="@string/all_label_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -66,37 +74,45 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_login_password"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/button_login_login"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0.5"
         android:backgroundTint="@color/BTCPrimary"
-        android:onClick="login"
         android:text="@string/all_label_login"
         android:textColor="#381E72" />
 
     <Button
+        android:id="@+id/button_login_signup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="100dp"
         android:layout_weight="0.5"
         android:backgroundTint="#4A4458"
-        android:onClick="signup"
         android:text="@string/all_label_signup"
         android:textColor="#E8DEF8" />
 
     <TextView
+        android:id="@+id/textView_login_miscerrormessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.6"
+        android:gravity="center_horizontal"
+        android:textColor="#E88181" />
+
+    <TextView
+        android:id="@+id/TextView_login_bottomhelptext"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"

@@ -25,4 +25,6 @@
     <string name="text_oldPass">Old Password</string>
     <string name="all_label_oldPassword">Old Password</string>
     <string name="all_label_newPassword">New Password</string>
+    <string name="login_errormessageplaceholder">Error Message Placeholder</string>
+    <string name="login_blockedmessage">We have blocked all request from this device due to unusual activity. Try again later</string>
 </resources>
