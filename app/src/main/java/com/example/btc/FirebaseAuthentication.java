@@ -5,12 +5,14 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -52,16 +54,17 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
 
     }
 
-    public void getUser(Callback callback) {
+    public void getUser(Callback callback, LinearProgressIndicator progressBar) {
+        progressBar.setVisibility(View.VISIBLE);
         DocumentReference docRef = db.collection("users").document(currentUser.getEmail().substring(0, 6));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 callback.callback(user);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
     }
 
 }
