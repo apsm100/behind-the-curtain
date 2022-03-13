@@ -76,9 +76,9 @@ public class HomeActivity extends FirebaseAuthentication {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {
-            if (firebaseAuth.getCurrentUser() != null){
-                Intent mainActivity = new Intent(this, HomeActivity.class);
-                startActivity(mainActivity);
+            if (firebaseAuth.getCurrentUser() == null){
+                Intent loginActivity = new Intent(this, HomeActivity.class);
+                startActivity(loginActivity);
                 finishAffinity();
             }
         });
