@@ -91,6 +91,13 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         return new ViewHolder(view);
     }
 
+//    @Override
+//    public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
+//        FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+//        super.onViewAttachedToWindow(holder);
+//        updateHeartIcon(heartsList, holder.getHeart(), userId);
+//
+//    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {

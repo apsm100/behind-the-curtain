@@ -1,24 +1,20 @@
 package com.example.btc;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +46,7 @@ public class HomeActivity extends FirebaseAuthentication {
                 startActivity(loginActivity);
             }
         });
-        loadConfessions(setRefreshLayout());
+        loadConfessions();
     }
 
     public void newConfession(View view) {
@@ -58,51 +54,90 @@ public class HomeActivity extends FirebaseAuthentication {
         startActivity(intent);
     }
 
-    public void loadConfessions(SwipeRefreshLayout swipeRefreshLayout) {
-        LinearProgressIndicator progressBar = findViewById(R.id.progressBar_home);
-        getConfessions((objects -> {
-            ArrayList<Confession> confessions = (ArrayList<Confession>) objects;
-            setViewAdapter(confessions.toArray(new Confession[0]));
-        }), progressBar, swipeRefreshLayout);
-    }
+    public void loadConfessions() {
+        Query query = db.collection("confessions").orderBy("date", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Confession> options = new FirestoreRecyclerOptions.Builder<Confession>()
+                .setQuery(query, Confession.class)
+                .build();
+        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<Confession, ConfessionsAdapter.ViewHolder>(options) {
+            @Override
+            public void onBindViewHolder(ConfessionsAdapter.ViewHolder viewHolder, int position, Confession model) {
+                FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+                Button heartButton = viewHolder.getHeart();
+                // Get element from your dataset at this position and replace the
+                // contents of the view with that element
+                viewHolder.getUsername().setText(model.getUser().getDisplayName());
+                viewHolder.getText().setText(model.getText());
+                viewHolder.getComment().setText(String.valueOf(model.getComments().size()));
+                heartButton.setText(String.valueOf(model.getHearts().size()));
 
-    public void setViewAdapter(Confession[] confessions) {
-        ViewPager2 viewPager2 = findViewById(R.id.ViewPager_home);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, confessions);
-        viewPager2.setAdapter(viewPagerAdapter);
+                ArrayList<String> heartsList = model.getHearts();
+                String userId = firebaseAuthentication.currentUser.getUid();
+                String documentId = model.getDocumentId();
+                FirebaseFirestore db = firebaseAuthentication.db;
 
-        TabLayout tabLayout = findViewById(R.id.TabLayout_home);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        if (position == 0){
-                            tab.setText("Popular");
-                            tab.setIcon(R.drawable.ic_baseline_trending_up_24);
-                        }else {
-                            tab.setText("Popular");
-                            tab.setIcon(R.drawable.ic_baseline_refresh_24);
+                updateHeartIcon(heartsList, heartButton, userId);
 
-                        }
+                viewHolder.getHeart().setOnClickListener(view -> {
+                    if (heartsList.contains(userId)) {
+                        heartsList.remove(userId);
+                        db.collection("confessions")
+                                .document(documentId)
+                                .update("hearts", FieldValue.arrayRemove(userId));
+                    } else {
+                        heartsList.add(userId);
+                        db.collection("confessions")
+                                .document(documentId)
+                                .update("hearts", FieldValue.arrayUnion(userId));
                     }
                 });
+            }
 
-        tabLayoutMediator.attach();
-    }
-
-    public SwipeRefreshLayout setRefreshLayout() {
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefresh_home);
-
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        loadConfessions(swipeRefreshLayout);
-                    }
+            private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
+                if (heartsList.contains(userId)) {
+                    heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            R.drawable.heart_filled, 0, 0, 0);
+                } else {
+                    heartButton
+                            .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                    R.drawable.heart_outline, 0, 0, 0);
                 }
-        );
-        return swipeRefreshLayout;
+            }
+
+            @Override
+            public ConfessionsAdapter.ViewHolder onCreateViewHolder(ViewGroup group, int i) {
+                // Create a new instance of the ViewHolder, in this case we are using a custom
+                // layout called R.layout.message for each item
+                View view = LayoutInflater.from(group.getContext())
+                        .inflate(R.layout.item_confession, group, false);
+                return new ConfessionsAdapter.ViewHolder(view);
+            }
+        };
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_home);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.startListening();
+
+//        TabLayout tabLayout = findViewById(R.id.TabLayout_home);
+//        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
+//                new TabLayoutMediator.TabConfigurationStrategy() {
+//                    @Override
+//                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+//                        if (position == 0){
+//                            tab.setText("Popular");
+//                            tab.setIcon(R.drawable.ic_baseline_trending_up_24);
+//                        }else {
+//                            tab.setText("Popular");
+//                            tab.setIcon(R.drawable.ic_baseline_refresh_24);
+//
+//                        }
+//                    }
+//                });
+//
+//        tabLayoutMediator.attach();
     }
+
+
 
 
 }
