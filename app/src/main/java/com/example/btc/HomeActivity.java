@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HomeActivity extends FirebaseAuthentication {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +60,7 @@ public class HomeActivity extends FirebaseAuthentication {
 
     public void loadConfessions() {
         LinearProgressIndicator progressBar = findViewById(R.id.progressBar_home);
-        getConfessions((objects -> {
+        addConfessionsListener((objects -> {
             ArrayList<Confession> confessions = (ArrayList<Confession>) objects;
             setViewAdapter(confessions.toArray(new Confession[0]));
         }), progressBar);
@@ -71,6 +70,7 @@ public class HomeActivity extends FirebaseAuthentication {
         ViewPager2 viewPager2 = findViewById(R.id.ViewPager_home);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, confessions);
         viewPager2.setAdapter(viewPagerAdapter);
+
         TabLayout tabLayout = findViewById(R.id.TabLayout_home);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
                 new TabLayoutMediator.TabConfigurationStrategy() {
@@ -89,4 +89,6 @@ public class HomeActivity extends FirebaseAuthentication {
 
         tabLayoutMediator.attach();
     }
+
+
 }

@@ -20,10 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 abstract class FirebaseAuthentication extends AppCompatActivity{
@@ -77,31 +81,34 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
         });
     }
 
-    public void getConfessions(Callback callback, LinearProgressIndicator progressBar) {
-//        db.collection("confessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//    public void getConfessions(Callback callback, LinearProgressIndicator progressBar) {
+//        progressBar.show();
+//        db.collection("confessions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 //            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                List<Confession> confessions = task.getResult().toObjects(Confession.class);
-//                callback.call(confessions);
-//                progressBar.setVisibility(View.INVISIBLE);
+//            public void onSuccess(QuerySnapshot documentSnapshots) {
+//                if (!documentSnapshots.isEmpty()) {
+//                    List<Confession> confessions = documentSnapshots.toObjects(Confession.class);
+//                    callback.call(confessions);
+//                    progressBar.hide();
+//                }
 //            }
 //        });
+//
+//    }
 
-        db.collection("confessions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot documentSnapshots) {
-                if (documentSnapshots.isEmpty()) {
-                    Log.d(TAG, "onSuccess: LIST EMPTY");
-                    return;
-                } else {
-                    List<Confession> confessions = documentSnapshots.toObjects(Confession.class);
-                    callback.call(confessions);
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            }
-            });
-
-
+    public void addConfessionsListener(Callback callback, LinearProgressIndicator progressBar) {
+        db.collection("confessions").orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        assert value != null;
+                        if (!value.isEmpty()) {
+                            List<Confession> confessions = value.toObjects(Confession.class);
+                            callback.call(confessions);
+                            progressBar.hide();
+                        }
+                    }
+                });
     }
 
 }
