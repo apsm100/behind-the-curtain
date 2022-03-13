@@ -14,6 +14,7 @@ public class Confession implements Serializable {
     private ArrayList<Comment> comments;
     private ArrayList<String> hearts;
     private Date date;
+    private int popularityIndex;
 
     public String getDocumentId() {
         return documentId;
@@ -25,12 +26,41 @@ public class Confession implements Serializable {
         this.text = text;
         this.comments = comments;
         this.hearts = hearts;
+        setPopularityIndex();
     }
 
     public Confession(){}
 
     public User getUser() {
         return user;
+    }
+
+    public void addHeart(String userId) {
+        hearts.add(userId);
+        setPopularityIndex();
+    }
+
+    public void removeHeart(String userId) {
+        hearts.remove(userId);
+        setPopularityIndex();
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        setPopularityIndex();
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        setPopularityIndex();
+    }
+
+    public int getPopularityIndex() {
+        return popularityIndex;
+    }
+
+    public void setPopularityIndex() {
+        popularityIndex = hearts.size() + (comments.size() * 2);
     }
 
     public String getText() {
