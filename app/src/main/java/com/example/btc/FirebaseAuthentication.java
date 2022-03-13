@@ -89,7 +89,7 @@ class FirebaseAuthentication extends AppCompatActivity{
 
     public void getConfessions(Callback callback, LinearProgressIndicator progressBar, SwipeRefreshLayout swipeRefreshLayout) {
         progressBar.show();
-        db.collection("confessions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("confessions").orderBy("date", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot documentSnapshots) {
                 if (!documentSnapshots.isEmpty()) {
