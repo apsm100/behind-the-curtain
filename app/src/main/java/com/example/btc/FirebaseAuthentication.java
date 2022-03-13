@@ -87,4 +87,47 @@ class FirebaseAuthentication extends AppCompatActivity{
         });
     }
 
+    public void getConfessions(Callback callback, LinearProgressIndicator progressBar, SwipeRefreshLayout swipeRefreshLayout) {
+        progressBar.show();
+        db.collection("confessions").orderBy("date", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot documentSnapshots) {
+                if (!documentSnapshots.isEmpty()) {
+                    List<Confession> confessions = documentSnapshots.toObjects(Confession.class);
+                    callback.call(confessions);
+                    progressBar.hide();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
+
+    }
+
+//    public void addConfessionsListener(Callback callback, LinearProgressIndicator progressBar) {
+//        db.collection("confessions").orderBy("date", Query.Direction.DESCENDING)
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        assert value != null;
+//                        if (!value.isEmpty()) {
+//                            List<Confession> confessions = value.toObjects(Confession.class);
+//                            callback.call(confessions);
+//                            progressBar.hide();
+//                        }
+//                    }
+//                });
+//    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void updateHearts(Callback callback, String confessionId, String userId) {
+        db.collection("confessions")
+                .document(confessionId)
+                .update("hearts", userId)
+                .addOnSuccessListener(callback::call);
+    }
+
+
 }

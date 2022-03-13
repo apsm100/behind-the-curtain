@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -47,20 +46,20 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter {
         holder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
         holder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
         holder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().size()));
-
-        holder.getHeart().setOnClickListener(view -> {
-            if (heartsList.contains(userId)) {
-                heartsList.remove(userId);
-                db.collection("confessions")
-                        .document(documentId)
-                        .update("hearts", FieldValue.arrayRemove(userId));
-            } else {
-                heartsList.add(userId);
-                db.collection("confessions")
-                        .document(documentId)
-                        .update("hearts", FieldValue.arrayUnion(userId));
-            }
-        });
+        
+//        holder.getHeart().setOnClickListener(view -> {
+//            if (heartsList.contains(userId)) {
+//                heartsList.remove(userId);
+//                db.collection("confessions")
+//                        .document(documentId)
+//                        .update("hearts", FieldValue.arrayRemove(userId));
+//            } else {
+//                heartsList.add(userId);
+//                db.collection("confessions")
+//                        .document(documentId)
+//                        .update("hearts", FieldValue.arrayUnion(userId));
+//            }
+//        });
     }
 
     @NonNull
