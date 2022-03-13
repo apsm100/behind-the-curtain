@@ -23,6 +23,7 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
     protected FirebaseFirestore db;
     protected FirebaseAuth auth;
     protected FirebaseUser currentUser;
+    String username;
 
     public FirebaseAuthentication() {
         db = FirebaseFirestore.getInstance();
@@ -34,7 +35,7 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
-
+        username = currentUser.getEmail().substring(0, 6);
     }
 
 
@@ -56,12 +57,24 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
 
     public void getUser(Callback callback, LinearProgressIndicator progressBar) {
         progressBar.setVisibility(View.VISIBLE);
-        DocumentReference docRef = db.collection("users").document(currentUser.getEmail().substring(0, 6));
+        DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                callback.callback(user);
+                callback.call(user);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    public void addConfession(Confession confession, Callback callback, LinearProgressIndicator progressBar) {
+        progressBar.setVisibility(View.VISIBLE);
+        DocumentReference docRef = db.collection("posts").document();
+        docRef.set(confession).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                callback.call(o);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });

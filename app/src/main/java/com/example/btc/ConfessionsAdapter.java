@@ -86,8 +86,8 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         // contents of the view with that element
         viewHolder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
         viewHolder.getText().setText(localDataSet[position].getMessage());
-        viewHolder.getComment().setText(String.valueOf(localDataSet[position].getComments().length));
-        viewHolder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().length));
+//        viewHolder.getComment().setText(String.valueOf(localDataSet[position].getComments().length));
+//        viewHolder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().length));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

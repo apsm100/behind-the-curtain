@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -29,8 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        Heart[] heartsArray = new Heart[]{new Heart("abcdefg"), new Heart("abcdefg")};
-        Comment[] commentsArray = new Comment[]{new Comment("abcedfg", "Wow this is a great app.")};
+        ArrayList<Heart> heartsArray = new ArrayList<>();
+        ArrayList<Comment> commentsArray = new ArrayList<>();
         User user = new User("123456", "123456", "BCIT", "BCIT#123456");
 
         Confession[] confessions = {

@@ -3,5 +3,5 @@ package com.example.btc;
 import java.io.Serializable;
 
 public interface Callback {
-    public void callback(Object object);
+    public void call(Object object);
 }

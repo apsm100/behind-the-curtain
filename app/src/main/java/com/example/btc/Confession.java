@@ -1,17 +1,18 @@
 package com.example.btc;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Confession implements Serializable {
     private final User user;
     private final String text;
-    private final Comment[] comments;
-    private final Heart[] hearts;
+    private final ArrayList<Comment> comments;
+    private final ArrayList<Heart> hearts;
     private final Date date;
 
 
-    public Confession(User user, String message, Comment[] comments, Heart[] hearts) {
+    public Confession(User user, String message, ArrayList<Comment> comments, ArrayList<Heart> hearts) {
         this.date = new Date(System.currentTimeMillis());
         this.user = user;
         this.text = message;
@@ -31,11 +32,11 @@ public class Confession implements Serializable {
         return text;
     }
 
-    public Comment[] getComments() {
-        return comments;
-    }
-
-    public Heart[] getHearts() {
-        return hearts;
-    }
+//    public Comment[] getComments() {
+//        return comments;
+//    }
+//
+//    public Heart[] getHearts() {
+//        return hearts;
+//    }
 }
