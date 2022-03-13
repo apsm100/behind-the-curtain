@@ -122,13 +122,11 @@ class FirebaseAuthentication extends AppCompatActivity{
         return username;
     }
 
-    public void updateHearts(Callback callback, String confessionId, ArrayList<Heart> hearts) {
-        db.collection("confessions").document(confessionId).update("hearts", hearts).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                callback.call(o);
-            }
-        });
+    public void updateHearts(Callback callback, String confessionId, String userId) {
+        db.collection("confessions")
+                .document(confessionId)
+                .update("hearts", userId)
+                .addOnSuccessListener(callback::call);
     }
 
 

@@ -64,8 +64,8 @@ public class ItemsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_itemsfragment);
-
         ConfessionsAdapter recyclerViewAdapter = new ConfessionsAdapter(confessions);
+        recyclerViewAdapter.setHasStableIds(true);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 

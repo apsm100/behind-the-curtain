@@ -12,14 +12,14 @@ public class Confession implements Serializable {
     private User user;
     private String text;
     private ArrayList<Comment> comments;
-    private ArrayList<Heart> hearts;
+    private ArrayList<String> hearts;
     private Date date;
 
     public String getDocumentId() {
         return documentId;
     }
 
-    public Confession(User user, String text, ArrayList<Comment> comments, ArrayList<Heart> hearts, Date date) {
+    public Confession(User user, String text, ArrayList<Comment> comments, ArrayList<String> hearts, Date date) {
         this.date = date;
         this.user = user;
         this.text = text;
@@ -41,7 +41,7 @@ public class Confession implements Serializable {
         return comments;
     }
 
-    public ArrayList<Heart> getHearts() {
+    public ArrayList<String> getHearts() {
         return hearts;
     }
 

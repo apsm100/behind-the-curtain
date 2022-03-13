@@ -2,6 +2,7 @@ package com.example.btc;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.FirestoreGrpc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.ViewHolder> {
@@ -32,7 +40,6 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         private final Button heart;
         private final Button more;
 
-
         public ViewHolder(View view) {
             super(view);
             this.username = view.findViewById(R.id.textView_itemconfession_username);
@@ -40,6 +47,7 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
             this.comment = view.findViewById(R.id.Button_itemconfession_comment);
             this.heart = view.findViewById(R.id.Button_itemconfession_heart);
             this.more = view.findViewById(R.id.Button_itemconfession_more);
+
         }
 
         public TextView getUsername() {
@@ -83,9 +91,9 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
 
         // Get element from your dataset at this position and replace the
@@ -95,33 +103,53 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         viewHolder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
         viewHolder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().size()));
 
-        viewHolder.getHeart().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = firebaseAuthentication.getUsername();
-                ArrayList<Heart> hearts = localDataSet[position].getHearts();
-                addOrRemoveHeart(hearts, username);
-                String documentId = localDataSet[position].getDocumentId();
-                firebaseAuthentication.updateHearts((object -> {
-                    return;
-                }), documentId, hearts);
+        ArrayList<String> heartsList = localDataSet[position].getHearts();
+        String userId = firebaseAuthentication.currentUser.getUid();
+        String documentId = localDataSet[position].getDocumentId();
+        FirebaseFirestore db = firebaseAuthentication.db;
+
+        updateHeartIcon(heartsList, viewHolder, userId);
+
+        viewHolder.getHeart().setOnClickListener(view -> {
+
+            if (heartsList.contains(userId)) {
+                db.collection("confessions")
+                        .document(documentId)
+                        .update("hearts", FieldValue.arrayRemove(userId))
+                        .addOnCompleteListener(task -> updateHeartIcon(heartsList, viewHolder, userId));
+            } else {
+                db.collection("confessions")
+                        .document(documentId)
+                        .update("hearts", FieldValue.arrayUnion(userId))
+                        .addOnCompleteListener(task -> updateHeartIcon(heartsList, viewHolder, userId));
             }
         });
     }
 
-    public void addOrRemoveHeart(ArrayList<Heart> hearts, String username) {
-        for (Heart heart: hearts) {
-            if (heart.getUserId().equals(username)) {
-                hearts.remove(heart);
-                return;
-            }
+
+    private void updateHeartIcon(ArrayList<String> heartsList, ViewHolder viewHolder, String userId) {
+        if (heartsList.contains(userId)) {
+            viewHolder.getHeart().setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.heart_outline, 0, 0, 0);
+        } else {
+            viewHolder.getHeart()
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            R.drawable.heart_filled, 0, 0, 0);
         }
-        hearts.add(new Heart(username));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
+    public long getItemId(int position) {
+        String documentID = localDataSet[position].getDocumentId();
+        String digits = documentID.replaceAll("[^0-9]", "");
+
+        return (long) Integer.parseInt(digits);
+    }
+
+    @Override
     public int getItemCount() {
         return localDataSet.length;
     }
+
 }

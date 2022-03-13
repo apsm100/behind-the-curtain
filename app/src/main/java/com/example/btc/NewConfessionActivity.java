@@ -46,7 +46,7 @@ public class NewConfessionActivity extends FirebaseAuthentication {
 
         // TEST COMMENT HEARTS
         ArrayList<Comment> comments = new ArrayList<>();
-        ArrayList<Heart> hearts = new ArrayList<>();
+        ArrayList<String> hearts = new ArrayList<>();
 //        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
 //        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
 //        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
