@@ -24,6 +24,6 @@ class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return confessionsArray.length;
+        return 2;
     }
 }
