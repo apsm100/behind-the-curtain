@@ -1,17 +1,23 @@
 package com.example.btc;
 
+import com.google.firebase.firestore.DocumentId;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Confession implements Serializable {
+    @DocumentId
+    private String documentId;
     private User user;
     private String text;
     private ArrayList<Comment> comments;
     private ArrayList<Heart> hearts;
     private Date date;
 
-
+    public String getDocumentId() {
+        return documentId;
+    }
 
     public Confession(User user, String text, ArrayList<Comment> comments, ArrayList<Heart> hearts, Date date) {
         this.date = date;

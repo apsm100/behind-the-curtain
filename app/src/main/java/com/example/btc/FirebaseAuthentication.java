@@ -30,7 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class FirebaseAuthentication extends AppCompatActivity{
+class FirebaseAuthentication extends AppCompatActivity{
     protected FirebaseFirestore db;
     protected FirebaseAuth auth;
     protected FirebaseUser currentUser;
@@ -110,5 +110,21 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
                     }
                 });
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void updateHearts(Callback callback, LinearProgressIndicator progressBar, String confessionId, ArrayList<Heart> hearts) {
+        System.out.println(confessionId);
+        db.collection("confessions").document(confessionId).update("hearts", hearts).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                callback.call(o);
+//                progressBar.hide();
+            }
+        });
+    }
+
 
 }
