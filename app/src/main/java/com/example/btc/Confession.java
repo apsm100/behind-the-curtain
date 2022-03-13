@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Confession implements Serializable {
-    private final User user;
-    private final String text;
-    private final ArrayList<Comment> comments;
-    private final ArrayList<Heart> hearts;
-    private final Date date;
+    private User user;
+    private String text;
+    private ArrayList<Comment> comments;
+    private ArrayList<Heart> hearts;
+    private Date date;
+
 
 
     public Confession(User user, String text, ArrayList<Comment> comments, ArrayList<Heart> hearts, Date date) {
@@ -19,6 +20,8 @@ public class Confession implements Serializable {
         this.comments = comments;
         this.hearts = hearts;
     }
+
+    public Confession(){}
 
     public User getUser() {
         return user;

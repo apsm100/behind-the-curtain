@@ -8,16 +8,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 abstract class FirebaseAuthentication extends AppCompatActivity{
     protected FirebaseFirestore db;
@@ -60,7 +67,7 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
 
     public void addConfession(Confession confession, Callback callback, LinearProgressIndicator progressBar) {
         progressBar.setVisibility(View.VISIBLE);
-        DocumentReference docRef = db.collection("posts").document();
+        DocumentReference docRef = db.collection("confessions").document();
         docRef.set(confession).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
@@ -68,6 +75,33 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void getConfessions(Callback callback, LinearProgressIndicator progressBar) {
+//        db.collection("confessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                List<Confession> confessions = task.getResult().toObjects(Confession.class);
+//                callback.call(confessions);
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//        });
+
+        db.collection("confessions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot documentSnapshots) {
+                if (documentSnapshots.isEmpty()) {
+                    Log.d(TAG, "onSuccess: LIST EMPTY");
+                    return;
+                } else {
+                    List<Confession> confessions = documentSnapshots.toObjects(Confession.class);
+                    callback.call(confessions);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+            });
+
+
     }
 
 }
