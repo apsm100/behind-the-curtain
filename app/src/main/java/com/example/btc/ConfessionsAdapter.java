@@ -47,12 +47,10 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
         viewHolder.getHeart().setOnClickListener(view -> {
             if (heartsList.contains(userId)) {
-                heartsList.remove(userId);
                 db.collection("confessions")
                         .document(documentId)
                         .update("hearts", FieldValue.arrayRemove(userId));
             } else {
-                heartsList.add(userId);
                 db.collection("confessions")
                         .document(documentId)
                         .update("hearts", FieldValue.arrayUnion(userId));
