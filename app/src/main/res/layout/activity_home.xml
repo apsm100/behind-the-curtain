@@ -61,16 +61,26 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/ViewPager_home"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="2dp"
-        android:layout_weight="3.5"
-        android:padding="10dp"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="165dp" />
+        android:layout_weight="3.5">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/ViewPager_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            tools:layout_editor_absoluteX="6dp"
+            tools:layout_editor_absoluteY="165dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -28,8 +29,6 @@ public class HomeActivity extends FirebaseAuthentication {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        loadConfessions();
-
         Button profileButton = findViewById(R.id.button_home_profile);
         profileButton.setOnClickListener(view -> {
             Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
@@ -51,6 +50,7 @@ public class HomeActivity extends FirebaseAuthentication {
                 startActivity(loginActivity);
             }
         });
+        loadConfessions(setRefreshLayout());
     }
 
     public void newConfession(View view) {
@@ -58,12 +58,12 @@ public class HomeActivity extends FirebaseAuthentication {
         startActivity(intent);
     }
 
-    public void loadConfessions() {
+    public void loadConfessions(SwipeRefreshLayout swipeRefreshLayout) {
         LinearProgressIndicator progressBar = findViewById(R.id.progressBar_home);
-        addConfessionsListener((objects -> {
+        getConfessions((objects -> {
             ArrayList<Confession> confessions = (ArrayList<Confession>) objects;
             setViewAdapter(confessions.toArray(new Confession[0]));
-        }), progressBar);
+        }), progressBar, swipeRefreshLayout);
     }
 
     public void setViewAdapter(Confession[] confessions) {
@@ -88,6 +88,20 @@ public class HomeActivity extends FirebaseAuthentication {
                 });
 
         tabLayoutMediator.attach();
+    }
+
+    public SwipeRefreshLayout setRefreshLayout() {
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefresh_home);
+
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        loadConfessions(swipeRefreshLayout);
+                    }
+                }
+        );
+        return swipeRefreshLayout;
     }
 
 
