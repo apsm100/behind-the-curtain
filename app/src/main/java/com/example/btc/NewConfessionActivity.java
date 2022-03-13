@@ -30,11 +30,6 @@ public class NewConfessionActivity extends FirebaseAuthentication {
             usernameTextView.setText(userObj.getDisplayName());
         }), progressBar);
 
-        ArrayList<Confession> confessions = null;
-        getConfessions((objects -> {
-            System.out.println((ArrayList<Confession>) objects);
-        }), progressBar);
-
     }
 
     public void createConfession(View view) {
