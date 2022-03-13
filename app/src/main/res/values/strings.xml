@@ -30,4 +30,5 @@
     <string name="new_confession_close">Close</string>
     <string name="login_errormessageplaceholder">Error Message Placeholder</string>
     <string name="login_blockedmessage">We have blocked all request from this device due to unusual activity. Try again later</string>
+    <string name="newconfession_cancel">Cancel</string>
 </resources>

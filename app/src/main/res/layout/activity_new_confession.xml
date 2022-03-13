@@ -1,113 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
     android:backgroundTint="#14D0BCFF"
     android:backgroundTintMode="screen"
-    android:orientation="vertical"
     android:theme="@style/Theme.BTC"
-    tools:context=".HomeActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".NewConfessionActivity">
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar_new_confession"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="0.001"
-        android:indeterminate="true"
-        app:indicatorColor="@color/purple_200"
-        app:trackColor="@color/BTCPrimary" />
+        android:layout_gravity="center"
+        android:fitsSystemWindows="true"
+        android:isScrollContainer="true"
+        android:fillViewport="true"
+        >
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_weight="4.6"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/BTCPrimary">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar_new_confession"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/purple_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackColor="@color/BTCPrimary" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#1C1B1F"
-            android:backgroundTint="#14D0BCFF"
-            android:backgroundTintMode="src_over"
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTintMode="multiply"
+            android:fitsSystemWindows="true"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_new_confession">
 
 
-            <TextView
-                android:id="@+id/textView_new_confession_username"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/textView_new_confession_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:gravity="top"
+                    android:text="@string/item_confession_usernameplaceholder"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    android:textColor="#E6E1E5" />
+            </FrameLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:paddingTop="12dp"
-                android:text="@string/item_confession_usernameplaceholder"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
-                android:textColor="#E6E1E5" />
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/editTextTextMultiLine_new_confession"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="300dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/new_confession_enter_text"
-                android:inputType="textMultiLine"
-                android:textColor="#E8DEF8"
+                android:importantForAutofill="no"
+                android:inputType="textAutoCorrect|textMultiLine|textNoSuggestions"
+                android:linksClickable="false"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
                 android:textColorHint="@color/BTCPrimary" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/button_new_confession_cancel"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="#4A4458"
+                    android:text="@string/newconfession_cancel"
+                    android:textColor="#E8DEF8"
+                    app:layout_constraintEnd_toStartOf="@+id/button_new_confession_post"
+                    app:layout_constraintTop_toTopOf="@+id/button_new_confession_post" />
+
+                <Button
+                    android:id="@+id/button_new_confession_post"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/BTCPrimary"
+                    android:text="@string/new_confession_post"
+                    android:textColor="#381E72"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Buttons -->
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.001" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".75"
-        android:gravity="right"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <Button
-            android:id="@+id/button_new_confession_close"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="5dp"
-            android:backgroundTint="#4A4458"
-            android:onClick="closeClick"
-            android:text="@string/new_confession_close"
-            android:textColor="#E8DEF8" />
-
-        <Button
-            android:id="@+id/button_new_confession_post"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/BTCPrimary"
-            android:text="@string/new_confession_post"
-            android:textColor="#381E72" />
-
-    </LinearLayout>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -78,6 +78,7 @@
         android:layout_weight="0.01" />
 
     <Button
+        android:id="@+id/button_home_newconfession"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
@@ -85,7 +86,6 @@
         android:layout_marginBottom="3dp"
         android:layout_weight="0.35"
         android:backgroundTint="#4A4458"
-        android:onClick="newConfession"
         android:textColor="#E8DEF8"
         app:icon="@drawable/ic_baseline_add_24"
         app:iconGravity="textStart"

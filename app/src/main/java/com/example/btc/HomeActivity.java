@@ -31,13 +31,13 @@ public class HomeActivity extends FirebaseAuthentication {
         loadConfessions();
 
         Button profileButton = findViewById(R.id.button_home_profile);
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
+        profileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
         });
+
+        Button newConfessionButton = findViewById(R.id.button_home_newconfession);
+        newConfessionButton.setOnClickListener(this::newConfession);
     }
 
 

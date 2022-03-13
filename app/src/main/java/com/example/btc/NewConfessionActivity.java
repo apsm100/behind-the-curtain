@@ -30,6 +30,11 @@ public class NewConfessionActivity extends FirebaseAuthentication {
             usernameTextView.setText(userObj.getDisplayName());
         }), progressBar);
 
+
+        Button cancelButton = findViewById(R.id.button_new_confession_cancel);
+        cancelButton.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     public void createConfession(View view) {
