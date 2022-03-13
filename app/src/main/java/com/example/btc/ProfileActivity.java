@@ -114,7 +114,7 @@ public class ProfileActivity extends FirebaseAuthentication {
     }
 
     private void cancelButtonClicked(View view) {
-
+        finish();
     }
 
     private void signOutButtonClicked(View view) {
@@ -174,9 +174,9 @@ public class ProfileActivity extends FirebaseAuthentication {
         });
 
 
-        Button updateButton = findViewById(R.id.Button_profile_update);
-        Button cancelButton = findViewById(R.id.Button_profile_cancel);
-        Button signOutButton = findViewById(R.id.Button_profile_signout);
+        updateButton = findViewById(R.id.Button_profile_update);
+        cancelButton = findViewById(R.id.Button_profile_cancel);
+        signOutButton = findViewById(R.id.Button_profile_signout);
 
 
         updateButton.setOnClickListener(this::updateButtonClicked);
