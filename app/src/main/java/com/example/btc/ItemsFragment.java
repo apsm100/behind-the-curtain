@@ -11,6 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +29,8 @@ public class ItemsFragment extends Fragment {
     private static final String ARG_PARAM1 = "com.example.btc.ITEMS";
 
     private Confession[] confessions;
+    private FirebaseFirestore db;
+    private ConfessionsAdapter adapter;
 
     public ItemsFragment() {
         // Required empty public constructor
@@ -50,6 +57,7 @@ public class ItemsFragment extends Fragment {
         if (getArguments() != null) {
             confessions = (Confession[]) getArguments().getSerializable(ARG_PARAM1);
         }
+
     }
 
     @Override
@@ -60,14 +68,25 @@ public class ItemsFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_itemsfragment);
-        ConfessionsAdapter recyclerViewAdapter = new ConfessionsAdapter(confessions);
-        recyclerViewAdapter.setHasStableIds(true);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        Query query = db.collection("confessions").orderBy("date", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Confession> options = new FirestoreRecyclerOptions.Builder<Confession>()
+                .setQuery(query, Confession.class)
+                .build();
+
+        adapter = new ConfessionsAdapter(options, confessions);
+        RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_itemsfragment);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 }

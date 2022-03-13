@@ -1,145 +1,84 @@
 package com.example.btc;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.FirestoreGrpc;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.ViewHolder> {
-
+public class ConfessionsAdapter extends FirestoreRecyclerAdapter {
     private final Confession[] localDataSet;
-
+    private FirebaseAuthentication firebaseAuthentication;
+    private ConfessionHolder confessionHolder;
     /**
-     * Provide a reference to the type of views that you are using
-     * This template comes with a TextView
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView username;
-        private final TextView text;
-        private final Button comment;
-        private final Button heart;
-        private final Button more;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.username = view.findViewById(R.id.textView_itemconfession_username);
-            this.text = view.findViewById(R.id.textView_itemconfession_text);
-            this.comment = view.findViewById(R.id.Button_itemconfession_comment);
-            this.heart = view.findViewById(R.id.Button_itemconfession_heart);
-            this.more = view.findViewById(R.id.Button_itemconfession_more);
-
-        }
-
-        public TextView getUsername() {
-            return username;
-        }
-
-        public TextView getText() {
-            return text;
-        }
-
-        public Button getComment() {
-            return comment;
-        }
-
-        public Button getHeart() {
-            return heart;
-        }
-
-        public Button getMore() {
-            return more;
-        }
-    }
-
-    /**
-     * Initialize the dataset of the Adapter.
+     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
+     * FirestoreRecyclerOptions} for configuration options.
      *
-     * @param dataSet String[] containing the data to populate views to be used
-     *                by RecyclerView.
+     * @param options
+     * @param localDataSet
      */
-    public ConfessionsAdapter(Confession[] dataSet) {
-        localDataSet = dataSet;
+    public ConfessionsAdapter(@NonNull FirestoreRecyclerOptions options, Confession[] localDataSet) {
+        super(options);
+        this.localDataSet = localDataSet;
+        this.firebaseAuthentication = new FirebaseAuthentication();
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_confession, viewGroup, false);
+    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position, @NonNull Object model) {
+        Confession confession = (Confession) model;
+        ConfessionHolder holder = (ConfessionHolder) viewHolder;
 
-        return new ViewHolder(view);
-    }
-
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-        Button heartButton = viewHolder.getHeart();
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
-        viewHolder.getText().setText(localDataSet[position].getText());
-        viewHolder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
-        heartButton.setText(String.valueOf(localDataSet[position].getHearts().size()));
-
-        ArrayList<String> heartsList = localDataSet[position].getHearts();
+        ArrayList<String> heartsList = confession.getHearts();
         String userId = firebaseAuthentication.currentUser.getUid();
-        String documentId = localDataSet[position].getDocumentId();
+        String documentId = confession.getDocumentId();
         FirebaseFirestore db = firebaseAuthentication.db;
 
-        updateHeartIcon(heartsList, heartButton, userId);
+        holder.getText().setText(localDataSet[position].getText());
+        holder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
+        holder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
+        holder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().size()));
 
-        viewHolder.getHeart().setOnClickListener(view -> {
+        holder.getHeart().setOnClickListener(view -> {
             if (heartsList.contains(userId)) {
                 heartsList.remove(userId);
-                int nextVal =Integer.parseInt(heartButton.getText().toString()) - 1;
-                heartButton.setText(String.valueOf(nextVal));
                 db.collection("confessions")
                         .document(documentId)
-                        .update("hearts", FieldValue.arrayRemove(userId))
-                        .addOnCompleteListener(task -> updateHeartIcon(heartButton, false));
+                        .update("hearts", FieldValue.arrayRemove(userId));
             } else {
                 heartsList.add(userId);
-                int nextVal =Integer.parseInt(heartButton.getText().toString()) + 1;
-                heartButton.setText(String.valueOf(nextVal));
                 db.collection("confessions")
                         .document(documentId)
-                        .update("hearts", FieldValue.arrayUnion(userId))
-                        .addOnCompleteListener(task -> updateHeartIcon(heartButton, true));
+                        .update("hearts", FieldValue.arrayUnion(userId));
             }
         });
     }
 
-    private void updateHeartIcon(Button heartButton, Boolean filled) {
-        if (filled) {
-            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.heart_filled, 0, 0, 0);
-        } else {
-            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.heart_outline, 0, 0, 0);
-        }
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a new instance of the ViewHolder, in this case we are using a custom
+        // layout called R.layout.message for each item
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_confession, parent, false);
+        return new ConfessionHolder(view);
     }
+
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+    }
+
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
@@ -152,18 +91,7 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public long getItemId(int position) {
-        String documentID = localDataSet[position].getDocumentId();
-        String digits = documentID.replaceAll("[^0-9]", "");
 
-        return (long) Integer.parseInt(digits);
-    }
 
-    @Override
-    public int getItemCount() {
-        return localDataSet.length;
-    }
 
 }
