@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -61,12 +62,10 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
-            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.heart_filled, 0, 0, 0);
+            ((MaterialButton) heartButton).setIconResource(R.drawable.heart_filled);
+
         } else {
-            heartButton
-                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            R.drawable.heart_outline, 0, 0, 0);
+            ((MaterialButton) heartButton).setIconResource(R.drawable.heart_outline);
         }
     }
 
