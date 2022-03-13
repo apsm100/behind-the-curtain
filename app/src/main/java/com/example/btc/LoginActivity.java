@@ -219,19 +219,17 @@ public class LoginActivity extends FirebaseAuthentication {
         startActivity(intent);
     }
 
+
+
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            System.out.println("New user signed in: " + currentUser.getEmail());
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-        } else {
-            System.out.println("No user signed in");
-        }
+        auth.addAuthStateListener(firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null){
+                Intent mainActivity = new Intent(this, HomeActivity.class);
+                startActivity(mainActivity);
+                finishAffinity();
+            }
+        });
     }
-
-
 }

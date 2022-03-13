@@ -21,10 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class HomeActivity extends AppCompatActivity {
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
+public class HomeActivity extends FirebaseAuthentication {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +75,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null){
-            System.out.println("New user signed in: " + currentUser.getEmail());
-        } else{
-            System.out.println("No user signed in\nBringing back to sign in page");
-            finish();
-        }
+        auth.addAuthStateListener(firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null){
+                Intent mainActivity = new Intent(this, HomeActivity.class);
+                startActivity(mainActivity);
+                finishAffinity();
+            }
+        });
     }
 
     public void newConfession(View view) {

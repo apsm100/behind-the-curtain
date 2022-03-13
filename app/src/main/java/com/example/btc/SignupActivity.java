@@ -208,7 +208,7 @@ public class SignupActivity extends FirebaseAuthentication {
         }
     }
 
-    public void setErrorMessageFromException(Exception exception) {
+    private void setErrorMessageFromException(Exception exception) {
         try {
             throw exception;
         } catch (FirebaseAuthUserCollisionException e) {

@@ -23,12 +23,11 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
     protected FirebaseFirestore db;
     protected FirebaseAuth auth;
     protected FirebaseUser currentUser;
-    String username;
+    protected String username;
 
     public FirebaseAuthentication() {
         db = FirebaseFirestore.getInstance();
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,17 +41,6 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-
-//        Bundle extras = getIntent().getExtras();
-//        boolean exit = true;
-//        if (extras != null) {
-//            exit = extras.getBoolean("Exit");
-//        }
-//        System.out.println(exit);
-//        if (!exit) {
-//            return;
-//        }
-
     }
 
     public void getUser(Callback callback, LinearProgressIndicator progressBar) {

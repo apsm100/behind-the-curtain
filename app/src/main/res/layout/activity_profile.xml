@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ContraintLayout_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
@@ -13,14 +14,43 @@
     android:theme="@style/Theme.BTC"
     tools:context=".LoginActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editView_profile_name_layout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/all_logo_description"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/TextInputLayout_profile_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="ImageContrastCheck"
+        tools:layout_conversion_absoluteHeight="122dp"
+        tools:layout_conversion_absoluteWidth="351dp" />
+
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/ProgressBar_profile"
+        app:indicatorColor="@color/purple_200"
+        app:trackColor="@color/BTCPrimary"
+        android:indeterminate="true"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="0.1"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TextInputLayout_profile_username"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
         android:enabled="false"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
@@ -28,111 +58,158 @@
         app:endIconMode="clear_text"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:placeholderTextColor="#D0BCFF">
+        app:layout_constraintBottom_toTopOf="@+id/TextInputLayout_profile_oldpassword"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ProgressBar_profile"
+        app:placeholderTextColor="#D0BCFF"
+        tools:layout_conversion_absoluteHeight="107dp"
+        tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_profile_username"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:enabled="false"
             android:inputType="text"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="351dp"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="197dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editView_profile_oldPass_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.1"
+        android:id="@+id/TextInputLayout_profile_oldpassword"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:hint="@string/all_label_oldPassword"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
         app:endIconMode="password_toggle"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:placeholderTextColor="#D0BCFF">
+        app:layout_constraintEnd_toEndOf="@+id/TextInputLayout_profile_username"
+        app:layout_constraintStart_toStartOf="@+id/TextInputLayout_profile_username"
+        app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_profile_username"
+        app:placeholderTextColor="#D0BCFF"
+        tools:layout_conversion_absoluteHeight="107dp"
+        tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_profile_password"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="351dp"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="304dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editView_profile_newPass_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.1"
+        android:id="@+id/TextInputLayout_profile_newpassword"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:hint="@string/all_label_newPassword"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
         app:endIconMode="password_toggle"
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
-        app:placeholderTextColor="#D0BCFF">
+        app:layout_constraintEnd_toEndOf="@+id/TextInputLayout_profile_oldpassword"
+        app:layout_constraintStart_toStartOf="@+id/TextInputLayout_profile_oldpassword"
+        app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_profile_oldpassword"
+        app:placeholderTextColor="#D0BCFF"
+        tools:layout_conversion_absoluteHeight="107dp"
+        tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_profile_newpassword"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="351dp"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="411dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/profile_button_update"
-        android:layout_width="214dp"
-        android:layout_height="29dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="0.5"
-        android:backgroundTint="@color/BTCPrimary"
-        android:text="@string/profile_button_update"
-        android:textColor="#381E72" />
-
-    <Button
-        android:id="@+id/profile_button_cancel"
-        android:layout_width="217dp"
-        android:layout_height="23dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="100dp"
-        android:layout_weight="0.5"
+        android:id="@+id/Button_profile_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#4A4458"
         android:text="@string/profile_button_cancel"
-        android:textColor="#E8DEF8" />
+        android:textColor="#E8DEF8"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/TextInputLayout_profile_newpassword"
+        app:layout_constraintTop_toBottomOf="@+id/TextInputLayout_profile_newpassword"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="92dp" />
 
     <Button
-        android:id="@+id/profile_button_signout"
-        android:layout_width="244dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="100dp"
-        android:layout_weight="0.5"
+        android:id="@+id/Button_profile_update"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/BTCPrimary"
+        android:text="@string/profile_button_update"
+        android:textColor="#381E72"
+        app:layout_constraintBottom_toBottomOf="@+id/Button_profile_cancel"
+        app:layout_constraintEnd_toEndOf="@+id/TextInputLayout_profile_newpassword"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/Button_profile_cancel"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="94dp" />
+
+    <Button
+        android:id="@+id/Button_profile_signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
         android:backgroundTint="#4A4458"
         android:text="@string/profile_button_signout"
-        android:textColor="#E8DEF8" />
+        android:textColor="#E8DEF8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Button_profile_cancel"
+        tools:layout_conversion_absoluteHeight="49dp"
+        tools:layout_conversion_absoluteWidth="101dp" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
         android:text="@string/profile_remindermessageplaceholder"
         android:textColor="#848083"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Button_profile_signout"
+        tools:ignore="TextContrastCheck"
+        tools:layout_conversion_absoluteHeight="122dp"
+        tools:layout_conversion_absoluteWidth="351dp" />
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="168dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
