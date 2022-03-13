@@ -98,15 +98,25 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
         viewHolder.getHeart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String username = firebaseAuthentication.getUsername();
                 ArrayList<Heart> hearts = localDataSet[position].getHearts();
-                Heart heart = new Heart(firebaseAuthentication.getUsername());
-                hearts.add(heart);
+                addOrRemoveHeart(hearts, username);
                 String documentId = localDataSet[position].getDocumentId();
                 firebaseAuthentication.updateHearts((object -> {
                     return;
                 }), null, documentId, hearts);
             }
         });
+    }
+
+    public void addOrRemoveHeart(ArrayList<Heart> hearts, String username) {
+        for (Heart heart: hearts) {
+            if (heart.getUserId().equals(username)) {
+                hearts.remove(heart);
+                return;
+            }
+        }
+        hearts.add(new Heart(username));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

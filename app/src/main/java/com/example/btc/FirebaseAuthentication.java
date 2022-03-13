@@ -38,16 +38,21 @@ class FirebaseAuthentication extends AppCompatActivity{
 
     public FirebaseAuthentication() {
         db = FirebaseFirestore.getInstance();
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null){
             username = currentUser.getEmail().substring(0, 6);
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        auth = FirebaseAuth.getInstance();
+//        currentUser =  FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser != null){
+//            username = currentUser.getEmail().substring(0, 6);
+//        }
     }
 
 
