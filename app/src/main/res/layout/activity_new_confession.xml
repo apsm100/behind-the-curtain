@@ -65,6 +65,7 @@
                 android:gravity="start|top"
                 android:hint="@string/new_confession_enter_text"
                 android:inputType="textMultiLine"
+                android:textColor="#E8DEF8"
                 android:textColorHint="@color/BTCPrimary" />
 
             <!-- Buttons -->

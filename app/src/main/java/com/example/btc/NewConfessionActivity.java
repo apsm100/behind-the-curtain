@@ -38,7 +38,18 @@ public class NewConfessionActivity extends FirebaseAuthentication {
         }
         LinearProgressIndicator progressBar = findViewById(R.id.progressBar_new_confession);
         EditText editText = findViewById(R.id.editTextTextMultiLine_new_confession);
-        Confession confession = new Confession(userObj, editText.getText().toString(), new ArrayList<Comment>(), new ArrayList<Heart>(), new Date(System.currentTimeMillis()));
+
+        // TEST COMMENT HEARTS
+        ArrayList<Comment> comments = new ArrayList<>();
+        ArrayList<Heart> hearts = new ArrayList<>();
+//        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
+//        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
+//        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
+//        hearts.add(new Heart("123456"));
+//        hearts.add(new Heart("123456"));
+//        hearts.add(new Heart("123456"));
+
+        Confession confession = new Confession(userObj, editText.getText().toString(), comments, hearts, new Date(System.currentTimeMillis()));
         addConfession(confession, (object -> {
             this.finish();
         }), progressBar);

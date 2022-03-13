@@ -4,12 +4,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Comment  implements Serializable {
-    private final String userId;
-    private final Date date;
-    private final String data;
+    String userId;
+    Date date;
+    String data;
+    public Comment(){}
+    public String getUserId() {
+        return userId;
+    }
 
-    public Comment(String userId, String data) {
-        this.date = new Date(System.currentTimeMillis());
+    public Date getDate() {
+        return date;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public Comment(String userId, String data, Date date) {
+        this.date = date;
         this.userId = userId;
         this.data = data;
     }
