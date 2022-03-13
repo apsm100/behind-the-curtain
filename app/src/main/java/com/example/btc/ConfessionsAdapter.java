@@ -95,46 +95,60 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-
+        Button heartButton = viewHolder.getHeart();
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
         viewHolder.getText().setText(localDataSet[position].getText());
         viewHolder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
-        viewHolder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().size()));
+        heartButton.setText(String.valueOf(localDataSet[position].getHearts().size()));
 
         ArrayList<String> heartsList = localDataSet[position].getHearts();
         String userId = firebaseAuthentication.currentUser.getUid();
         String documentId = localDataSet[position].getDocumentId();
         FirebaseFirestore db = firebaseAuthentication.db;
 
-        updateHeartIcon(heartsList, viewHolder, userId);
+        updateHeartIcon(heartsList, heartButton, userId);
 
         viewHolder.getHeart().setOnClickListener(view -> {
-
             if (heartsList.contains(userId)) {
+                heartsList.remove(userId);
+                int nextVal =Integer.parseInt(heartButton.getText().toString()) - 1;
+                heartButton.setText(String.valueOf(nextVal));
                 db.collection("confessions")
                         .document(documentId)
                         .update("hearts", FieldValue.arrayRemove(userId))
-                        .addOnCompleteListener(task -> updateHeartIcon(heartsList, viewHolder, userId));
+                        .addOnCompleteListener(task -> updateHeartIcon(heartButton, false));
             } else {
+                heartsList.add(userId);
+                int nextVal =Integer.parseInt(heartButton.getText().toString()) + 1;
+                heartButton.setText(String.valueOf(nextVal));
                 db.collection("confessions")
                         .document(documentId)
                         .update("hearts", FieldValue.arrayUnion(userId))
-                        .addOnCompleteListener(task -> updateHeartIcon(heartsList, viewHolder, userId));
+                        .addOnCompleteListener(task -> updateHeartIcon(heartButton, true));
             }
         });
     }
 
-
-    private void updateHeartIcon(ArrayList<String> heartsList, ViewHolder viewHolder, String userId) {
-        if (heartsList.contains(userId)) {
-            viewHolder.getHeart().setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.heart_outline, 0, 0, 0);
+    private void updateHeartIcon(Button heartButton, Boolean filled) {
+        if (filled) {
+            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.heart_filled, 0, 0, 0);
         } else {
-            viewHolder.getHeart()
+            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.heart_outline, 0, 0, 0);
+        }
+    }
+
+    private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
+        if (heartsList.contains(userId)) {
+            heartButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.heart_filled, 0, 0, 0);
+        } else {
+            heartButton
                     .setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            R.drawable.heart_filled, 0, 0, 0);
+                            R.drawable.heart_outline, 0, 0, 0);
         }
     }
 
