@@ -226,7 +226,6 @@ public class ProfileActivity extends FirebaseAuthentication {
 
 
     private void reAuthUser(String email, String password) {
-
         AuthCredential credential = EmailAuthProvider
                 .getCredential(email, password);
         currentUser.reauthenticate(credential)
@@ -244,9 +243,9 @@ public class ProfileActivity extends FirebaseAuthentication {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() == null){
-                Intent mainActivity = new Intent(this, LoginActivity.class);
-                startActivity(mainActivity);
-                finishAffinity();
+                Intent loginActivity = new Intent(this, LoginActivity.class);
+                loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginActivity);
             }
         });
     }

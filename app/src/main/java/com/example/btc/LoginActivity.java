@@ -204,9 +204,8 @@ public class LoginActivity extends FirebaseAuthentication {
     private void login(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
+                    if (!task.isSuccessful()) {
+                        // Success. Auth listener will handle success.
                     } else {
                         setErrorMessageFromException(task.getException());
                     }
@@ -215,8 +214,9 @@ public class LoginActivity extends FirebaseAuthentication {
 
 
     public void signup(View view) {
-        Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
+        Intent signUpIntent = new Intent(this, SignupActivity.class);
+        signUpIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(signUpIntent);
     }
 
 
@@ -227,8 +227,8 @@ public class LoginActivity extends FirebaseAuthentication {
         auth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() != null){
                 Intent mainActivity = new Intent(this, HomeActivity.class);
+                mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(mainActivity);
-                finishAffinity();
             }
         });
     }

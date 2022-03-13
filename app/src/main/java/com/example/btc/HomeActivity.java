@@ -32,8 +32,9 @@ public class HomeActivity extends FirebaseAuthentication {
 
         Button profileButton = findViewById(R.id.button_home_profile);
         profileButton.setOnClickListener(view -> {
-            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(profileIntent);
         });
 
         Button newConfessionButton = findViewById(R.id.button_home_newconfession);
@@ -47,14 +48,15 @@ public class HomeActivity extends FirebaseAuthentication {
         auth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() == null){
                 Intent loginActivity = new Intent(this, HomeActivity.class);
+                loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginActivity);
-                finishAffinity();
             }
         });
     }
 
     public void newConfession(View view) {
         Intent intent = new Intent(HomeActivity.this, NewConfessionActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
