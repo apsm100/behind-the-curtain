@@ -56,7 +56,6 @@ public class HomeActivity extends FirebaseAuthentication {
 
     public void newConfession(View view) {
         Intent intent = new Intent(HomeActivity.this, NewConfessionActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
