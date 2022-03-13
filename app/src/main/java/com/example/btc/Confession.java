@@ -12,10 +12,10 @@ public class Confession implements Serializable {
     private final Date date;
 
 
-    public Confession(User user, String message, ArrayList<Comment> comments, ArrayList<Heart> hearts) {
-        this.date = new Date(System.currentTimeMillis());
+    public Confession(User user, String text, ArrayList<Comment> comments, ArrayList<Heart> hearts, Date date) {
+        this.date = date;
         this.user = user;
-        this.text = message;
+        this.text = text;
         this.comments = comments;
         this.hearts = hearts;
     }
@@ -24,19 +24,19 @@ public class Confession implements Serializable {
         return user;
     }
 
-    public String getMessage() {
-        return text;
-    }
-
     public String getText() {
         return text;
     }
 
-//    public Comment[] getComments() {
-//        return comments;
-//    }
-//
-//    public Heart[] getHearts() {
-//        return hearts;
-//    }
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public ArrayList<Heart> getHearts() {
+        return hearts;
+    }
+
+    public Date getDate() {
+        return date;
+    }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NewConfessionActivity extends FirebaseAuthentication {
@@ -37,7 +38,7 @@ public class NewConfessionActivity extends FirebaseAuthentication {
         }
         LinearProgressIndicator progressBar = findViewById(R.id.progressBar_new_confession);
         EditText editText = findViewById(R.id.editTextTextMultiLine_new_confession);
-        Confession confession = new Confession(userObj, editText.getText().toString(), new ArrayList<Comment>(), new ArrayList<Heart>());
+        Confession confession = new Confession(userObj, editText.getText().toString(), new ArrayList<Comment>(), new ArrayList<Heart>(), new Date(System.currentTimeMillis()));
         addConfession(confession, (object -> {
             this.finish();
         }), progressBar);

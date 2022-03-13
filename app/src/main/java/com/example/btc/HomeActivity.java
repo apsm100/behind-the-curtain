@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -36,8 +37,8 @@ public class HomeActivity extends AppCompatActivity {
         User user = new User("123456", "123456", "BCIT", "BCIT#123456");
 
         Confession[] confessions = {
-                new Confession(user, "THIS IS MESSAGE 1", commentsArray, heartsArray),
-                new Confession(user, "THIS IS MESSAGE 2", commentsArray, heartsArray)
+                new Confession(user, "THIS IS MESSAGE 1", commentsArray, heartsArray, new Date(System.currentTimeMillis())),
+                new Confession(user, "THIS IS MESSAGE 2", commentsArray, heartsArray, new Date(System.currentTimeMillis()))
         };
 
 
