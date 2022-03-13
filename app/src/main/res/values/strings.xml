@@ -31,4 +31,7 @@
     <string name="login_errormessageplaceholder">Error Message Placeholder</string>
     <string name="login_blockedmessage">We have blocked all request from this device due to unusual activity. Try again later</string>
     <string name="newconfession_cancel">Cancel</string>
+    <string name="itemcomment_text_placeholder">This is a placeholder comment!</string>
+    <string name="itemcomment_timeplaceholder">1 HOUR AGO</string>
+    <string name="itemcomment_displaynameplaceholder">BCIT#495898</string>
 </resources>
