@@ -24,11 +24,9 @@ import com.google.firebase.firestore.Query;
  */
 public class ItemsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "com.example.btc.ITEMS";
 
-    private Confession[] confessions;
     private FirebaseFirestore db;
     private ConfessionsAdapter adapter;
 
@@ -42,22 +40,13 @@ public class ItemsFragment extends Fragment {
      *
      * @return A new instance of fragment ItemsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ItemsFragment newInstance(Confession[] confessions) {
-        ItemsFragment fragment = new ItemsFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, confessions);
-        fragment.setArguments(args);
-        return fragment;
+    public static ItemsFragment newInstance() {
+        return new ItemsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            confessions = (Confession[]) getArguments().getSerializable(ARG_PARAM1);
-        }
-
     }
 
     @Override
@@ -65,12 +54,6 @@ public class ItemsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_items, container, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
     }
 
     @Override
@@ -84,9 +67,11 @@ public class ItemsFragment extends Fragment {
                 .setQuery(query, Confession.class)
                 .build();
 
-        adapter = new ConfessionsAdapter(options, confessions);
+        adapter = new ConfessionsAdapter(options);
+
         RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_itemsfragment);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter.startListening();
     }
 }

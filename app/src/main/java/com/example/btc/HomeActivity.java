@@ -37,6 +37,7 @@ public class HomeActivity extends FirebaseAuthentication {
 
         Button newConfessionButton = findViewById(R.id.button_home_newconfession);
         newConfessionButton.setOnClickListener(this::newConfession);
+        setViewAdapter();
     }
 
 
@@ -50,7 +51,6 @@ public class HomeActivity extends FirebaseAuthentication {
                 startActivity(loginActivity);
             }
         });
-        loadConfessions(setRefreshLayout());
     }
 
     public void newConfession(View view) {
@@ -58,17 +58,9 @@ public class HomeActivity extends FirebaseAuthentication {
         startActivity(intent);
     }
 
-    public void loadConfessions(SwipeRefreshLayout swipeRefreshLayout) {
-        LinearProgressIndicator progressBar = findViewById(R.id.progressBar_home);
-        getConfessions((objects -> {
-            ArrayList<Confession> confessions = (ArrayList<Confession>) objects;
-            setViewAdapter(confessions.toArray(new Confession[0]));
-        }), progressBar, swipeRefreshLayout);
-    }
-
-    public void setViewAdapter(Confession[] confessions) {
+    public void setViewAdapter() {
         ViewPager2 viewPager2 = findViewById(R.id.ViewPager_home);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, confessions);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(viewPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.TabLayout_home);
@@ -90,19 +82,6 @@ public class HomeActivity extends FirebaseAuthentication {
         tabLayoutMediator.attach();
     }
 
-    public SwipeRefreshLayout setRefreshLayout() {
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefresh_home);
-
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        loadConfessions(swipeRefreshLayout);
-                    }
-                }
-        );
-        return swipeRefreshLayout;
-    }
 
 
 }

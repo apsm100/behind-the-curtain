@@ -10,16 +10,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
  */
 class ViewPagerAdapter extends FragmentStateAdapter {
 
-    Confession[] confessionsArray;
 
-    public ViewPagerAdapter(FragmentActivity fa, Confession[] confessions) {
+
+    public ViewPagerAdapter(FragmentActivity fa) {
         super(fa);
-        this.confessionsArray = confessions;
     }
 
     @Override
     public Fragment createFragment(int position) {
-        return ItemsFragment.newInstance(confessionsArray);
+        return ItemsFragment.newInstance();
     }
 
     @Override

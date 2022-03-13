@@ -16,42 +16,36 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 
-public class ConfessionsAdapter extends FirestoreRecyclerAdapter {
-    private final Confession[] localDataSet;
-    private FirebaseAuthentication firebaseAuthentication;
-    private ConfessionHolder confessionHolder;
+public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, ConfessionHolder> {
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
      *
      * @param options
-     * @param localDataSet
      */
-    public ConfessionsAdapter(@NonNull FirestoreRecyclerOptions options, Confession[] localDataSet) {
+    public ConfessionsAdapter(@NonNull FirestoreRecyclerOptions<Confession> options) {
         super(options);
-        this.localDataSet = localDataSet;
-        this.firebaseAuthentication = new FirebaseAuthentication();
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position, @NonNull Object model) {
-        Confession confession = (Confession) model;
-        ConfessionHolder holder = (ConfessionHolder) viewHolder;
+    protected void onBindViewHolder(@NonNull ConfessionHolder viewHolder, int position, @NonNull Confession model) {
+        FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+        Button heartButton = viewHolder.getHeart();
+        // Get element from your dataset at this position and replace the
+        // contents of the view with that element
+        viewHolder.getUsername().setText(model.getUser().getDisplayName());
+        viewHolder.getText().setText(model.getText());
+        viewHolder.getComment().setText(String.valueOf(model.getComments().size()));
+        heartButton.setText(String.valueOf(model.getHearts().size()));
 
-        ArrayList<String> heartsList = confession.getHearts();
+        ArrayList<String> heartsList = model.getHearts();
         String userId = firebaseAuthentication.currentUser.getUid();
-        String documentId = confession.getDocumentId();
+        String documentId = model.getDocumentId();
         FirebaseFirestore db = firebaseAuthentication.db;
 
-        holder.getText().setText(localDataSet[position].getText());
-        holder.getUsername().setText(localDataSet[position].getUser().getDisplayName());
-        holder.getComment().setText(String.valueOf(localDataSet[position].getComments().size()));
-        holder.getHeart().setText(String.valueOf(localDataSet[position].getHearts().size()));
+        updateHeartIcon(heartsList, heartButton, userId);
 
-
-        updateHeartIcon(heartsList, holder.getHeart(), userId);
-
-        holder.getHeart().setOnClickListener(view -> {
+        viewHolder.getHeart().setOnClickListener(view -> {
             if (heartsList.contains(userId)) {
                 heartsList.remove(userId);
                 db.collection("confessions")
@@ -66,23 +60,6 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter {
         });
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Create a new instance of the ViewHolder, in this case we are using a custom
-        // layout called R.layout.message for each item
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_confession, parent, false);
-        return new ConfessionHolder(view);
-    }
-
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-
-    }
-
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
@@ -95,7 +72,11 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter {
         }
     }
 
-
-
-
+    @NonNull
+    @Override
+    public ConfessionHolder onCreateViewHolder(@NonNull ViewGroup group, int viewType) {
+        View view = LayoutInflater.from(group.getContext())
+                .inflate(R.layout.item_confession, group, false);
+        return new ConfessionHolder(view);
+    }
 }
