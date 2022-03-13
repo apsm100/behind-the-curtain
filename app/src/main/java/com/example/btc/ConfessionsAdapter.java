@@ -104,7 +104,7 @@ public class ConfessionsAdapter extends RecyclerView.Adapter<ConfessionsAdapter.
                 String documentId = localDataSet[position].getDocumentId();
                 firebaseAuthentication.updateHearts((object -> {
                     return;
-                }), null, documentId, hearts);
+                }), documentId, hearts);
             }
         });
     }

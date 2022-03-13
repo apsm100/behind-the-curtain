@@ -120,13 +120,11 @@ class FirebaseAuthentication extends AppCompatActivity{
         return username;
     }
 
-    public void updateHearts(Callback callback, LinearProgressIndicator progressBar, String confessionId, ArrayList<Heart> hearts) {
-        System.out.println(confessionId);
+    public void updateHearts(Callback callback, String confessionId, ArrayList<Heart> hearts) {
         db.collection("confessions").document(confessionId).update("hearts", hearts).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
                 callback.call(o);
-//                progressBar.hide();
             }
         });
     }
