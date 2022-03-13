@@ -34,7 +34,9 @@ abstract class FirebaseAuthentication extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
-        username = currentUser.getEmail().substring(0, 6);
+        if (currentUser != null){
+            username = currentUser.getEmail().substring(0, 6);
+        }
     }
 
 
