@@ -33,7 +33,6 @@ public class HomeActivity extends FirebaseAuthentication {
         Button profileButton = findViewById(R.id.button_home_profile);
         profileButton.setOnClickListener(view -> {
             Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
-            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(profileIntent);
         });
 
