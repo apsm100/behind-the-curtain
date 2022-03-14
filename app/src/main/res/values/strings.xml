@@ -34,7 +34,6 @@
     <string name="itemcomment_text_placeholder">This is a placeholder comment!</string>
     <string name="itemcomment_timeplaceholder">1 HOUR AGO</string>
     <string name="itemcomment_displaynameplaceholder">BCIT#495898</string>
-    <string name="itemcomment_timeplaceholder">1 HOUR AGO</string>
     <string name="confessions_close">Close</string>
     <string name="comments_addnewcommentplaceholder">Add New Comment</string>
 </resources>
