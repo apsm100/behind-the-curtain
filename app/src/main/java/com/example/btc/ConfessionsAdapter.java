@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, ConfessionHolder> {
 
+    public final static String modelKey = "postObject";
+
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -70,7 +72,7 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
         viewHolder.getComment().setOnClickListener(view -> {
             Intent intent = new Intent (viewHolder.itemView.getContext(), CommentsActivity.class);
-            intent.putExtra("postObject", model);
+            intent.putExtra(modelKey, model);
             viewHolder.itemView.getContext().startActivity(intent);
         });
 

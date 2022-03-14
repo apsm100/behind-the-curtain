@@ -71,6 +71,8 @@ public class Confession implements Serializable {
         return comments;
     }
 
+    public void setComments(ArrayList<Comment> comments) { this.comments = comments; }
+
     public ArrayList<String> getHearts() {
         return hearts;
     }

@@ -9,9 +9,10 @@
     <TextView
         android:id="@+id/textView_itemcomment_time"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="18dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="30dp"
+        android:gravity="end"
         android:text="@string/itemcomment_timeplaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_itemcomment_displayname"
@@ -31,7 +32,7 @@
     <TextView
         android:id="@+id/textView_itemcomment_text"
         android:layout_width="0dp"
-        android:layout_height="204dp"
+        android:layout_height="80dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
