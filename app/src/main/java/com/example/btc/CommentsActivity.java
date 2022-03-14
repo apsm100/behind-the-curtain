@@ -156,6 +156,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         textEditor.setEndIconOnClickListener(view ->{
             if (allowPost){
                 textEditor.setEnabled(false);
+                setProgressBar(true);
                 addCommentToFirebase(textEditor.getEditText().getText().toString());
             }
         }
@@ -209,6 +210,8 @@ public class CommentsActivity extends FirebaseAuthentication {
         db.collection("confessions")
                 .document(model.getDocumentId())
                 .update("popularityIndex", model.getPopularityIndex());
+
+        setProgressBar(false);
 
     }
 
