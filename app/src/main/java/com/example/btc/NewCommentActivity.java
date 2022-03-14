@@ -1,23 +1,17 @@
 package com.example.btc;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -61,11 +55,19 @@ public class NewCommentActivity extends AppCompatActivity {
                         assert document != null;
                         Comment comment = new Comment(document.getString("displayName"), commentData, new Date());
 
-                        model.addComment(comment);
+                        model.addComment();
 
                         db.collection("confessions")
                                 .document(model.getDocumentId())
                                 .collection("comments").add(comment);
+
+                        db.collection("confessions")
+                                .document(model.getDocumentId())
+                                .update("comments", model.getComments());
+
+                        db.collection("confessions")
+                                .document(model.getDocumentId())
+                                .update("popularityIndex", model.getPopularityIndex());
 
                         button_new_comment_post.setEnabled(true);
                         Intent intent = new Intent(NewCommentActivity.this, CommentsActivity.class);

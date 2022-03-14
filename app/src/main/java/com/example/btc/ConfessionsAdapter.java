@@ -39,7 +39,7 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
         // contents of the view with that element
         viewHolder.getUsername().setText(model.getUser().getDisplayName());
         viewHolder.getText().setText(model.getText());
-        viewHolder.getComment().setText(String.valueOf(model.getComments().size()));
+        viewHolder.getComment().setText(String.valueOf(model.getComments()));
         heartButton.setText(String.valueOf(model.getHearts().size()));
 
         ArrayList<String> heartsList = model.getHearts();

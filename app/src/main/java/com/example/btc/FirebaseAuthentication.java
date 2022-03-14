@@ -44,6 +44,8 @@ class FirebaseAuthentication extends AppCompatActivity{
         if (currentUser != null){
             username = currentUser.getEmail().substring(0, 6);
         }
+//        Clear local persistence data:
+//        db.clearPersistence();
     }
 
     @Override

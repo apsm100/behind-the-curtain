@@ -6,25 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -117,10 +108,10 @@ public class CommentsActivity extends FirebaseAuthentication {
 
         });
 
-        ArrayList<Comment> comments = model.getComments();
+        int comments = model.getComments();
 
         TextView textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
-        if (comments.size() > 0 ){
+        if (comments > 0 ){
             textview_empty_placeholder.setText("");
             textview_empty_placeholder.setVisibility(View.GONE);
         } else {

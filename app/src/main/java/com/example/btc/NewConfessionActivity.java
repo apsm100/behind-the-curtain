@@ -45,7 +45,6 @@ public class NewConfessionActivity extends FirebaseAuthentication {
         EditText editText = findViewById(R.id.editTextTextMultiLine_new_confession);
 
         // TEST COMMENT HEARTS
-        ArrayList<Comment> comments = new ArrayList<>();
         ArrayList<String> hearts = new ArrayList<>();
 //        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
 //        comments.add(new Comment("123456", "Wassap", new Date(System.currentTimeMillis())));
@@ -54,7 +53,7 @@ public class NewConfessionActivity extends FirebaseAuthentication {
 //        hearts.add(new Heart("123456"));
 //        hearts.add(new Heart("123456"));
 
-        Confession confession = new Confession(userObj, editText.getText().toString(), comments, hearts, new Date(System.currentTimeMillis()));
+        Confession confession = new Confession(userObj, editText.getText().toString(), hearts, new Date(System.currentTimeMillis()));
         addConfession(confession, (object -> {
             this.finish();
         }), progressBar);
