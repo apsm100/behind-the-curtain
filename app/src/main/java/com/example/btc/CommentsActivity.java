@@ -88,7 +88,6 @@ public class CommentsActivity extends FirebaseAuthentication {
                     .update("popularityIndex", model.getPopularityIndex());
         });
 
-
     }
 
 
