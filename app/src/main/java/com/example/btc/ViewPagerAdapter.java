@@ -18,7 +18,13 @@ class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        return ItemsFragment.newInstance();
+        String orderByField;
+        if (position == 1) {
+            orderByField = "date";
+        } else {
+            orderByField = "popularityIndex";
+        }
+            return ItemsFragment.newInstance(orderByField);
     }
 
     @Override
