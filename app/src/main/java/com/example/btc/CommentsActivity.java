@@ -1,20 +1,18 @@
 package com.example.btc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.firestore.FieldValue;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class CommentsActivity extends AppCompatActivity {
+public class CommentsActivity extends FirebaseAuthentication {
 
     private TextView time;
     private TextView username;
@@ -63,6 +61,32 @@ public class CommentsActivity extends AppCompatActivity {
         }else {
             time.setText(MoreThan24Hours);
         }
+
+
+        if (model.getHearts().contains(currentUser.getUid())){
+            ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+        }else {
+            ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+        }
+
+        heart.setOnClickListener(view -> {
+            if (model.getHearts().contains(currentUser.getUid())) {
+                model.removeHeart(currentUser.getUid());
+                db.collection("confessions")
+                        .document(model.getDocumentId())
+                        .update("hearts", FieldValue.arrayRemove(currentUser.getUid()));
+                ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+            } else {
+                model.addHeart(currentUser.getUid());
+                db.collection("confessions")
+                        .document(model.getDocumentId())
+                        .update("hearts", FieldValue.arrayUnion(currentUser.getUid()));
+                ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+            }
+            db.collection("confessions")
+                    .document(model.getDocumentId())
+                    .update("popularityIndex", model.getPopularityIndex());
+        });
 
 
     }
