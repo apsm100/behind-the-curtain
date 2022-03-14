@@ -1,35 +1,46 @@
 package com.example.btc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.firestore.FieldValue;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class CommentsActivity extends FirebaseAuthentication {
 
+    public final static String modelKey = "postObject";
     private TextView time;
     private TextView username;
     private Button heart;
     private TextView text;
     private LinearProgressIndicator progressBar;
+    private Confession model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+        model = (Confession) getIntent().getSerializableExtra("postObject");
+
         initializeViews();
 
     }
 
     private void initializeViews(){
+        Button closeButton = findViewById(R.id.button_comments_close);
+        closeButton.setOnClickListener(view -> finish());
 
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
 
@@ -60,9 +71,9 @@ public class CommentsActivity extends FirebaseAuthentication {
 
 
         if (model.getHearts().contains(currentUser.getUid())){
-            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
+            ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
         }else {
-            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
+            ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
         }
 
         heart.setOnClickListener(view -> {
@@ -71,19 +82,42 @@ public class CommentsActivity extends FirebaseAuthentication {
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayRemove(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
+                ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
             } else {
                 model.addHeart(currentUser.getUid());
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayUnion(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
+                ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
             }
             db.collection("confessions")
                     .document(model.getDocumentId())
                     .update("popularityIndex", model.getPopularityIndex());
         });
 
+        Button button_comments_add = findViewById(R.id.button_comments_add);
+        button_comments_add.setOnClickListener(view -> {
+
+            Intent intent = new Intent(CommentsActivity.this, NewCommentActivity.class);
+            intent.putExtra(modelKey, model);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+        });
+
+        ArrayList<Comment> comments = model.getComments();
+
+        RecyclerView commentsView = findViewById(R.id.recyclerView_comments);
+        CommentRecycler commentRecycler = new CommentRecycler(comments);
+        commentsView.setAdapter(commentRecycler);
+        commentsView.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
+
+        TextView textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
+        if (comments.size() > 0 ){
+            textview_empty_placeholder.setText("");
+        } else {
+            textview_empty_placeholder.setText("No Comments Yet...");
+        }
     }
 
 

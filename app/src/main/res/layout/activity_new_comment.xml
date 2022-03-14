@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1B1F"
+    android:backgroundTint="#14D0BCFF"
+    android:backgroundTintMode="screen"
+    android:theme="@style/Theme.BTC"
+    android:fitsSystemWindows="true"
+    tools:context=".NewCommentActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fitsSystemWindows="true"
+        android:isScrollContainer="true"
+        android:fillViewport="true"
+        >
+
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar_new_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/purple_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackColor="@color/BTCPrimary" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTintMode="multiply"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_new_comment">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/textView_new_comment_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:gravity="top"
+                    android:text="New comment"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    android:textColor="#E6E1E5" />
+            </FrameLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine_new_comment"
+                style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/editText_comment_field"
+                android:importantForAutofill="no"
+                android:inputType="textAutoCorrect|textMultiLine|textNoSuggestions"
+                android:linksClickable="false"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textColorHint="@color/BTCPrimary" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/button_new_comment_cancel"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="#4A4458"
+                    android:text="cancel"
+                    android:textColor="#E8DEF8"
+                    app:layout_constraintEnd_toStartOf="@+id/button_new_comment_post"
+                    app:layout_constraintTop_toTopOf="@+id/button_new_comment_post" />
+
+                <Button
+                    android:id="@+id/button_new_comment_post"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/BTCPrimary"
+                    android:text="post"
+                    android:textColor="#381E72"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Buttons -->
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
