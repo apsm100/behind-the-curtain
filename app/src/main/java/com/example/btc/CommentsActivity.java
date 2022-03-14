@@ -133,7 +133,7 @@ public class CommentsActivity extends FirebaseAuthentication {
                 .orderBy("date", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
-                .setQuery(query, Comment.class).setLifecycleOwner(this)
+                .setQuery(query, Comment.class)
                 .build();
 
         adapter = new CommentsAdapter(options);
