@@ -65,7 +65,7 @@ public class NewCommentActivity extends AppCompatActivity {
 
                         db.collection("confessions")
                                 .document(model.getDocumentId())
-                                .update("comments", FieldValue.arrayUnion(comment));
+                                .collection("comments").add(comment);
 
                         button_new_comment_post.setEnabled(true);
                         Intent intent = new Intent(NewCommentActivity.this, CommentsActivity.class);
