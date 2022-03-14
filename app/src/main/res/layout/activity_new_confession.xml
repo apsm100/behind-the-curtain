@@ -63,6 +63,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="top"
                     android:text="@string/item_confession_usernameplaceholder"
+                    android:textAllCaps="true"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     android:textColor="#E6E1E5" />
             </FrameLayout>

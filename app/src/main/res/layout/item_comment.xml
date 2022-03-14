@@ -13,6 +13,7 @@
         android:layout_marginStart="1dp"
         android:gravity="end"
         android:text="@string/itemcomment_timeplaceholder"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_itemcomment_displayname"
         app:layout_constraintTop_toTopOf="@+id/textView_itemcomment_displayname"
@@ -24,6 +25,7 @@
         android:layout_height="18dp"
         android:layout_marginTop="15dp"
         android:text="@string/itemcomment_displaynameplaceholder"
+        android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="@+id/textView_itemcomment_text"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />

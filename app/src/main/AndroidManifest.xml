@@ -14,9 +14,6 @@
         android:theme="@style/Theme.BTC"
         android:windowSoftInputMode="adjustResize">
         <activity
-            android:name=".NewCommentActivity"
-            android:exported="false" />
-        <activity
             android:name=".CommentsActivity"
             android:exported="false" />
         <activity
