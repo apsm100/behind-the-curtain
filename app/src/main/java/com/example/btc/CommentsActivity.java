@@ -44,6 +44,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     private CommentsAdapter adapter;
     private boolean allowPost;
     private RecyclerView recyclerView;
+    private TextView textview_empty_placeholder;
 
 
     @Override
@@ -119,7 +120,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         handleFirebaseQuery();
         int comments = model.getComments();
 
-        TextView textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
+        textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
         if (comments > 0) {
             textview_empty_placeholder.setText("");
             textview_empty_placeholder.setVisibility(View.GONE);
@@ -185,32 +186,43 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     }
 
-
     private void addCommentToFirebase(String text) {
-        Comment comment = new Comment(model.getUser().getDisplayName(), text, new Date());
 
-        model.addComment();
+        db.collection("users").document(Objects.requireNonNull(currentUser.getEmail()).substring(0,6)).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                assert document != null;
+                Comment comment = new Comment(document.getString("displayName"), text, new Date());
 
-        db.collection("confessions")
-                .document(model.getDocumentId())
-            .collection("comments").add(comment).addOnSuccessListener(documentReference -> {
-            textEditor.getEditText().setText("");
-            textEditor.clearFocus();
-            textEditor.setEnabled(true);
-            hideKeyboard(this);
-            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+                model.addComment();
 
-        });
+                db.collection("confessions")
+                        .document(model.getDocumentId())
+                        .collection("comments").add(comment).addOnSuccessListener(documentReference -> {
+                    textview_empty_placeholder.setText("");
+                    textview_empty_placeholder.setVisibility(View.GONE);
+                    textEditor.getEditText().setText("");
+                    textEditor.clearFocus();
+                    textEditor.setEnabled(true);
+                    hideKeyboard(this);
+                    recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
 
-        db.collection("confessions")
-                .document(model.getDocumentId())
-                .update("comments", model.getComments());
+                });
 
-        db.collection("confessions")
-                .document(model.getDocumentId())
-                .update("popularityIndex", model.getPopularityIndex());
+                db.collection("confessions")
+                        .document(model.getDocumentId())
+                        .update("comments", model.getComments());
 
-        setProgressBar(false);
+                db.collection("confessions")
+                        .document(model.getDocumentId())
+                        .update("popularityIndex", model.getPopularityIndex());
+
+                setProgressBar(false);
+
+            }});
+
+
+
 
     }
 
