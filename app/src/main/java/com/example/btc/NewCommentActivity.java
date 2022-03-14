@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -59,12 +60,13 @@ public class NewCommentActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         assert document != null;
                         Comment comment = new Comment(document.getString("displayName"), commentData, new Date());
-                        ArrayList<Comment> comments = model.getComments();
-                        comments.add(comment);
-                        model.setComments(comments);
+
+                        model.addComment(comment);
+
                         db.collection("confessions")
                                 .document(model.getDocumentId())
-                                .update("comments", model.getComments());
+                                .update("comments", FieldValue.arrayUnion(currentUser.getUid()));
+
                         button_new_comment_post.setEnabled(true);
                         Intent intent = new Intent(NewCommentActivity.this, CommentsActivity.class);
                         intent.putExtra("postObject", model);
