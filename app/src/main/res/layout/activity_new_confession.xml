@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             app:indicatorColor="@color/purple_200"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
             app:layout_constraintTop_toTopOf="parent"
             app:trackColor="@color/BTCPrimary" />
 
