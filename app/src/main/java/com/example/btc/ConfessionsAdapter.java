@@ -1,6 +1,7 @@
 package com.example.btc;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 
 public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, ConfessionHolder> {
+
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -68,13 +70,10 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
         viewHolder.getComment().setOnClickListener(view -> {
             Intent intent = new Intent (viewHolder.itemView.getContext(), CommentsActivity.class);
+            intent.putExtra("postObject", model);
             viewHolder.itemView.getContext().startActivity(intent);
         });
 
-    }
-
-    private void navigateToComments(Confession model, ConfessionHolder viewHolder){
-        Intent commentsActivity = new Intent(viewHolder.itemView.getContext(), CommentsActivity.class);
     }
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {

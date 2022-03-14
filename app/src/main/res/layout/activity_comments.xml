@@ -23,7 +23,7 @@
 
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progressBar_new_confession"
+            android:id="@+id/progressBar_comments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:trackColor="@color/BTCPrimary" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout3"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -45,104 +45,114 @@
             android:background="@drawable/rounded_background"
             android:backgroundTintMode="multiply"
             android:fitsSystemWindows="true"
-            android:orientation="vertical"
-            android:padding="10dp"
+            android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar_new_confession">
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_comments"
+            app:layout_constraintVertical_bias="1.0">
 
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+            <TextView
+                android:id="@+id/textView_comments_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/itemcomment_timeplaceholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button_comments_heart"
+                tools:ignore="TextContrastCheck" />
 
-                <TextView
-                    android:id="@+id/textView_comments_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/itemcomment_timeplaceholder"
-                    tools:ignore="TextContrastCheck" />
 
-                <Button
-                    android:id="@+id/button_comments_heart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|end"
-                    android:backgroundTint="@color/fui_transparent"
-                    app:icon="@drawable/heart_outline"
-                    app:iconGravity="textEnd"
-                    tools:ignore="SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/button_comments_heart"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/fui_transparent"
+                app:icon="@drawable/heart_outline"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/textView_comments_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/item_confession_usernameplaceholder"
-                    android:textAppearance="?attr/textAppearanceTitleSmall"
-                    android:textColor="#E6E1E5" />
-            </FrameLayout>
+            <TextView
+                android:id="@+id/textView_comments_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_confession_usernameplaceholder"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="#E6E1E5"
+                app:layout_constraintBottom_toBottomOf="@+id/button_comments_heart"
+                app:layout_constraintStart_toStartOf="@+id/textView_comments_time" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/textview_comments_text"
+                app:layout_constraintStart_toStartOf="@+id/textview_comments_text"
+                app:layout_constraintTop_toBottomOf="@+id/textview_comments_text" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="450dp" />
+                android:id="@+id/recyclerView_comments"
+                android:layout_width="322dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+                app:layout_constraintEnd_toEndOf="@+id/materialDivider2"
+                app:layout_constraintStart_toStartOf="@+id/materialDivider2"
+                app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="9dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_comments_add"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_comments" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <Button
+                android:id="@+id/button_comments_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#4A4458"
+                android:text="@string/confessions_close"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_comments_add" />
 
-                <Button
-                    android:id="@+id/button_comments_close"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:backgroundTint="#4A4458"
-                    android:text="@string/confessions_close"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_comments_add"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.571" />
+            <Button
+                android:id="@+id/button_comments_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/BTCPrimary"
+                android:text="@string/comments_addnewcommentplaceholder"
+                android:textColor="#381E72"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/materialDivider" />
 
-                <Button
-                    android:id="@+id/button_comments_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:backgroundTint="@color/BTCPrimary"
-                    android:text="@string/comments_addnewcommentplaceholder"
-                    android:textColor="#381E72"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.571" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textview_comments_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/comments_textplaceholder"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/button_comments_heart"
+                app:layout_constraintStart_toStartOf="@+id/textView_comments_username"
+                app:layout_constraintTop_toBottomOf="@+id/textView_comments_username"
+                tools:ignore="TextContrastCheck" />
 
             <!-- Buttons -->
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

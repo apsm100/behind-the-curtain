@@ -36,4 +36,5 @@
     <string name="itemcomment_displaynameplaceholder">BCIT#495898</string>
     <string name="confessions_close">Close</string>
     <string name="comments_addnewcommentplaceholder">Add New Comment</string>
+    <string name="comments_textplaceholder">This is a placeholder for a post text</string>
 </resources>
