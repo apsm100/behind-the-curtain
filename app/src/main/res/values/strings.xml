@@ -39,4 +39,7 @@
     <string name="comments_textplaceholder">This is a placeholder for a post text</string>
     <string name="comments_empty_recyclerview">No Comments Yet...</string>
     <string name="editText_comment_field">Enter Comment here</string>
+    <string name="comments_textviewplaceholder">Enter your comment here..</string>
+    <string name="comments_done_button">Done</string>
+    <string name="comments_report">Report</string>
 </resources>

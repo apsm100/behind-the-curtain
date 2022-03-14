@@ -86,6 +86,16 @@
                 app:layout_constraintBottom_toBottomOf="@+id/button_comments_heart"
                 app:layout_constraintStart_toStartOf="@+id/textView_comments_time" />
 
+            <TextView
+                android:id="@+id/textview_empty_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerView_comments"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments"
+                app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
+
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider2"
                 android:layout_width="wrap_content"
@@ -135,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Enter your comment here.."
+                android:hint="@string/comments_textviewplaceholder"
                 android:textColorHint="#D0BCFF"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
@@ -167,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:backgroundTint="#14D0BCFF"
-                android:text="Done"
+                android:text="@string/comments_done_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments" />
 
@@ -177,7 +187,7 @@
                 android:layout_height="48dp"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="#14D0BCFF"
-                android:text="Report"
+                android:text="@string/comments_report"
                 app:layout_constraintBottom_toBottomOf="@+id/button_comments_done"
                 app:layout_constraintEnd_toStartOf="@+id/button_comments_done"
                 app:layout_constraintTop_toTopOf="@+id/button_comments_done"

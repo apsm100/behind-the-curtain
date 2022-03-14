@@ -6,12 +6,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +37,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     private TextView text;
     private LinearProgressIndicator progressBar;
     private Confession model;
+    private CommentsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +51,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void initializeViews(){
-        Button closeButton = findViewById(R.id.button_comments_close);
+        Button closeButton = findViewById(R.id.button_comments_done);
         closeButton.setOnClickListener(view -> finish());
 
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
@@ -71,9 +83,9 @@ public class CommentsActivity extends FirebaseAuthentication {
 
 
         if (model.getHearts().contains(currentUser.getUid())){
-            ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
         }else {
-            ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
         }
 
         heart.setOnClickListener(view -> {
@@ -82,20 +94,20 @@ public class CommentsActivity extends FirebaseAuthentication {
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayRemove(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
             } else {
                 model.addHeart(currentUser.getUid());
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayUnion(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
             }
             db.collection("confessions")
                     .document(model.getDocumentId())
                     .update("popularityIndex", model.getPopularityIndex());
         });
 
-        Button button_comments_add = findViewById(R.id.button_comments_add);
+        Button button_comments_add = findViewById(R.id.button_comments_report);
         button_comments_add.setOnClickListener(view -> {
 
             Intent intent = new Intent(CommentsActivity.this, NewCommentActivity.class);
@@ -107,17 +119,37 @@ public class CommentsActivity extends FirebaseAuthentication {
 
         ArrayList<Comment> comments = model.getComments();
 
-        RecyclerView commentsView = findViewById(R.id.recyclerView_comments);
-        CommentRecycler commentRecycler = new CommentRecycler(comments);
-        commentsView.setAdapter(commentRecycler);
-        commentsView.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
-
         TextView textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
         if (comments.size() > 0 ){
             textview_empty_placeholder.setText("");
+            textview_empty_placeholder.setVisibility(View.GONE);
         } else {
+            textview_empty_placeholder.setVisibility(View.VISIBLE);
             textview_empty_placeholder.setText("No Comments Yet...");
         }
+
+        handleFirebaseQuery();
+    }
+
+
+    private void handleFirebaseQuery(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Query query = db.collection("confessions")
+                .document(model.getDocumentId())
+                .collection("comments")
+                .orderBy("date", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
+                .setQuery(query, Comment.class)
+                .build();
+
+        adapter = new CommentsAdapter(options);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_comments);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.startListening();
     }
 
 
