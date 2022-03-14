@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/fui_transparent"
-                app:icon="@drawable/heart_outline"
+                app:icon="@drawable/ic_heart_outline"
                 app:iconGravity="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

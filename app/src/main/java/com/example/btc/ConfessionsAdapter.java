@@ -1,15 +1,12 @@
 package com.example.btc;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -78,10 +75,10 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
-            ((MaterialButton) heartButton).setIconResource(R.drawable.heart_filled);
+            ((MaterialButton) heartButton).setIconResource(R.drawable.ic_heart_filled);
 
         } else {
-            ((MaterialButton) heartButton).setIconResource(R.drawable.heart_outline);
+            ((MaterialButton) heartButton).setIconResource(R.drawable.ic_heart_outline);
         }
     }
 

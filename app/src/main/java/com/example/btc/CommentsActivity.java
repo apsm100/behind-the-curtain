@@ -64,9 +64,9 @@ public class CommentsActivity extends FirebaseAuthentication {
 
 
         if (model.getHearts().contains(currentUser.getUid())){
-            ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
         }else {
-            ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
         }
 
         heart.setOnClickListener(view -> {
@@ -75,13 +75,13 @@ public class CommentsActivity extends FirebaseAuthentication {
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayRemove(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.heart_outline);
+                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
             } else {
                 model.addHeart(currentUser.getUid());
                 db.collection("confessions")
                         .document(model.getDocumentId())
                         .update("hearts", FieldValue.arrayUnion(currentUser.getUid()));
-                ((MaterialButton) heart).setIconResource(R.drawable.heart_filled);
+                ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
             }
             db.collection("confessions")
                     .document(model.getDocumentId())

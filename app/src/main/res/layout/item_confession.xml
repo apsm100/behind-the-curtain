@@ -60,8 +60,9 @@
                         android:layout_marginEnd="2dp"
                         android:layout_weight="2"
                         android:text="@string/item_confession_commentplaceholder"
+                        android:textAlignment="center"
                         android:textColor="#E6E1E5"
-                        app:icon="@drawable/chat_bubble_outline"
+                        app:icon="@drawable/ic_chat_bubble_outline"
                         app:iconTint="#E6E1E5" />
 
                     <Button
@@ -71,8 +72,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/item_confession_heartplaceholder"
+                        android:textAlignment="center"
                         android:textColor="#E6E1E5"
-                        app:icon="@drawable/heart_outline"
+                        app:icon="@drawable/ic_heart_outline"
                         app:iconTint="#E6E1E5" />
 
                     <Button
