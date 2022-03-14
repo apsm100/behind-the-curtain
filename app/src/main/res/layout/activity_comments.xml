@@ -9,9 +9,8 @@
     android:background="#1C1B1F"
     android:backgroundTint="#14D0BCFF"
     android:backgroundTintMode="screen"
-    android:theme="@style/Theme.BTC"
     android:fitsSystemWindows="true"
-    tools:context=".NewConfessionActivity">
+    android:theme="@style/Theme.BTC">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -98,58 +97,15 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_comments"
-                android:layout_width="322dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout_comments_newcomment"
                 app:layout_constraintEnd_toEndOf="@+id/materialDivider2"
                 app:layout_constraintStart_toStartOf="@+id/materialDivider2"
                 app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
 
-            <TextView
-                android:id="@+id/textview_empty_placeholder"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@string/comments_empty_recyclerview"
-                app:layout_constraintBottom_toTopOf="@+id/materialDivider"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
-                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments"
-                app:layout_constraintTop_toBottomOf="@+id/materialDivider2"
-                tools:ignore="TextContrastCheck" />
-
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="9dp"
-                app:layout_constraintBottom_toTopOf="@+id/button_comments_add"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
-                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView_comments" />
-
-            <Button
-                android:id="@+id/button_comments_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#4A4458"
-                android:text="@string/confessions_close"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_comments_add" />
-
-            <Button
-                android:id="@+id/button_comments_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/BTCPrimary"
-                android:text="@string/comments_addnewcommentplaceholder"
-                android:textColor="#381E72"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/materialDivider" />
 
             <TextView
                 android:id="@+id/textview_comments_text"
@@ -162,6 +118,70 @@
                 app:layout_constraintStart_toStartOf="@+id/textView_comments_username"
                 app:layout_constraintTop_toBottomOf="@+id/textView_comments_username"
                 tools:ignore="TextContrastCheck" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="322dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_comments_done"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_comments_newcomment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Enter your comment here.."
+                android:textColorHint="#D0BCFF"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="2dp"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_circle_up_24"
+                app:endIconMode="custom"
+                app:endIconTint="#CAC4D0"
+                app:hintTextColor="#D0BCFF"
+                app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_comments"
+                app:placeholderTextColor="#D0BCFF">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/TextView_comments_newcomment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_comments_done"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="#14D0BCFF"
+                android:text="Done"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments" />
+
+            <Button
+                android:id="@+id/button_comments_report"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#14D0BCFF"
+                android:text="Report"
+                app:layout_constraintBottom_toBottomOf="@+id/button_comments_done"
+                app:layout_constraintEnd_toStartOf="@+id/button_comments_done"
+                app:layout_constraintTop_toTopOf="@+id/button_comments_done"
+                app:layout_constraintVertical_bias="0.0" />
 
             <!-- Buttons -->
 

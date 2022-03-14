@@ -30,10 +30,6 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void initializeViews(){
-        Button closeButton = findViewById(R.id.button_comments_close);
-        closeButton.setOnClickListener(view -> {
-            finish();
-        });
 
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
 
