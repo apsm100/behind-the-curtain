@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -50,15 +51,26 @@ public class CommentsActivity extends AppCompatActivity {
         text.setText(model.getText());
 
         Date now = new Date(System.currentTimeMillis());
-        System.out.println(model.getDate().toString());
-        System.out.println(getDateDiff(model.getDate(),now,TimeUnit.HOURS));
+        long timeElapsed = getDateDiff(model.getDate(),now,TimeUnit.MINUTES);
+        String timeLessThan60minutes = timeElapsed + " Minutes Ago";
+        String lessThan24Hours = timeElapsed / 60 + " Hours Ago";
+        String MoreThan24Hours = timeElapsed / 1440 + " Days Ago";
+
+        if (timeElapsed < 60){
+            time.setText(timeLessThan60minutes);
+        }else if (timeElapsed < 1440){
+            time.setText(lessThan24Hours);
+        }else {
+            time.setText(MoreThan24Hours);
+        }
+
 
     }
 
 
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies,timeUnit);
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
 
     private void setProgressBar(Boolean value) {
