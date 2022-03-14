@@ -60,7 +60,7 @@ public class Confession implements Serializable {
     }
 
     public void setPopularityIndex() {
-        popularityIndex = hearts.size() + (comments.size() * 2);
+        popularityIndex = hearts.size() + (comments.size() / 4);
     }
 
     public String getText() {
