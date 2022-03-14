@@ -25,7 +25,10 @@
             android:backgroundTint="#14D0BCFF"
             android:backgroundTintMode="src_over"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="14dp"
+            android:paddingTop="2dp"
+            android:paddingRight="14dp"
+            android:paddingBottom="16dp">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,7 +97,7 @@
                 android:id="@+id/textView_itemconfession_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:layout_weight="1"
                 android:text="@string/item_confession_textplaceholder"
                 android:textAppearance="?attr/textAppearanceBody2"
