@@ -92,6 +92,7 @@
                 android:id="@+id/textview_empty_placeholder"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:gravity="center"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/recyclerView_comments"
                 app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"

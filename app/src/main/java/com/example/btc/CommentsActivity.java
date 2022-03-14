@@ -115,6 +115,8 @@ public class CommentsActivity extends FirebaseAuthentication {
                     .update("popularityIndex", model.getPopularityIndex());
         });
 
+
+        handleFirebaseQuery();
         int comments = model.getComments();
 
         TextView textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
@@ -125,8 +127,6 @@ public class CommentsActivity extends FirebaseAuthentication {
             textview_empty_placeholder.setVisibility(View.VISIBLE);
             textview_empty_placeholder.setText("No Comments Yet...");
         }
-
-        handleFirebaseQuery();
 
         textEditor.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
