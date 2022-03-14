@@ -29,8 +29,8 @@
             android:layout_marginTop="50dp"
             android:indeterminate="true"
             app:indicatorColor="@color/purple_200"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
             app:layout_constraintTop_toTopOf="parent"
             app:trackColor="@color/BTCPrimary" />
 
@@ -97,7 +97,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="470dp" />
+                android:layout_height="450dp" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider"

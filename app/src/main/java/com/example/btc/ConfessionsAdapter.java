@@ -1,11 +1,13 @@
 package com.example.btc;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -62,8 +64,18 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
                     .document(documentId)
                     .update("popularityIndex", model.getPopularityIndex());
         });
+
+
+        viewHolder.getComment().setOnClickListener(view -> {
+            Intent intent = new Intent (viewHolder.itemView.getContext(), CommentsActivity.class);
+            viewHolder.itemView.getContext().startActivity(intent);
+        });
+
     }
 
+    private void navigateToComments(Confession model, ConfessionHolder viewHolder){
+        Intent commentsActivity = new Intent(viewHolder.itemView.getContext(), CommentsActivity.class);
+    }
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
@@ -81,4 +93,5 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
                 .inflate(R.layout.item_confession, group, false);
         return new ConfessionHolder(view);
     }
+
 }
