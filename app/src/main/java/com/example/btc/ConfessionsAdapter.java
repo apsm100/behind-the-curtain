@@ -73,6 +73,17 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
             viewHolder.itemView.getContext().startActivity(intent);
         });
 
+        viewHolder.itemView.findViewById(R.id.cardview_item_confession).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewHolder.getText().getMaxLines() == 20){
+                    viewHolder.getText().setMaxLines(4);
+                }else {
+                    viewHolder.getText().setMaxLines(20);
+                }
+            }
+        });
+
     }
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {

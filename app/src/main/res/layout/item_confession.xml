@@ -6,17 +6,17 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_item_confession"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="1dp"
-        app:cardCornerRadius="4dp"
-        app:strokeColor="@color/BTCPrimary"
-        >
+        app:strokeColor="@color/BTCPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,7 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:lineSpacingExtra="8sp"
+                android:maxLines="4"
                 android:text="@string/item_confession_textplaceholder"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="#E6E1E5" />
