@@ -13,6 +13,7 @@
     android:theme="@style/Theme.BTC">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
@@ -25,7 +26,7 @@
             android:id="@+id/progressBar_comments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:indeterminate="true"
             app:indicatorColor="@color/purple_200"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
@@ -167,32 +168,15 @@
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/button_comments_report"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="#14D0BCFF"
-                android:text="@string/comments_report"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/button_comments_done"
-                app:layout_constraintEnd_toStartOf="@+id/button_comments_done"
-                app:layout_constraintTop_toTopOf="@+id/button_comments_done"
-                app:layout_constraintVertical_bias="0.0" />
-
             <!-- Buttons -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/button_comments_done"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-            android:backgroundTint="#14D0BCFF"
-            android:text="@string/comments_done_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:backgroundTint="#00D0BCFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
