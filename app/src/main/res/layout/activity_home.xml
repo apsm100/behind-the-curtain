@@ -29,7 +29,7 @@
         android:layout_height="0dp"
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="2dp"
         android:layout_weight="0.4"
         android:backgroundTint="#00C80000"
         app:icon="@drawable/ic_baseline_person_outline_24"
@@ -41,7 +41,7 @@
         android:id="@+id/TabLayout_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0.5"
         android:background="#001C1B1F"
         tools:layout_editor_absoluteY="75dp">
