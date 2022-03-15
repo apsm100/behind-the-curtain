@@ -1,15 +1,21 @@
 package com.example.btc;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,10 +40,79 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         this.currentUserId = currentUserId;
     }
 
+    private void updateVoteButton(ArrayList<String> list, Button button, String userId, int active, int inactive) {
+        if (list.contains(userId)) {
+            ((MaterialButton) button).setIconResource(active);
+        } else {
+            ((MaterialButton) button).setIconResource(inactive);
+        }
+    }
 
     @Override
     protected void onBindViewHolder(@NonNull CommentHolder viewHolder, int position, @NonNull Comment model) {
         FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+        FirebaseFirestore db = firebaseAuthentication.db;
+        String userUid = firebaseAuthentication.currentUser.getUid();
+        String documentId = model.getDocumentId();
+        String commentDocumentId = model.getCommentDocumentId();
+
+        Button upVoteButton =  viewHolder.getUpVote();
+        Button downVoteButton =  viewHolder.getDownVote();
+        TextView voteCount = viewHolder.getVoteCount();
+
+        ArrayList<String> upVoteIds = model.getUpVoteIds();
+        ArrayList<String> downVoteIds = model.getDownVoteIds();
+
+        voteCount.setText(String.valueOf(model.getVoteCount()));
+
+        updateVoteButton(upVoteIds, upVoteButton, userUid, R.drawable.ic_upvote_active, R.drawable.ic_upvote_inactive);
+        updateVoteButton(downVoteIds, downVoteButton, userUid, R.drawable.ic_downvote_active, R.drawable.ic_downvote_inactive);
+
+
+        upVoteButton.setOnClickListener(view -> {
+            if (model.addUpVote(userUid)) {
+                db.collection("confessions")
+                        .document(commentDocumentId).collection("comments").document(documentId)
+                        .update("upVoteIds", FieldValue.arrayUnion(userUid));
+                if (model.removeDownVote(userUid)) {
+                    db.collection("confessions")
+                            .document(commentDocumentId).collection("comments").document(documentId)
+                            .update("downVoteIds", FieldValue.arrayRemove(userUid));
+                }
+            } else {
+                model.removeUpVote(userUid);
+                db.collection("confessions")
+                        .document(commentDocumentId).collection("comments").document(documentId)
+                        .update("upVoteIds", FieldValue.arrayRemove(userUid));
+            }
+            db.collection("confessions")
+                    .document(commentDocumentId).collection("comments").document(documentId)
+                    .update("voteCount", model.getVoteCount());
+        });
+
+        downVoteButton.setOnClickListener(view -> {
+            if (model.addDownVote(userUid)) {
+                db.collection("confessions")
+                        .document(commentDocumentId).collection("comments").document(documentId)
+                        .update("downVoteIds", FieldValue.arrayUnion(userUid));
+                if (model.removeUpVote(userUid)) {
+                    db.collection("confessions")
+                            .document(commentDocumentId).collection("comments").document(documentId)
+                            .update("upVoteIds", FieldValue.arrayRemove(userUid));
+                }
+            } else {
+                model.removeDownVote(userUid);
+                db.collection("confessions")
+                        .document(commentDocumentId).collection("comments").document(documentId)
+                        .update("downVoteIds", FieldValue.arrayRemove(userUid));
+            }
+            db.collection("confessions")
+                    .document(commentDocumentId).collection("comments").document(documentId)
+                    .update("voteCount", model.getVoteCount());
+        });
+
+
+
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         String userId = model.getUserId();

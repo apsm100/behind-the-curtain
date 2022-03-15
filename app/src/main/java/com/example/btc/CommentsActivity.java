@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -180,7 +181,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void addCommentToFirebase(String text) {
-        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date());
+        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<String>(), new ArrayList<String>(), model.getDocumentId());
         model.addComment();
 
         db.collection("confessions")
@@ -216,7 +217,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         Query query = db.collection("confessions")
                 .document(model.getDocumentId())
                 .collection("comments")
-                .orderBy("date", Query.Direction.ASCENDING);
+                .orderBy("voteCount", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
                 .setQuery(query, Comment.class)
