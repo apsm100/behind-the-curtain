@@ -42,4 +42,5 @@
     <string name="comments_textviewplaceholder">Comment</string>
     <string name="comments_done_button">Close</string>
     <string name="comments_report">Report</string>
+    <string name="date_recent_post">Just now</string>
 </resources>

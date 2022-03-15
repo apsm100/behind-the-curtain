@@ -47,7 +47,11 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
 
         if (timeElapsed < 60){
-            viewHolder.getDate().setText(timeLessThan60minutes);
+            if(timeElapsed == 0) {
+                viewHolder.getDate().setText(R.string.date_recent_post);
+            } else {
+                viewHolder.getDate().setText(timeLessThan60minutes);
+            }
         }else if (timeElapsed < 1440){
             viewHolder.getDate().setText(lessThan24Hours);
         }else {

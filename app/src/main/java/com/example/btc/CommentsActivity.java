@@ -76,7 +76,11 @@ public class CommentsActivity extends FirebaseAuthentication {
         String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
 
         if (timeElapsed < 60) {
-            time.setText(timeLessThan60minutes);
+            if(timeElapsed == 0) {
+                time.setText(R.string.date_recent_post);
+            } else {
+                time.setText(timeLessThan60minutes);
+            }
         } else if (timeElapsed < 1440) {
             time.setText(lessThan24Hours);
         } else {
