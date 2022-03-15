@@ -134,7 +134,7 @@
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider"
-                android:layout_width="322dp"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/button_comments_done"
@@ -157,6 +157,7 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_circle_up_24"
                 app:endIconMode="custom"
+                app:endIconTint="#17FFFFFF"
                 app:hintTextColor="#D0BCFF"
                 app:layout_constraintBottom_toTopOf="@+id/materialDivider"
                 app:layout_constraintEnd_toEndOf="parent"

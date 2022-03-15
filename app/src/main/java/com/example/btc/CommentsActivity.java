@@ -134,7 +134,8 @@ public class CommentsActivity extends FirebaseAuthentication {
                 if (!isTextValid(s)) {
                     allowPost = false;
                     textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24);
-                    textEditor.setEndIconTintList(null);
+                    textEditor.setEndIconTintList(getColorStateList(R.color.disabledSend));
+
 
                 } else {
                    allowPost = true;
