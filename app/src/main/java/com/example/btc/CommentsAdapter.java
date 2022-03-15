@@ -40,11 +40,27 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         this.currentUserId = currentUserId;
     }
 
-    private void updateVoteButton(ArrayList<String> list, Button button, String userId, int active, int inactive) {
-        if (list.contains(userId)) {
-            ((MaterialButton) button).setIconResource(active);
-        } else {
-            ((MaterialButton) button).setIconResource(inactive);
+    private void updateVoteButton(ArrayList<String> list1, ArrayList<String> list2, Button button1,
+                                  Button button2, String userId, int active1, int active2,
+                                  int inactive1, int inactive2) {
+        if (list1.contains(userId)) {
+            ((MaterialButton) button1).setIconResource(active1);
+            ((MaterialButton) button2).setIconResource(inactive2);
+        } else  if (!list1.contains(userId)) {
+            ((MaterialButton) button1).setIconResource(inactive1);
+            if (list2.contains(userId)) {
+                ((MaterialButton) button2).setIconResource(active2);
+            }
+        }
+
+        if (list2.contains(userId)) {
+            ((MaterialButton) button2).setIconResource(active2);
+            ((MaterialButton) button1).setIconResource(inactive1);
+        } else  if (!list2.contains(userId)) {
+            ((MaterialButton) button2).setIconResource(inactive2);
+            if (list1.contains(userId)) {
+                ((MaterialButton) button1).setIconResource(active1);
+            }
         }
     }
 
@@ -65,8 +81,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
         voteCount.setText(String.valueOf(model.getVoteCount()));
 
-        updateVoteButton(upVoteIds, upVoteButton, userUid, R.drawable.ic_upvote_active, R.drawable.ic_upvote_inactive);
-        updateVoteButton(downVoteIds, downVoteButton, userUid, R.drawable.ic_downvote_active, R.drawable.ic_downvote_inactive);
+        updateVoteButton(upVoteIds, downVoteIds, upVoteButton, downVoteButton, userUid,
+                R.drawable.ic_upvote_active, R.drawable.ic_downvote_active, R.drawable.ic_upvote_inactive,
+                R.drawable.ic_downvote_inactive);
         upVoteButton.setOnClickListener(view -> {
             if (model.addUpVote(userUid)) {
                 db.collection("confessions")
@@ -126,8 +143,6 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
             viewHolder.getUsername().setText(model.getUserId());
         }
         viewHolder.getComment().setText(model.getData());
-
-
         Date now = new Date(System.currentTimeMillis());
         long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
         String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";

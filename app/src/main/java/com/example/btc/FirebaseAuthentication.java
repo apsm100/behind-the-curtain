@@ -42,7 +42,7 @@ class FirebaseAuthentication extends AppCompatActivity{
         auth = FirebaseAuth.getInstance();
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null){
-            username = currentUser.getEmail().substring(0, 6);
+            username = currentUser.getDisplayName();
         }
 //        Clear local persistence data:
 //        db.clearPersistence();
