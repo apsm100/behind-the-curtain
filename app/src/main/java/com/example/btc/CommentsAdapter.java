@@ -19,7 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHolder> {
 
     public final static String modelKey = "commentObject";
-
+    private String originalPosterId;
+    private String currentUserId;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -27,8 +28,10 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
      *
      * @param options
      */
-    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options) {
+    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options, String originalPosterId, String currentUserId) {
         super(options);
+        this.originalPosterId = originalPosterId;
+        this.currentUserId = currentUserId;
     }
 
 
@@ -37,8 +40,18 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getUsername().setText(model.getUserId());
+        String userId = model.getUserId();
+        if (originalPosterId.equals(userId)) {
+            viewHolder.getUsername().setText(R.string.comments_op);
+        } else if (currentUserId.equals(userId)) {
+            viewHolder.getUsername().setText(R.string.comments_you);
+        } else {
+            viewHolder.getUsername().setText(model.getUserId());
+        }
+
         viewHolder.getComment().setText(model.getData());
+
+
 
         Date now = new Date(System.currentTimeMillis());
         long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);

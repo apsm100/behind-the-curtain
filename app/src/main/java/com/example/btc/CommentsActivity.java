@@ -222,7 +222,7 @@ public class CommentsActivity extends FirebaseAuthentication {
                 .setQuery(query, Comment.class)
                 .build();
 
-        adapter = new CommentsAdapter(options);
+        adapter = new CommentsAdapter(options, model.getDisplayName(), auth.getCurrentUser().getDisplayName());
         recyclerView = findViewById(R.id.recyclerView_comments);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
