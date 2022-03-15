@@ -1,6 +1,7 @@
 package com.example.btc;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,10 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
         viewHolder.itemView.findViewById(R.id.cardview_item_confession).setOnClickListener(view -> {
             if (viewHolder.getText().getMaxLines() == 50){
                 viewHolder.getText().setMaxLines(4);
-                viewHolder.getText().setEllipsize(null);
+                viewHolder.getText().setEllipsize(TextUtils.TruncateAt.END);
             }else {
                 viewHolder.getText().setMaxLines(50);
+                viewHolder.getText().setEllipsize(null);
             }
         });
 
