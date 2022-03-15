@@ -60,6 +60,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/itemcomment_timeplaceholder"
                 android:textAllCaps="true"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/button_comments_heart"
                 tools:ignore="TextContrastCheck" />
@@ -85,6 +86,7 @@
                 android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textColor="#E6E1E5"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/button_comments_heart"
                 app:layout_constraintStart_toStartOf="@+id/textView_comments_time" />
 
@@ -125,6 +127,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="8sp"
+                android:maxLines="3"
                 android:text="@string/comments_textplaceholder"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/button_comments_heart"
@@ -132,20 +137,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView_comments_username"
                 tools:ignore="TextContrastCheck" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/button_comments_done"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_comments_newcomment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="61dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/comments_textviewplaceholder"
@@ -174,6 +169,16 @@
                     android:textSize="12sp"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_comments_done"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView_comments"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView_comments" />
 
             <Button
                 android:id="@+id/button_comments_done"
