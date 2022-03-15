@@ -37,7 +37,7 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
         Button heartButton = viewHolder.getHeart();
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getUsername().setText(model.getUser().getDisplayName());
+        viewHolder.getUsername().setText(model.getDisplayName());
         viewHolder.getText().setText(model.getText());
         viewHolder.getComment().setText(String.valueOf(model.getComments()));
         heartButton.setText(String.valueOf(model.getHearts().size()));

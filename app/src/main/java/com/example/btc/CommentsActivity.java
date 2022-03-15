@@ -1,8 +1,6 @@
 package com.example.btc;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,19 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.android.material.resources.MaterialResources;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class CommentsActivity extends FirebaseAuthentication {
@@ -73,7 +66,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         heart = findViewById(R.id.button_comments_heart);
         textEditor = findViewById(R.id.textInputLayout_comments_newcomment);
 
-        username.setText(model.getUser().getDisplayName());
+        username.setText(model.getDisplayName());
         text.setText(model.getText());
 
         Date now = new Date(System.currentTimeMillis());
@@ -166,12 +159,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private boolean isTextValid(CharSequence text){
-
-        if (text.length() < 1){
-            return false;
-        }
-
-        return true;
+        return text.length() >= 1;
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -187,43 +175,31 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void addCommentToFirebase(String text) {
+        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date());
+        model.addComment();
 
-        db.collection("users").document(Objects.requireNonNull(currentUser.getEmail()).substring(0,6)).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                assert document != null;
-                Comment comment = new Comment(document.getString("displayName"), text, new Date());
+        db.collection("confessions")
+                .document(model.getDocumentId())
+                .collection("comments").add(comment).addOnSuccessListener(documentReference -> {
+            textview_empty_placeholder.setText("");
+            textview_empty_placeholder.setVisibility(View.GONE);
+            textEditor.getEditText().setText("");
+            textEditor.clearFocus();
+            textEditor.setEnabled(true);
+            hideKeyboard(this);
+            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
 
-                model.addComment();
+        });
 
-                db.collection("confessions")
-                        .document(model.getDocumentId())
-                        .collection("comments").add(comment).addOnSuccessListener(documentReference -> {
-                    textview_empty_placeholder.setText("");
-                    textview_empty_placeholder.setVisibility(View.GONE);
-                    textEditor.getEditText().setText("");
-                    textEditor.clearFocus();
-                    textEditor.setEnabled(true);
-                    hideKeyboard(this);
-                    recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        db.collection("confessions")
+                .document(model.getDocumentId())
+                .update("comments", model.getComments());
 
-                });
+        db.collection("confessions")
+                .document(model.getDocumentId())
+                .update("popularityIndex", model.getPopularityIndex());
 
-                db.collection("confessions")
-                        .document(model.getDocumentId())
-                        .update("comments", model.getComments());
-
-                db.collection("confessions")
-                        .document(model.getDocumentId())
-                        .update("popularityIndex", model.getPopularityIndex());
-
-                setProgressBar(false);
-
-            }});
-
-
-
-
+        setProgressBar(false);
     }
 
 

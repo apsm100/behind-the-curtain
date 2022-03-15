@@ -28,6 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:indeterminate="true"
+            android:visibility="invisible"
             app:indicatorColor="@color/purple_200"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="@+id/linearLayout3"

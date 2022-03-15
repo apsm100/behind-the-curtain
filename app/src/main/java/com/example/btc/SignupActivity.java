@@ -18,6 +18,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 import java.util.Random;
@@ -254,10 +255,13 @@ public class SignupActivity extends FirebaseAuthentication {
     protected void registerUser(User user, String password) {
         auth.createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        addUserToCollection(user);
-                    } else {
-                        setErrorMessageFromException(task.getException());
+                    if(task.isSuccessful()){
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(user.getDisplayName()).build();
+                        auth.getCurrentUser().updateProfile(profileUpdates)
+                                .addOnCompleteListener(success -> {
+                                    addUserToCollection(user);
+                                });
                     }
                 });
 

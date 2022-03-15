@@ -9,7 +9,7 @@ import java.util.Date;
 public class Confession implements Serializable {
     @DocumentId
     private String documentId;
-    private User user;
+    private String displayName;
     private String text;
     private int comments;
     private ArrayList<String> hearts;
@@ -20,9 +20,9 @@ public class Confession implements Serializable {
         return documentId;
     }
 
-    public Confession(User user, String text, ArrayList<String> hearts, Date date) {
+    public Confession(String displayName, String text, ArrayList<String> hearts, Date date) {
         this.date = date;
-        this.user = user;
+        this.displayName = displayName;
         this.text = text;
         this.comments = 0;
         this.hearts = hearts;
@@ -31,8 +31,8 @@ public class Confession implements Serializable {
 
     public Confession(){}
 
-    public User getUser() {
-        return user;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public void addHeart(String userId) {
