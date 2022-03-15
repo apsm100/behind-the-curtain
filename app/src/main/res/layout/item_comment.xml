@@ -2,32 +2,85 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#1C1B1F">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView_itemcomment_time"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="18dp"
+        android:gravity="end"
+        android:text="@string/itemcomment_timeplaceholder"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toEndOf="@+id/textView_itemcomment_displayname"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/textView_itemcomment_displayname"
+        android:layout_width="0dp"
+        android:layout_height="18dp"
+        android:text="@string/itemcomment_displaynameplaceholder"
+        android:textAllCaps="true"
+        android:textColor="@color/BTCPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/textView_itemcomment_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/textView_itemcomment_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/itemcomment_text_placeholder"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_itemcomment_time" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/MaterialDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dividerColor="#454545"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="right"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/textView_itemcomment_time"
-        app:layout_constraintStart_toStartOf="@+id/textView_itemcomment_time"
-        tools:layout_editor_absoluteY="3dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_itemcomment_text">
 
         <Button
             android:id="@+id/button_comment_upvote"
-            android:layout_width="48dp"
+            android:layout_width="54dp"
             android:layout_height="48dp"
             android:background="#00FFFFFF"
             app:icon="@drawable/ic_upvote_inactive"
             app:iconGravity="textEnd"
-            app:iconSize="30dp" />
+            app:iconSize="30dp"
+            app:iconTint="@null" />
 
         <TextView
             android:id="@+id/textView_comment_vote_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0" />
+            android:minWidth="30dp"
+            android:text="1"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_comment_downvote"
@@ -36,61 +89,9 @@
             android:background="#00FFFFFF"
             app:icon="@drawable/ic_downvote_inactive"
             app:iconGravity="textEnd"
-            app:iconSize="30dp" />
+            app:iconSize="30dp"
+            app:iconTint="@null" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView_itemcomment_time"
-        android:layout_width="0dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="end"
-        android:text="@string/itemcomment_timeplaceholder"
-        android:textAllCaps="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemcomment_displayname"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemcomment_displayname"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/textView_itemcomment_displayname"
-        android:layout_width="96dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/itemcomment_displaynameplaceholder"
-        android:textAllCaps="true"
-        android:textColor="@color/BTCPrimary"
-        app:layout_constraintStart_toStartOf="@+id/textView_itemcomment_text"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/textView_itemcomment_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="20dp"
-        android:lineSpacingExtra="8sp"
-        android:text="@string/itemcomment_text_placeholder"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/MaterialDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/MaterialDivider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        app:dividerColor="#454545"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_itemcomment_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

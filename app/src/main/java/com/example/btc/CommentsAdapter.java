@@ -67,8 +67,6 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
         updateVoteButton(upVoteIds, upVoteButton, userUid, R.drawable.ic_upvote_active, R.drawable.ic_upvote_inactive);
         updateVoteButton(downVoteIds, downVoteButton, userUid, R.drawable.ic_downvote_active, R.drawable.ic_downvote_inactive);
-
-
         upVoteButton.setOnClickListener(view -> {
             if (model.addUpVote(userUid)) {
                 db.collection("confessions")
