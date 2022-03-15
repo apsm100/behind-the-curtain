@@ -41,16 +41,18 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         String userId = model.getUserId();
-        if (originalPosterId.equals(userId)) {
-            viewHolder.getUsername().setText(R.string.comments_op);
-        } else if (currentUserId.equals(userId)) {
+        boolean originalPost = originalPosterId.equals(userId);
+        boolean currentUser = currentUserId.equals(userId);
+        if ( originalPost && currentUser) {
+            viewHolder.getUsername().setText(R.string.comments_you_op);
+        } else if (currentUser) {
             viewHolder.getUsername().setText(R.string.comments_you);
+        } else if (originalPost){
+            viewHolder.getUsername().setText(R.string.comments_op);
         } else {
             viewHolder.getUsername().setText(model.getUserId());
         }
-
         viewHolder.getComment().setText(model.getData());
-
 
 
         Date now = new Date(System.currentTimeMillis());

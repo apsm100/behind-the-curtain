@@ -44,5 +44,6 @@
     <string name="comments_report">Report</string>
     <string name="date_recent_post">Just now</string>
     <string name="comments_op">✪ OP</string>
+    <string name="comments_you_op">✪ YOU</string>
     <string name="comments_you">YOU</string>
 </resources>
