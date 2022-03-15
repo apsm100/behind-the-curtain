@@ -42,9 +42,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
         Date now = new Date(System.currentTimeMillis());
         long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
-        String timeLessThan60minutes = timeElapsed + " Minutes Ago";
-        String lessThan24Hours = timeElapsed / 60 + " Hours Ago";
-        String MoreThan24Hours = timeElapsed / 1440 + " Days Ago";
+        String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
+        String lessThan24Hours = timeElapsed / 60 + " Hour" + ((timeElapsed / 60 == 1) ? "" : "s") + " Ago";
+        String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
 
         if (timeElapsed < 60){
             viewHolder.getDate().setText(timeLessThan60minutes);
