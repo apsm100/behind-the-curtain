@@ -12,9 +12,8 @@
     <string name="signup_helpmessageplaceholder">Your username will be auto generated and you can’t reset your password after account creation to maintain anonymity.</string>
     <string name="main_tabbarpopular">Popular</string>
     <string name="main_tabbarrecent">Recent</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="item_confession_commentplaceholder">4</string>
-    <string name="item_confession_textplaceholder">I’m a girl and i want to be a mechnic, im just afraid I’ll get hate for it.</string>
+    <string name="item_confession_textplaceholder">Placeholder comment!</string>
     <string name="item_confession_usernameplaceholder">SCH#123456</string>
     <string name="item_confession_heartplaceholder">20</string>
     <string name="main_newconfessionplaceholder">New Confession</string>

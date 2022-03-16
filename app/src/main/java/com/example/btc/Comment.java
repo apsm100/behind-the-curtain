@@ -8,14 +8,14 @@ import java.util.Date;
 
 public class Comment  implements Serializable {
     @DocumentId
-    String documentId;
-    String userId;
-    Date date;
-    String data;
-    ArrayList<String> upVoteIds;
-    ArrayList<String> downVoteIds;
-    int voteCount;
-    String commentDocumentId;
+    private String documentId;
+    private String userId;
+    private Date date;
+    private String data;
+    private ArrayList<String> upVoteIds;
+    private ArrayList<String> downVoteIds;
+    private int voteCount;
+    private String commentDocumentId;
 
     public String getDocumentId() {
         return documentId;
