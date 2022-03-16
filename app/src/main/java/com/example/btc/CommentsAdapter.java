@@ -27,6 +27,8 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
     public final static String modelKey = "commentObject";
     private String originalPosterId;
     private String currentUserId;
+    FirebaseAuthentication firebaseAuthentication;
+    FirebaseFirestore db;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -38,36 +40,35 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         super(options);
         this.originalPosterId = originalPosterId;
         this.currentUserId = currentUserId;
+        firebaseAuthentication = new FirebaseAuthentication();
+        db = firebaseAuthentication.db;
     }
 
     private void updateVoteButton(ArrayList<String> list1, ArrayList<String> list2, Button button1,
-                                  Button button2, String userId, int active1, int active2,
-                                  int inactive1, int inactive2) {
+                                  Button button2, String userId, int activeColor1, int activeColor2,
+                                  int inactiveColor) {
         if (list1.contains(userId)) {
-            ((MaterialButton) button1).setIconResource(active1);
-            ((MaterialButton) button2).setIconResource(inactive2);
+            ((MaterialButton) button1).setIconTintResource(activeColor1);
+            ((MaterialButton) button2).setIconTintResource(inactiveColor);
         } else  if (!list1.contains(userId)) {
-            ((MaterialButton) button1).setIconResource(inactive1);
+            ((MaterialButton) button1).setIconTintResource(inactiveColor);
             if (list2.contains(userId)) {
-                ((MaterialButton) button2).setIconResource(active2);
+                ((MaterialButton) button2).setIconTintResource(activeColor2);
             }
         }
-
         if (list2.contains(userId)) {
-            ((MaterialButton) button2).setIconResource(active2);
-            ((MaterialButton) button1).setIconResource(inactive1);
+            ((MaterialButton) button2).setIconTintResource(activeColor2);
+            ((MaterialButton) button1).setIconTintResource(inactiveColor);
         } else  if (!list2.contains(userId)) {
-            ((MaterialButton) button2).setIconResource(inactive2);
+            ((MaterialButton) button2).setIconTintResource(inactiveColor);
             if (list1.contains(userId)) {
-                ((MaterialButton) button1).setIconResource(active1);
+                ((MaterialButton) button1).setIconTintResource(activeColor1);
             }
         }
     }
 
     @Override
     protected void onBindViewHolder(@NonNull CommentHolder viewHolder, int position, @NonNull Comment model) {
-        FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
-        FirebaseFirestore db = firebaseAuthentication.db;
         String userUid = firebaseAuthentication.currentUser.getUid();
 
         setVoting(model, viewHolder, userUid, db);
@@ -109,8 +110,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         voteCount.setText(String.valueOf(model.getVoteCount()));
 
         updateVoteButton(upVoteIds, downVoteIds, upVoteButton, downVoteButton, userUid,
-                R.drawable.ic_upvote_active, R.drawable.ic_downvote_active, R.drawable.ic_upvote_inactive,
-                R.drawable.ic_downvote_inactive);
+                R.color.upVoteActive, R.color.downVoteActive, R.color.voteInactive);
         upVoteButton.setOnClickListener(view -> {
             if (model.addUpVote(userUid)) {
                 db.collection("confessions")
