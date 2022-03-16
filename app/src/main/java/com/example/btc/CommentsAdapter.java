@@ -69,6 +69,33 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
         FirebaseFirestore db = firebaseAuthentication.db;
         String userUid = firebaseAuthentication.currentUser.getUid();
+
+        setVoting(model, viewHolder, userUid, db);
+
+        setSpecialUsernames(model.getUserId(), viewHolder);
+        viewHolder.getComment().setText(model.getData());
+
+        Date now = new Date(System.currentTimeMillis());
+        long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
+        String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
+        String lessThan24Hours = timeElapsed / 60 + " Hour" + ((timeElapsed / 60 == 1) ? "" : "s") + " Ago";
+        String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
+
+        if (timeElapsed < 60){
+            if(timeElapsed == 0) {
+                viewHolder.getDate().setText(R.string.date_recent_post);
+            } else {
+                viewHolder.getDate().setText(timeLessThan60minutes);
+            }
+        }else if (timeElapsed < 1440){
+            viewHolder.getDate().setText(lessThan24Hours);
+        }else {
+            viewHolder.getDate().setText(MoreThan24Hours);
+        }
+
+    }
+
+    public void setVoting(Comment model, CommentHolder viewHolder, String userUid, FirebaseFirestore db) {
         String documentId = model.getDocumentId();
         String commentDocumentId = model.getCommentDocumentId();
 
@@ -126,11 +153,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                     .update("voteCount", model.getVoteCount());
         });
 
+    }
 
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        String userId = model.getUserId();
+    public void setSpecialUsernames(String userId, CommentHolder viewHolder) {
         boolean originalPost = originalPosterId.equals(userId);
         boolean currentUser = currentUserId.equals(userId);
         if ( originalPost && currentUser) {
@@ -140,27 +165,8 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         } else if (originalPost){
             viewHolder.getUsername().setText(R.string.comments_op);
         } else {
-            viewHolder.getUsername().setText(model.getUserId());
+            viewHolder.getUsername().setText(userId);
         }
-        viewHolder.getComment().setText(model.getData());
-        Date now = new Date(System.currentTimeMillis());
-        long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
-        String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
-        String lessThan24Hours = timeElapsed / 60 + " Hour" + ((timeElapsed / 60 == 1) ? "" : "s") + " Ago";
-        String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
-
-        if (timeElapsed < 60){
-            if(timeElapsed == 0) {
-                viewHolder.getDate().setText(R.string.date_recent_post);
-            } else {
-                viewHolder.getDate().setText(timeLessThan60minutes);
-            }
-        }else if (timeElapsed < 1440){
-            viewHolder.getDate().setText(lessThan24Hours);
-        }else {
-            viewHolder.getDate().setText(MoreThan24Hours);
-        }
-
     }
 
 
