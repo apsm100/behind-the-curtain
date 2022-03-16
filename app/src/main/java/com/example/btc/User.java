@@ -15,6 +15,11 @@ public class User implements Serializable {
         this.school = school;
         this.displayName = displayName;
     }
+
+    public String getSchool() {
+        return school;
+    }
+
     public User() {
         // empty overloaded constructor
     }
@@ -23,31 +28,11 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
     public String getDisplayName() {
         return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 }

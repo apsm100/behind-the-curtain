@@ -26,8 +26,6 @@ public class ItemsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "com.example.btc.orderByField";
 
-    private FirebaseFirestore db;
-    private ConfessionsAdapter adapter;
     private String orderByField;
 
     public ItemsFragment() {
@@ -74,7 +72,7 @@ public class ItemsFragment extends Fragment {
                 .setQuery(query, Confession.class)
                 .build();
 
-        adapter = new ConfessionsAdapter(options);
+        ConfessionsAdapter adapter = new ConfessionsAdapter(options);
 
         RecyclerView recyclerView = view.findViewById(R.id.RecyclerView_itemsfragment);
         recyclerView.setAdapter(adapter);

@@ -1,27 +1,12 @@
 package com.example.btc;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 public class HomeActivity extends FirebaseAuthentication {
     @Override
@@ -65,17 +50,14 @@ public class HomeActivity extends FirebaseAuthentication {
 
         TabLayout tabLayout = findViewById(R.id.TabLayout_home);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        if (position == 0){
-                            tab.setText("Popular");
-                            tab.setIcon(R.drawable.ic_baseline_trending_up_24);
-                        }else {
-                            tab.setText("Recent");
-                            tab.setIcon(R.drawable.ic_baseline_refresh_24);
+                (tab, position) -> {
+                    if (position == 0){
+                        tab.setText("Popular");
+                        tab.setIcon(R.drawable.ic_baseline_trending_up_24);
+                    }else {
+                        tab.setText("Recent");
+                        tab.setIcon(R.drawable.ic_baseline_refresh_24);
 
-                        }
                     }
                 });
 

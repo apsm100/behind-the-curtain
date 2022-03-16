@@ -259,14 +259,10 @@ public class SignupActivity extends FirebaseAuthentication {
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(user.getDisplayName()).build();
                         auth.getCurrentUser().updateProfile(profileUpdates)
-                                .addOnCompleteListener(success -> {
-                                    addUserToCollection(user);
-                                });
+                                .addOnCompleteListener(success -> addUserToCollection(user));
                     }
                 });
-
     }
-
 
     private void addUserToCollection(User user) {
         db.collection("users")
@@ -286,7 +282,6 @@ public class SignupActivity extends FirebaseAuthentication {
                     editTextName.setText(user.getUsername());
                 });
     }
-
 
     @Override
     public void onStart() {

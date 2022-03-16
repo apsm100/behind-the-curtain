@@ -53,9 +53,6 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void initializeViews() {
-//        Button closeButton = findViewById(R.id.button_comments_done);
-//        closeButton.setOnClickListener(view -> finish());
-
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
 
         progressBar = findViewById(R.id.progressBar_comments);
@@ -181,8 +178,18 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void addCommentToFirebase(String text) {
-        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<String>(), new ArrayList<String>(), model.getDocumentId());
+        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<>(), new ArrayList<>(), model.getDocumentId());
         model.addComment();
+
+        RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                recyclerView.smoothScrollToPosition(positionStart);
+            }
+        };
+
+        recyclerView.getAdapter().registerAdapterDataObserver(observer);
 
         db.collection("confessions")
                 .document(model.getDocumentId())
@@ -193,8 +200,7 @@ public class CommentsActivity extends FirebaseAuthentication {
             textEditor.clearFocus();
             textEditor.setEnabled(true);
             hideKeyboard(this);
-            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
-
+            recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
         });
 
         db.collection("confessions")

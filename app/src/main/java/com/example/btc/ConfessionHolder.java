@@ -17,7 +17,6 @@ public class ConfessionHolder extends RecyclerView.ViewHolder {
     private final TextView text;
     private final Button comment;
     private final Button heart;
-    private final Button more;
 
 
     public ConfessionHolder(@NonNull View view) {
@@ -27,7 +26,6 @@ public class ConfessionHolder extends RecyclerView.ViewHolder {
         this.text = view.findViewById(R.id.textView_itemconfession_text);
         this.comment = view.findViewById(R.id.Button_itemconfession_comment);
         this.heart = view.findViewById(R.id.Button_itemconfession_heart);
-        this.more = view.findViewById(R.id.Button_itemconfession_more);
     }
 
     public TextView getUsername() {
@@ -46,7 +44,4 @@ public class ConfessionHolder extends RecyclerView.ViewHolder {
         return heart;
     }
 
-    public Button getMore() {
-        return more;
-    }
 }

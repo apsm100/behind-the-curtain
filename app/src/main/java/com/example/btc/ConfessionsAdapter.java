@@ -27,7 +27,7 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
      *
-     * @param options
+     * @param options Firestore options
      */
     public ConfessionsAdapter(@NonNull FirestoreRecyclerOptions<Confession> options) {
         super(options);

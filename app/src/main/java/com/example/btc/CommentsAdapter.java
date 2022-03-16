@@ -1,6 +1,5 @@
 package com.example.btc;
 
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -25,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHolder> {
 
-    public final static String modelKey = "commentObject";
     private String originalPosterId;
     private String currentUserId;
     FirebaseAuthentication firebaseAuthentication;
@@ -35,7 +31,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
      *
-     * @param options
+     * @param options Firestore options
      */
     public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options, String originalPosterId, String currentUserId) {
         super(options);
