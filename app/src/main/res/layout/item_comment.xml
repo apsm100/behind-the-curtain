@@ -41,6 +41,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="35dp"
         android:lineSpacingExtra="8sp"
+        android:ellipsize="end"
+        android:maxLines="4"
         android:text="@string/itemcomment_text_placeholder"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

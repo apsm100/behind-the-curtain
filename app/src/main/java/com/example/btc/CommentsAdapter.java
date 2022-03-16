@@ -1,6 +1,7 @@
 package com.example.btc;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,16 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         }else {
             viewHolder.getDate().setText(MoreThan24Hours);
         }
+
+        viewHolder.itemView.findViewById(R.id.textView_itemcomment_text).setOnClickListener(view -> {
+            if (viewHolder.getComment().getMaxLines() == 50){
+                viewHolder.getComment().setMaxLines(4);
+                viewHolder.getComment().setEllipsize(TextUtils.TruncateAt.END);
+            }else {
+                viewHolder.getComment().setMaxLines(50);
+                viewHolder.getComment().setEllipsize(null);
+            }
+        });
 
     }
 

@@ -21,7 +21,8 @@ import java.util.ArrayList;
 public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, ConfessionHolder> {
 
     public final static String modelKey = "postObject";
-
+    FirebaseAuthentication firebaseAuthentication;
+    FirebaseFirestore db;
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -30,14 +31,14 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
      */
     public ConfessionsAdapter(@NonNull FirestoreRecyclerOptions<Confession> options) {
         super(options);
+        firebaseAuthentication = new FirebaseAuthentication();
+        db = firebaseAuthentication.db;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ConfessionHolder viewHolder, int position, @NonNull Confession model) {
-        FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication();
+
         Button heartButton = viewHolder.getHeart();
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.getUsername().setText(model.getDisplayName());
         viewHolder.getText().setText(model.getText());
         viewHolder.getComment().setText(String.valueOf(model.getComments()));
@@ -46,7 +47,6 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
         ArrayList<String> heartsList = model.getHearts();
         String userId = firebaseAuthentication.currentUser.getUid();
         String documentId = model.getDocumentId();
-        FirebaseFirestore db = firebaseAuthentication.db;
 
         updateHeartIcon(heartsList, heartButton, userId);
 
@@ -89,7 +89,6 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {
         if (heartsList.contains(userId)) {
             ((MaterialButton) heartButton).setIconResource(R.drawable.ic_heart_filled);
-
         } else {
             ((MaterialButton) heartButton).setIconResource(R.drawable.ic_heart_outline);
         }
