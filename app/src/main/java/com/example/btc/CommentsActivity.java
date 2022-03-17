@@ -174,6 +174,7 @@ public class CommentsActivity extends FirebaseAuthentication {
             size = getReplyTagSize(str[0]);
         } else {
             textEditor.setHint("Comment");
+            textEditor.setTag(null);
             return;
         }
         if (str[0].length() == size) {
@@ -181,6 +182,7 @@ public class CommentsActivity extends FirebaseAuthentication {
             textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
             textEditor.setHint("Comment");
+            textEditor.setTag(null);
             textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
