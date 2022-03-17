@@ -3,6 +3,8 @@ package com.example.btc;
 import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 import static java.util.stream.Collectors.toList;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -156,14 +159,18 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
            public void onClick(View view) {
                int position = getPositionWithId(model.getReplyDocumentId());
                mRecyclerView.smoothScrollToPosition(position);
+               CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
+               if (holder != null) {
+                   animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"),  Color.parseColor("#00D0BCFF"));
+                   return;
+               }
                RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
                    @Override
                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                        switch (newState) {
                            case SCROLL_STATE_IDLE:
                                CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
-                               holder.getLayout().setBackgroundColor(Color.parseColor("#777777"));
-
+                               animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"),  Color.parseColor("#00D0BCFF"));
                                recyclerView.removeOnScrollListener(this);
                        }
                    }
@@ -176,6 +183,21 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
            System.out.println(model.getReplyDocumentId());
            replyPath.setVisibility(View.VISIBLE);
        }
+    }
+
+    public void animateColor(ConstraintLayout layout, int from, int to) {
+        ValueAnimator anim = new ValueAnimator();
+        anim.setIntValues(from, to);
+        anim.setEvaluator(new ArgbEvaluator());
+
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                layout.setBackgroundColor((Integer)valueAnimator.getAnimatedValue());
+            }
+        });
+        anim.setDuration(1000);
+        anim.start();
     }
 
     public Spannable setReplyTag(Spannable s) {
