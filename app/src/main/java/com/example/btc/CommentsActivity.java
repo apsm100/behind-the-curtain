@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -25,6 +27,8 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommentsActivity extends FirebaseAuthentication {
 
@@ -138,15 +142,31 @@ public class CommentsActivity extends FirebaseAuthentication {
                     textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24);
                     textEditor.setEndIconTintList(getColorStateList(R.color.disabledSend));
 
-
+                    textEditor.setHint("Comment");
                 } else {
                    allowPost = true;
                     textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24_success);
                     textEditor.setEndIconTintList(getColorStateList(R.color.BTCPrimary));
+                    setReply();
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
+                Spannable textSpan = s;
+                String[] str = String.valueOf(textEditor.getEditText().getText()).split("\\s+");
+                int size = 0;
+                if (str[0].length() > 1) {
+                      if (str[0].charAt(0) == '@') {
+                    if (str[0].charAt(1) == 'B') {
+                    size = 12;
+                }else {
+                    size = 11;
+                }
+                }
+                }
+
+                if (s.length() > size)
+                textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         });
 
@@ -161,8 +181,25 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     }
 
+    public void setReply() {
+        String[] str = String.valueOf(textEditor.getEditText().getText()).split("\\s+");
+        int size = 11;
+        if (str[0].charAt(0) == '@') {
+            if (str[0].charAt(1) == 'B') {
+                size = 12;
+            }else {
+                size = 11;
+            }
+        }
+        if (str[0].length() == size && str[0].charAt(0) == '@'){
+            textEditor.setHint("Reply");
+        } else {
+            textEditor.setHint("Comment");
+        }
+    }
+
     private boolean isTextValid(CharSequence text){
-        return text.length() >= 1;
+        return text.length() >= 2;
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -229,7 +266,7 @@ public class CommentsActivity extends FirebaseAuthentication {
                 .setQuery(query, Comment.class)
                 .build();
 
-        adapter = new CommentsAdapter(options, model.getDisplayName(), auth.getCurrentUser().getDisplayName());
+        adapter = new CommentsAdapter(options, model.getDisplayName(), auth.getCurrentUser().getDisplayName(), this.findViewById(R.id.textInputLayout_comments_newcomment));
         recyclerView = findViewById(R.id.recyclerView_comments);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -97,6 +97,17 @@
             app:iconSize="30dp"
             app:iconTint="@null" />
 
+        <Button
+            android:id="@+id/button_comment_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:backgroundTint="#00FFFFFF"
+            android:text="REPLY"
+            android:textAlignment="textEnd"
+            android:textColor="@color/voteInactive" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

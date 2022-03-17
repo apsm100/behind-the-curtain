@@ -1,9 +1,13 @@
 package com.example.btc;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,6 +16,7 @@ import androidx.annotation.NonNull;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -24,6 +29,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
     private String originalPosterId;
     private String currentUserId;
+    private TextInputLayout textView;
     FirebaseAuthentication firebaseAuthentication;
     FirebaseFirestore db;
 
@@ -33,10 +39,11 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
      *
      * @param options Firestore options
      */
-    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options, String originalPosterId, String currentUserId) {
+    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options, String originalPosterId, String currentUserId, TextInputLayout view) {
         super(options);
         this.originalPosterId = originalPosterId;
         this.currentUserId = currentUserId;
+        this.textView = view;
         firebaseAuthentication = new FirebaseAuthentication();
         db = firebaseAuthentication.db;
     }
@@ -69,7 +76,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         String userUid = firebaseAuthentication.currentUser.getUid();
 
         setVoting(model, viewHolder, userUid, db);
-
+        setReply(viewHolder, model);
         setSpecialUsernames(model.getUserId(), viewHolder);
         viewHolder.getComment().setText(model.getData());
 
@@ -101,6 +108,26 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
             }
         });
 
+    }
+
+    public void setReply(CommentHolder viewHolder, Comment model) {
+        Button replyButton = viewHolder.getReply();
+        String username = model.getUserId();
+
+        replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String[] str = String.valueOf(textView.getEditText().getText()).split("\\s+");
+                textView.getEditText().setText( "@" + username + " ");
+
+
+                textView.setHint("Reply");
+                textView.getEditText().setSelection(textView.getEditText().getText().length());
+                textView.getEditText().requestFocus();
+                System.out.println("@");
+            }
+        });
     }
 
     public void setVoting(Comment model, CommentHolder viewHolder, String userUid, FirebaseFirestore db) {
