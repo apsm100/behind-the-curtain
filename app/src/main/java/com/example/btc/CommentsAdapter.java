@@ -155,6 +155,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                mRecyclerView.smoothScrollToPosition(getPositionWithId(model.getReplyDocumentId()));
            }
        });
+        replyPath.setVisibility(View.GONE);
        if (model.getReplyDocumentId() != null) {
            System.out.println(model.getReplyDocumentId());
            replyPath.setVisibility(View.VISIBLE);

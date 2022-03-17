@@ -99,12 +99,13 @@
 
         <Button
             android:id="@+id/button_comment_reply_path"
-            android:layout_width="wrap_content"
+            android:layout_width="6dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00FFFFFF"
-            android:visibility="gone"
+            android:visibility="visible"
             app:icon="@drawable/ic_reply_path"
+            app:iconGravity="textEnd"
             app:iconSize="24dp"
             app:iconTint="@color/BTCPrimary" />
 
