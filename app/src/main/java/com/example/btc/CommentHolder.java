@@ -5,6 +5,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CommentHolder extends RecyclerView.ViewHolder {
@@ -16,6 +18,13 @@ public class CommentHolder extends RecyclerView.ViewHolder {
     private final Button downVote;
     private final Button reply;
     private final Button replyPath;
+
+
+    private final ConstraintLayout layout;
+
+    public ConstraintLayout getLayout() {
+        return layout;
+    }
 
     public TextView getVoteCount() {
         return voteCount;
@@ -39,7 +48,7 @@ public class CommentHolder extends RecyclerView.ViewHolder {
         this.username = view.findViewById(R.id.textView_itemcomment_displayname);
         this.comment = view.findViewById(R.id.textView_itemcomment_text);
         this.date = view.findViewById(R.id.textView_itemcomment_time);
-
+        this.layout = view.findViewById(R.id.constraintLayout_item_comment);
         this.voteCount = view.findViewById(R.id.textView_comment_vote_count);
         this.upVote = view.findViewById(R.id.button_comment_upvote);
         this.downVote = view.findViewById(R.id.button_comment_downvote);

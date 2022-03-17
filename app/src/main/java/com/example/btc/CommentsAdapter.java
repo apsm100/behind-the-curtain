@@ -1,5 +1,6 @@
 package com.example.btc;
 
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 import static java.util.stream.Collectors.toList;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.common.ChangeEventType;
@@ -152,7 +154,21 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
            @RequiresApi(api = Build.VERSION_CODES.N)
            @Override
            public void onClick(View view) {
-               mRecyclerView.smoothScrollToPosition(getPositionWithId(model.getReplyDocumentId()));
+               int position = getPositionWithId(model.getReplyDocumentId());
+               mRecyclerView.smoothScrollToPosition(position);
+               RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+                   @Override
+                   public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                       switch (newState) {
+                           case SCROLL_STATE_IDLE:
+                               CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
+                               holder.getLayout().setBackgroundColor(Color.parseColor("#777777"));
+
+                               recyclerView.removeOnScrollListener(this);
+                       }
+                   }
+               };
+               mRecyclerView.addOnScrollListener(onScrollListener);
            }
        });
         replyPath.setVisibility(View.GONE);
