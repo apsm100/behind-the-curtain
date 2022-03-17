@@ -3,7 +3,12 @@ package com.example.btc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Color;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +83,8 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         setVoting(model, viewHolder, userUid, db);
         setReply(viewHolder, model);
         setSpecialUsernames(model.getUserId(), viewHolder);
-        viewHolder.getComment().setText(model.getData());
+        Spannable s = setReplyTag(new SpannableString(model.getData()));
+        viewHolder.getComment().setText(s);
 
         Date now = new Date(System.currentTimeMillis());
         long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
@@ -110,6 +116,35 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
     }
 
+
+    public Spannable setReplyTag(Spannable s) {
+        Spannable textSpan = s;
+        String[] str = String.valueOf(s).split("\\s+");
+        int size = 0;
+        if (str[0].length() > 0) {
+            size = getReplyTagSize(str[0]);
+        } else {
+            return s;
+        }
+        if (str[0].length() == size) {
+            textSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#D0BCFF")), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else {
+            textSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFFFF")), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return textSpan;
+    }
+
+    public int getReplyTagSize(String str) {
+        if (str.charAt(0) == '@') {
+            if (str.contains("BCIT#")) {
+                return 12;
+            } else if (str.contains("UBC#") || str.contains("SFU#")) {
+                return 11;
+            }
+        }
+        return 0;
+    }
+
     public void setReply(CommentHolder viewHolder, Comment model) {
         Button replyButton = viewHolder.getReply();
         String username = model.getUserId();
@@ -117,15 +152,11 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String[] str = String.valueOf(textView.getEditText().getText()).split("\\s+");
                 textView.getEditText().setText( "@" + username + " ");
-
-
                 textView.setHint("Reply");
                 textView.getEditText().setSelection(textView.getEditText().getText().length());
                 textView.getEditText().requestFocus();
-                System.out.println("@");
             }
         });
     }

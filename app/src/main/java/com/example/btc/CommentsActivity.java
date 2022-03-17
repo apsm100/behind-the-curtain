@@ -141,32 +141,16 @@ public class CommentsActivity extends FirebaseAuthentication {
                     allowPost = false;
                     textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24);
                     textEditor.setEndIconTintList(getColorStateList(R.color.disabledSend));
-
                     textEditor.setHint("Comment");
                 } else {
                    allowPost = true;
                     textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24_success);
                     textEditor.setEndIconTintList(getColorStateList(R.color.BTCPrimary));
-                    setReply();
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
-                Spannable textSpan = s;
-                String[] str = String.valueOf(textEditor.getEditText().getText()).split("\\s+");
-                int size = 0;
-                if (str[0].length() > 1) {
-                      if (str[0].charAt(0) == '@') {
-                    if (str[0].charAt(1) == 'B') {
-                    size = 12;
-                }else {
-                    size = 11;
-                }
-                }
-                }
-
-                if (s.length() > size)
-                textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                setReplyTag(s);
             }
         });
 
@@ -181,25 +165,38 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     }
 
-    public void setReply() {
-        String[] str = String.valueOf(textEditor.getEditText().getText()).split("\\s+");
-        int size = 11;
-        if (str[0].charAt(0) == '@') {
-            if (str[0].charAt(1) == 'B') {
-                size = 12;
-            }else {
-                size = 11;
-            }
-        }
-        if (str[0].length() == size && str[0].charAt(0) == '@'){
-            textEditor.setHint("Reply");
+    public void setReplyTag(Editable s) {
+        Spannable textSpan = s;
+        String[] str = String.valueOf(s).split("\\s+");
+        int size = 0;
+        if (str[0].length() > 0) {
+            size = getReplyTagSize(str[0]);
         } else {
             textEditor.setHint("Comment");
+            return;
+        }
+        if (str[0].length() == size) {
+            textEditor.setHint("Reply");
+            textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else {
+            textEditor.setHint("Comment");
+            textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 
+    public int getReplyTagSize(String str) {
+        if (str.charAt(0) == '@') {
+            if (str.contains("BCIT#")) {
+                return 12;
+            } else if (str.contains("UBC#") || str.contains("SFU#")) {
+                return 11;
+            }
+        }
+        return 0;
+    }
+
     private boolean isTextValid(CharSequence text){
-        return text.length() >= 2;
+        return text.length() >= 1;
     }
 
     public static void hideKeyboard(Activity activity) {
