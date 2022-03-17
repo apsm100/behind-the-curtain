@@ -1,9 +1,12 @@
 package com.example.btc;
 
+import static java.util.stream.Collectors.toList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -17,16 +20,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
+import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -51,6 +58,18 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         this.textView = view;
         firebaseAuthentication = new FirebaseAuthentication();
         db = firebaseAuthentication.db;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int getPositionWithId(String id) {
+        List<Comment> list = (List<Comment>) getSnapshots();
+        List<String> ids = list.stream().map(Comment::getDocumentId).collect(toList());
+        return ids.indexOf(id);
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
     }
 
     private void updateVoteButton(ArrayList<String> list1, ArrayList<String> list2, Button button1,
