@@ -158,7 +158,8 @@ public class CommentsActivity extends FirebaseAuthentication {
             if (allowPost){
                 textEditor.setEnabled(false);
                 setProgressBar(true);
-                addCommentToFirebase(textEditor.getEditText().getText().toString());
+                addCommentToFirebase(textEditor.getEditText().getText().toString(), (String) textEditor.getTag());
+                textEditor.setTag(null);
             }
         }
         );
@@ -211,8 +212,8 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     }
 
-    private void addCommentToFirebase(String text) {
-        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<>(), new ArrayList<>(), model.getDocumentId());
+    private void addCommentToFirebase(String text, String tag) {
+        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<>(), new ArrayList<>(), model.getDocumentId(), tag);
         model.addComment();
 
         RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {

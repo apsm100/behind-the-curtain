@@ -16,6 +16,7 @@ public class Comment  implements Serializable {
     private ArrayList<String> downVoteIds;
     private int voteCount;
     private String commentDocumentId;
+    private String replyDocumentId;
 
     public String getDocumentId() {
         return documentId;
@@ -24,6 +25,10 @@ public class Comment  implements Serializable {
     public Comment(){}
     public String getUserId() {
         return userId;
+    }
+
+    public String getReplyDocumentId() {
+        return replyDocumentId;
     }
 
     public boolean addUpVote(String userId) {
@@ -90,12 +95,13 @@ public class Comment  implements Serializable {
         return data;
     }
 
-    public Comment(String userId, String data, Date date, ArrayList<String> upVoteIds, ArrayList<String> downVoteIds, String commentDocumentId) {
+    public Comment(String userId, String data, Date date, ArrayList<String> upVoteIds, ArrayList<String> downVoteIds, String commentDocumentId, String replyDocumentId) {
         this.date = date;
         this.userId = userId;
         this.data = data;
         this.upVoteIds = upVoteIds;
         this.downVoteIds = downVoteIds;
         this.commentDocumentId = commentDocumentId;
+        this.replyDocumentId =replyDocumentId;
     }
 }

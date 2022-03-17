@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="35dp"
-        android:lineSpacingExtra="8sp"
         android:ellipsize="end"
+        android:lineSpacingExtra="8sp"
         android:maxLines="4"
         android:text="@string/itemcomment_text_placeholder"
         android:textColor="@color/white"
@@ -96,6 +96,17 @@
             app:iconGravity="textEnd"
             app:iconSize="30dp"
             app:iconTint="@null" />
+
+        <Button
+            android:id="@+id/button_comment_reply_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:visibility="gone"
+            app:icon="@drawable/ic_reply_path"
+            app:iconSize="24dp"
+            app:iconTint="@color/BTCPrimary" />
 
         <Button
             android:id="@+id/button_comment_reply"

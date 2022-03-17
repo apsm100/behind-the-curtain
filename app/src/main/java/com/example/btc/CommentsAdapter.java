@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -101,6 +102,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
         setVoting(model, viewHolder, userUid, db);
         setReply(viewHolder, model);
+        setReplyPath(viewHolder, model);
         setSpecialUsernames(model.getUserId(), viewHolder);
         Spannable s = setReplyTag(new SpannableString(model.getData()));
         viewHolder.getComment().setText(s);
@@ -135,6 +137,29 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
     }
 
+    RecyclerView mRecyclerView;
+
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerView = recyclerView;
+    }
+
+    public void setReplyPath(CommentHolder viewHolder, Comment model) {
+       Button replyPath = viewHolder.getReplyPath();
+       replyPath.setOnClickListener(new View.OnClickListener() {
+           @RequiresApi(api = Build.VERSION_CODES.N)
+           @Override
+           public void onClick(View view) {
+               mRecyclerView.smoothScrollToPosition(getPositionWithId(model.getReplyDocumentId()));
+           }
+       });
+       if (model.getReplyDocumentId() != null) {
+           System.out.println(model.getReplyDocumentId());
+           replyPath.setVisibility(View.VISIBLE);
+       }
+    }
 
     public Spannable setReplyTag(Spannable s) {
         Spannable textSpan = s;
@@ -176,6 +201,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                 textView.setHint("Reply");
                 textView.getEditText().setSelection(textView.getEditText().getText().length());
                 textView.getEditText().requestFocus();
+                textView.setTag(model.getDocumentId());
             }
         });
     }

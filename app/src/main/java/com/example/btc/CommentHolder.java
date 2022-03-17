@@ -15,6 +15,7 @@ public class CommentHolder extends RecyclerView.ViewHolder {
     private final Button upVote;
     private final Button downVote;
     private final Button reply;
+    private final Button replyPath;
 
     public TextView getVoteCount() {
         return voteCount;
@@ -22,6 +23,10 @@ public class CommentHolder extends RecyclerView.ViewHolder {
 
     public Button getUpVote() {
         return upVote;
+    }
+
+    public Button getReplyPath() {
+        return replyPath;
     }
 
     public Button getDownVote() {
@@ -39,6 +44,7 @@ public class CommentHolder extends RecyclerView.ViewHolder {
         this.upVote = view.findViewById(R.id.button_comment_upvote);
         this.downVote = view.findViewById(R.id.button_comment_downvote);
         this.reply = view.findViewById(R.id.button_comment_reply);
+        this.replyPath = view.findViewById(R.id.button_comment_reply_path);
 
     }
 
