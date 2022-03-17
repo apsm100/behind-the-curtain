@@ -168,9 +168,10 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     public void setReplyTag(Editable s) {
         Spannable textSpan = s;
-        String[] str = String.valueOf(s).split("\\s+");
+        String[] str;
+        str = String.valueOf(s).split("\\s+");
         int size = 0;
-        if (str[0].length() > 0) {
+        if (str.length > 0 && str[0].length() > 0) {
             size = getReplyTagSize(str[0]);
         } else {
             textEditor.setHint("Comment");
