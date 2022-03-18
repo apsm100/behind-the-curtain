@@ -153,7 +153,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                mRecyclerView.smoothScrollToPosition(position);
                CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
                if (holder != null) {
-                   animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"),  Color.parseColor("#00D0BCFF"));
+                   animateColor(holder.getLayout(), Color.parseColor("@color/BTCSecondaryDark"),  Color.parseColor("#00D0BCFF"));
                    return;
                }
                RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
@@ -161,7 +161,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                        if (newState == SCROLL_STATE_IDLE) {
                            CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
-                           animateColor(Objects.requireNonNull(holder).getLayout(), Color.parseColor("#1C1B1F"), Color.parseColor("#00D0BCFF"));
+                           animateColor(Objects.requireNonNull(holder).getLayout(), Color.parseColor("@color/BTCSecondaryDark"), Color.parseColor("#00D0BCFF"));
                            recyclerView.removeOnScrollListener(this);
                        }
                    }

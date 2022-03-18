@@ -11,5 +11,5 @@
     <color name="upVoteActive">#219553</color>
     <color name="downVoteActive">#eb5757</color>
     <color name="voteInactive">#cac4d0</color>
-
+    <color name="BTCSecondaryDark">#1C1B1F</color>
 </resources>
