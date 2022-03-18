@@ -13,7 +13,6 @@ public class HomeActivity extends FirebaseAuthentication {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         Button profileButton = findViewById(R.id.button_home_profile);
         profileButton.setOnClickListener(view -> {
             Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
@@ -30,7 +29,7 @@ public class HomeActivity extends FirebaseAuthentication {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() == null){
-                Intent loginActivity = new Intent(this, HomeActivity.class);
+                Intent loginActivity = new Intent(this, LoginActivity.class);
                 loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginActivity);
             }

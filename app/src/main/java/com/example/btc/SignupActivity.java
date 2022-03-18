@@ -274,9 +274,6 @@ public class SignupActivity extends FirebaseAuthentication {
                 .set(user)
                 .addOnSuccessListener(success -> {
                     setProgressBar(false);
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
                     finish();
                 })
                 .addOnFailureListener(e -> {

@@ -228,14 +228,4 @@ public class ProfileActivity extends FirebaseAuthentication {
                 });
     }
 
-    public void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(firebaseAuth -> {
-            if (firebaseAuth.getCurrentUser() == null){
-                Intent loginActivity = new Intent(this, LoginActivity.class);
-                loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(loginActivity);
-            }
-        });
-    }
 }

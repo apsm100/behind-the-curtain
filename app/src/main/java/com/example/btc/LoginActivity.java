@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
@@ -20,6 +23,8 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class LoginActivity extends FirebaseAuthentication {
+    private FirebaseAuth.AuthStateListener listener;
+
 
     LinearProgressIndicator progressBar;
     TextInputLayout usernameTextInputLayout;
@@ -29,7 +34,6 @@ public class LoginActivity extends FirebaseAuthentication {
     TextView errorMessageTextView;
     Button loginButton;
     Button signupButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,12 +214,24 @@ public class LoginActivity extends FirebaseAuthentication {
 
     protected void onStart() {
         super.onStart();
-        auth.addAuthStateListener(firebaseAuth -> {
+
+        listener = firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() != null){
-                Intent mainActivity = new Intent(this, HomeActivity.class);
-                mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(mainActivity);
+                Intent loginActivity = new Intent(this, HomeActivity.class);
+                loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginActivity);
+                finish();
             }
-        });
+        };
+
+        auth.addAuthStateListener(listener);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("FINISH LOGIN");
+        this.auth.removeAuthStateListener(listener);
+    }
+
 }
