@@ -14,18 +14,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 class FirebaseAuthentication extends AppCompatActivity{
-    protected FirebaseFirestore db;
-    protected FirebaseAuth auth;
-    protected FirebaseUser currentUser;
-    protected String username;
+    protected final FirebaseFirestore db;
+    protected final FirebaseAuth auth;
+    protected final FirebaseUser currentUser;
 
     public FirebaseAuthentication() {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         currentUser =  FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null){
-            username = currentUser.getDisplayName();
-        }
 //        Clear local persistence data:
 //        db.clearPersistence();
     }
@@ -35,20 +31,12 @@ class FirebaseAuthentication extends AppCompatActivity{
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     public void addConfession(Confession confession, Callback callback, LinearProgressIndicator progressBar) {
         progressBar.setVisibility(View.VISIBLE);
         DocumentReference docRef = db.collection("confessions").document();
-        docRef.set(confession).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                callback.call(o);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+        docRef.set(confession).addOnSuccessListener((OnSuccessListener<Object>) o -> {
+            callback.call(o);
+            progressBar.setVisibility(View.INVISIBLE);
         });
     }
 }

@@ -26,7 +26,6 @@ public class HomeActivity extends FirebaseAuthentication {
     }
 
 
-    @Override
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {

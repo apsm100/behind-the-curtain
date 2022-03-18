@@ -25,17 +25,14 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class CommentsActivity extends FirebaseAuthentication {
 
-    private TextView time;
-    private TextView username;
     private Button heart;
-    private TextView text;
     private TextInputLayout textEditor;
     private Confession model;
-    private CommentsAdapter adapter;
     private boolean allowPost;
     private RecyclerView recyclerView;
     private TextView textview_empty_placeholder;
@@ -47,16 +44,14 @@ public class CommentsActivity extends FirebaseAuthentication {
         setContentView(R.layout.activity_comments);
 
         model = (Confession) getIntent().getSerializableExtra("postObject");
-
         initializeViews();
-
     }
 
     private void initializeViews() {
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
-        time = findViewById(R.id.textView_comments_time);
-        username = findViewById(R.id.textView_comments_username);
-        text = findViewById(R.id.textview_comments_text);
+        TextView time = findViewById(R.id.textView_comments_time);
+        TextView username = findViewById(R.id.textView_comments_username);
+        TextView text = findViewById(R.id.textview_comments_text);
         heart = findViewById(R.id.button_comments_heart);
         textEditor = findViewById(R.id.textInputLayout_comments_newcomment);
 
@@ -71,7 +66,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     public void setTextInputLayoutListeners(TextInputLayout textEditor) {
-        textEditor.getEditText().addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(textEditor.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -218,7 +213,7 @@ public class CommentsActivity extends FirebaseAuthentication {
     }
 
     private void addCommentToFirebase(String text, String tag) {
-        Comment comment = new Comment(auth.getCurrentUser().getDisplayName(), text, new Date(), new ArrayList<>(), new ArrayList<>(), model.getDocumentId(), tag);
+        Comment comment = new Comment(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName(), text, new Date(), new ArrayList<>(), new ArrayList<>(), model.getDocumentId(), tag);
         model.addComment();
 
         RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
@@ -229,14 +224,14 @@ public class CommentsActivity extends FirebaseAuthentication {
             }
         };
 
-        recyclerView.getAdapter().registerAdapterDataObserver(observer);
+        Objects.requireNonNull(recyclerView.getAdapter()).registerAdapterDataObserver(observer);
 
         db.collection("confessions")
                 .document(model.getDocumentId())
                 .collection("comments").add(comment).addOnSuccessListener(documentReference -> {
             textview_empty_placeholder.setText("");
             textview_empty_placeholder.setVisibility(View.GONE);
-            textEditor.getEditText().setText("");
+            Objects.requireNonNull(textEditor.getEditText()).setText("");
             textEditor.clearFocus();
             textEditor.setEnabled(true);
             hideKeyboard(this);
@@ -266,7 +261,7 @@ public class CommentsActivity extends FirebaseAuthentication {
                 .setQuery(query, Comment.class)
                 .build();
 
-        adapter = new CommentsAdapter(options, model.getDisplayName(), auth.getCurrentUser().getDisplayName(), this.findViewById(R.id.textInputLayout_comments_newcomment));
+        CommentsAdapter adapter = new CommentsAdapter(options, model.getDisplayName(), Objects.requireNonNull(auth.getCurrentUser()).getDisplayName(), this.findViewById(R.id.textInputLayout_comments_newcomment));
         recyclerView = findViewById(R.id.recyclerView_comments);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -33,16 +33,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
 public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHolder> {
 
-    private String originalPosterId;
-    private String currentUserId;
-    private TextInputLayout textView;
-    FirebaseAuthentication firebaseAuthentication;
-    FirebaseFirestore db;
+    private final String originalPosterId;
+    private final String currentUserId;
+    private final TextInputLayout textView;
+    final FirebaseAuthentication firebaseAuthentication;
+    final FirebaseFirestore db;
     RecyclerView mRecyclerView;
 
     /**
@@ -62,14 +63,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getPositionWithId(String id) {
-        List<Comment> list = (List<Comment>) getSnapshots();
+        List<Comment> list = getSnapshots();
         List<String> ids = list.stream().map(Comment::getDocumentId).collect(toList());
         return ids.indexOf(id);
-    }
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
     }
 
     private void updateVoteButton(ArrayList<String> list1, ArrayList<String> list2, Button button1,
@@ -165,7 +161,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                        if (newState == SCROLL_STATE_IDLE) {
                            CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
-                           animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"), Color.parseColor("#00D0BCFF"));
+                           animateColor(Objects.requireNonNull(holder).getLayout(), Color.parseColor("#1C1B1F"), Color.parseColor("#00D0BCFF"));
                            recyclerView.removeOnScrollListener(this);
                        }
                    }
@@ -220,8 +216,10 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         Button replyButton = viewHolder.getReply();
         String username = model.getUserId();
         EditText editText = textView.getEditText();
+        String usernameString = R.string.all_at + username + R.string.all_space;
+
         replyButton.setOnClickListener(view -> {
-            editText.setText( "@" + username + " ");
+            Objects.requireNonNull(editText).setText(usernameString);
             textView.setHint("Reply");
             editText.setSelection(editText.getText().length());
             editText.requestFocus();

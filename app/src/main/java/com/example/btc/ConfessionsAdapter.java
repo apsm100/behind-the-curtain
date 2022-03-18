@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, ConfessionHolder> {
 
     public final static String modelKey = "postObject";
-    FirebaseAuthentication firebaseAuthentication;
-    FirebaseFirestore db;
+    final FirebaseAuthentication firebaseAuthentication;
+    final FirebaseFirestore db;
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.

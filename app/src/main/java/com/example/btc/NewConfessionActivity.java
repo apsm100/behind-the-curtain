@@ -10,6 +10,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class NewConfessionActivity extends FirebaseAuthentication {
     @Override
@@ -20,7 +21,7 @@ public class NewConfessionActivity extends FirebaseAuthentication {
         Button postButton = findViewById(R.id.button_new_confession_post);
         postButton.setOnClickListener(this::createConfession);
 
-        usernameTextView.setText(auth.getCurrentUser().getDisplayName());
+        usernameTextView.setText(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName());
 
         Button cancelButton = findViewById(R.id.button_new_confession_cancel);
         cancelButton.setOnClickListener(v -> finish());
@@ -32,7 +33,7 @@ public class NewConfessionActivity extends FirebaseAuthentication {
 
         ArrayList<String> hearts = new ArrayList<>();
 
-        Confession confession = new Confession(auth.getCurrentUser().getDisplayName(), editText.getText().toString(), hearts, new Date(System.currentTimeMillis()));
+        Confession confession = new Confession(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName(), editText.getText().toString(), hearts, new Date(System.currentTimeMillis()));
         addConfession(confession, (object -> this.finish()), progressBar);
 
     }

@@ -10,10 +10,10 @@
     android:backgroundTintMode="screen"
     android:orientation="vertical"
     android:theme="@style/Theme.BTC"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    tools:ignore="Overdraw">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

@@ -3,7 +3,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
@@ -11,7 +10,8 @@
     android:backgroundTintMode="screen"
     android:theme="@style/Theme.BTC"
     android:fitsSystemWindows="true"
-    tools:context=".NewConfessionActivity">
+    tools:context=".NewConfessionActivity"
+    tools:ignore="Overdraw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -96,7 +96,6 @@
                 android:textColorHint="@color/BTCPrimary" />
 
             <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
