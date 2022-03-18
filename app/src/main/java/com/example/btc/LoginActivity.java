@@ -192,9 +192,7 @@ public class LoginActivity extends FirebaseAuthentication {
     private void login(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Success. Auth listener will handle success.
-                    } else {
+                    if (!task.isSuccessful()) {
                         setErrorMessageFromException(task.getException());
                     }
                 });

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -37,20 +38,45 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
 
     @Override
     protected void onBindViewHolder(@NonNull ConfessionHolder viewHolder, int position, @NonNull Confession model) {
-
         Button heartButton = viewHolder.getHeart();
         viewHolder.getUsername().setText(model.getDisplayName());
         viewHolder.getText().setText(model.getText());
         viewHolder.getComment().setText(String.valueOf(model.getComments()));
         heartButton.setText(String.valueOf(model.getHearts().size()));
-
         ArrayList<String> heartsList = model.getHearts();
         String userId = firebaseAuthentication.currentUser.getUid();
         String documentId = model.getDocumentId();
 
         updateHeartIcon(heartsList, heartButton, userId);
+        setHeartClickListener(viewHolder.getHeart(), documentId, heartsList, model, userId);
+        setCommentClickListener(model, viewHolder);
+        setTextClickListenerExpand(viewHolder.getText());
+    }
 
-        viewHolder.getHeart().setOnClickListener(view -> {
+    public void setTextClickListenerExpand(TextView comment) {
+        comment.setOnClickListener(view -> {
+            if (comment.getMaxLines() == 50){
+                comment.setMaxLines(4);
+                comment.setEllipsize(TextUtils.TruncateAt.END);
+            }else {
+                comment.setMaxLines(50);
+                comment.setEllipsize(null);
+            }
+        });
+
+    }
+
+    private void setCommentClickListener(Confession model, ConfessionHolder viewHolder) {
+        viewHolder.getComment().setOnClickListener(view -> {
+            Intent intent = new Intent (viewHolder.itemView.getContext(), CommentsActivity.class);
+            intent.putExtra(modelKey, model);
+            viewHolder.itemView.getContext().startActivity(intent);
+        });
+    }
+
+    private void setHeartClickListener(Button heart, String documentId, ArrayList<String> heartsList,
+                                       Confession model, String userId) {
+        heart.setOnClickListener(view -> {
             if (heartsList.contains(userId)) {
                 model.removeHeart(userId);
                 db.collection("confessions")
@@ -66,24 +92,6 @@ public class ConfessionsAdapter extends FirestoreRecyclerAdapter<Confession, Con
                     .document(documentId)
                     .update("popularityIndex", model.getPopularityIndex());
         });
-
-
-        viewHolder.getComment().setOnClickListener(view -> {
-            Intent intent = new Intent (viewHolder.itemView.getContext(), CommentsActivity.class);
-            intent.putExtra(modelKey, model);
-            viewHolder.itemView.getContext().startActivity(intent);
-        });
-
-        viewHolder.itemView.findViewById(R.id.cardview_item_confession).setOnClickListener(view -> {
-            if (viewHolder.getText().getMaxLines() == 50){
-                viewHolder.getText().setMaxLines(4);
-                viewHolder.getText().setEllipsize(TextUtils.TruncateAt.END);
-            }else {
-                viewHolder.getText().setMaxLines(50);
-                viewHolder.getText().setEllipsize(null);
-            }
-        });
-
     }
 
     private void updateHeartIcon(ArrayList<String> heartsList, Button heartButton, String userId) {

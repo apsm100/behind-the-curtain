@@ -5,12 +5,8 @@ import static java.util.stream.Collectors.toList;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.os.Build;
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -18,22 +14,19 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -50,6 +43,7 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
     private TextInputLayout textView;
     FirebaseAuthentication firebaseAuthentication;
     FirebaseFirestore db;
+    RecyclerView mRecyclerView;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -104,14 +98,30 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
     @Override
     protected void onBindViewHolder(@NonNull CommentHolder viewHolder, int position, @NonNull Comment model) {
         String userUid = firebaseAuthentication.currentUser.getUid();
-
         setVoting(model, viewHolder, userUid, db);
         setReply(viewHolder, model);
         setReplyPath(viewHolder, model);
         setSpecialUsernames(model.getUserId(), viewHolder);
         Spannable s = setReplyTag(new SpannableString(model.getData()));
         viewHolder.getComment().setText(s);
+        setTime(viewHolder.getDate(), model);
+        setTextClickListenerExpand(viewHolder.getComment());
+    }
 
+    public void setTextClickListenerExpand(TextView comment) {
+        comment.setOnClickListener(view -> {
+            if (comment.getMaxLines() == 50){
+                comment.setMaxLines(4);
+                comment.setEllipsize(TextUtils.TruncateAt.END);
+            }else {
+                comment.setMaxLines(50);
+                comment.setEllipsize(null);
+            }
+        });
+
+    }
+
+    public void setTime(TextView date, Comment model) {
         Date now = new Date(System.currentTimeMillis());
         long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
         String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
@@ -120,33 +130,19 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
 
         if (timeElapsed < 60){
             if(timeElapsed == 0) {
-                viewHolder.getDate().setText(R.string.date_recent_post);
+                date.setText(R.string.date_recent_post);
             } else {
-                viewHolder.getDate().setText(timeLessThan60minutes);
+                date.setText(timeLessThan60minutes);
             }
         }else if (timeElapsed < 1440){
-            viewHolder.getDate().setText(lessThan24Hours);
+            date.setText(lessThan24Hours);
         }else {
-            viewHolder.getDate().setText(MoreThan24Hours);
+            date.setText(MoreThan24Hours);
         }
-
-        viewHolder.itemView.findViewById(R.id.textView_itemcomment_text).setOnClickListener(view -> {
-            if (viewHolder.getComment().getMaxLines() == 50){
-                viewHolder.getComment().setMaxLines(4);
-                viewHolder.getComment().setEllipsize(TextUtils.TruncateAt.END);
-            }else {
-                viewHolder.getComment().setMaxLines(50);
-                viewHolder.getComment().setEllipsize(null);
-            }
-        });
-
     }
 
-    RecyclerView mRecyclerView;
-
-
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         mRecyclerView = recyclerView;
     }
@@ -166,12 +162,11 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
                }
                RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
                    @Override
-                   public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                       switch (newState) {
-                           case SCROLL_STATE_IDLE:
-                               CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
-                               animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"),  Color.parseColor("#00D0BCFF"));
-                               recyclerView.removeOnScrollListener(this);
+                   public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                       if (newState == SCROLL_STATE_IDLE) {
+                           CommentHolder holder = (CommentHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
+                           animateColor(holder.getLayout(), Color.parseColor("#1C1B1F"), Color.parseColor("#00D0BCFF"));
+                           recyclerView.removeOnScrollListener(this);
                        }
                    }
                };
@@ -190,31 +185,25 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         anim.setIntValues(from, to);
         anim.setEvaluator(new ArgbEvaluator());
 
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                layout.setBackgroundColor((Integer)valueAnimator.getAnimatedValue());
-            }
-        });
+        anim.addUpdateListener(valueAnimator -> layout.setBackgroundColor((Integer)valueAnimator.getAnimatedValue()));
         anim.setDuration(1000);
         anim.start();
     }
 
     public Spannable setReplyTag(Spannable s) {
-        Spannable textSpan = s;
         String[] str = String.valueOf(s).split("\\s+");
-        int size = 0;
+        int size;
         if (str[0].length() > 0) {
             size = getReplyTagSize(str[0]);
         } else {
             return s;
         }
         if (str[0].length() == size) {
-            textSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#D0BCFF")), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(Color.parseColor("#D0BCFF")), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
-            textSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFFFF")), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFFFF")), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        return textSpan;
+        return s;
     }
 
     public int getReplyTagSize(String str) {
@@ -231,17 +220,13 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
     public void setReply(CommentHolder viewHolder, Comment model) {
         Button replyButton = viewHolder.getReply();
         String username = model.getUserId();
-
-        replyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] str = String.valueOf(textView.getEditText().getText()).split("\\s+");
-                textView.getEditText().setText( "@" + username + " ");
-                textView.setHint("Reply");
-                textView.getEditText().setSelection(textView.getEditText().getText().length());
-                textView.getEditText().requestFocus();
-                textView.setTag(model.getDocumentId());
-            }
+        EditText editText = textView.getEditText();
+        replyButton.setOnClickListener(view -> {
+            editText.setText( "@" + username + " ");
+            textView.setHint("Reply");
+            editText.setSelection(editText.getText().length());
+            editText.requestFocus();
+            textView.setTag(model.getDocumentId());
         });
     }
 

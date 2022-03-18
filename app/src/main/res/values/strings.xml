@@ -39,10 +39,12 @@
     <string name="comments_empty_recyclerview">No comments</string>
     <string name="editText_comment_field">Comment</string>
     <string name="comments_textviewplaceholder">Comment</string>
+    <string name="comments_textviewplaceholder_reply">Reply</string>
     <string name="comments_done_button">Close</string>
     <string name="comments_report">Report</string>
     <string name="date_recent_post">Just now</string>
     <string name="comments_op">✪ OP</string>
     <string name="comments_you_op">✪ YOU</string>
     <string name="comments_you">YOU</string>
+    <string name="comment_reply_button">REPLY</string>
 </resources>

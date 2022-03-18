@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,8 +26,6 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CommentsActivity extends FirebaseAuthentication {
 
@@ -37,7 +34,6 @@ public class CommentsActivity extends FirebaseAuthentication {
     private Button heart;
     private TextView text;
     private TextInputLayout textEditor;
-    private LinearProgressIndicator progressBar;
     private Confession model;
     private CommentsAdapter adapter;
     private boolean allowPost;
@@ -58,10 +54,6 @@ public class CommentsActivity extends FirebaseAuthentication {
 
     private void initializeViews() {
         Confession model = (Confession) getIntent().getSerializableExtra("postObject");
-
-        progressBar = findViewById(R.id.progressBar_comments);
-        setProgressBar(false);
-
         time = findViewById(R.id.textView_comments_time);
         username = findViewById(R.id.textView_comments_username);
         text = findViewById(R.id.textview_comments_text);
@@ -70,32 +62,65 @@ public class CommentsActivity extends FirebaseAuthentication {
 
         username.setText(model.getDisplayName());
         text.setText(model.getText());
+        setTime(time);
+        setIfUserHeart(model);
+        setHeartClickListener(heart);
+        handleFirebaseQuery();
+        setCommentPlaceHolder(model);
+        setTextInputLayoutListeners(textEditor);
+    }
 
-        Date now = new Date(System.currentTimeMillis());
-        long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
-        String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
-        String lessThan24Hours = timeElapsed / 60 + " Hour" + ((timeElapsed / 60 == 1) ? "" : "s") + " Ago";
-        String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
+    public void setTextInputLayoutListeners(TextInputLayout textEditor) {
+        textEditor.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        if (timeElapsed < 60) {
-            if(timeElapsed == 0) {
-                time.setText(R.string.date_recent_post);
-            } else {
-                time.setText(timeLessThan60minutes);
             }
-        } else if (timeElapsed < 1440) {
-            time.setText(lessThan24Hours);
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!isTextValid(s)) {
+                    allowPost = false;
+                    textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24);
+                    textEditor.setEndIconTintList(getColorStateList(R.color.disabledSend));
+                    textEditor.setHint(R.string.comments_textviewplaceholder);
+                } else {
+                    allowPost = true;
+                    textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24_success);
+                    textEditor.setEndIconTintList(getColorStateList(R.color.BTCPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setReplyTag(s);
+            }
+        });
+
+        textEditor.setEndIconOnClickListener(view -> {
+                    if (allowPost) {
+                        textEditor.setEnabled(false);
+                        addCommentToFirebase(textEditor.getEditText().getText().toString(), (String) textEditor.getTag());
+                        textEditor.setTag(null);
+                    }
+                }
+        );
+    }
+
+    public void setCommentPlaceHolder(Confession model) {
+        int comments = model.getComments();
+        textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
+        if (comments > 0) {
+            textview_empty_placeholder.setText("");
+            textview_empty_placeholder.setVisibility(View.GONE);
         } else {
-            time.setText(MoreThan24Hours);
+            textview_empty_placeholder.setVisibility(View.VISIBLE);
+            textview_empty_placeholder.setText(R.string.comments_empty_recyclerview);
         }
+    }
 
-
-        if (model.getHearts().contains(currentUser.getUid())) {
-            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
-        } else {
-            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
-        }
-
+    public void setHeartClickListener(Button heart) {
         heart.setOnClickListener(view -> {
             if (model.getHearts().contains(currentUser.getUid())) {
                 model.removeHeart(currentUser.getUid());
@@ -114,77 +139,54 @@ public class CommentsActivity extends FirebaseAuthentication {
                     .document(model.getDocumentId())
                     .update("popularityIndex", model.getPopularityIndex());
         });
-
-
-        handleFirebaseQuery();
-        int comments = model.getComments();
-
-        textview_empty_placeholder = findViewById(R.id.textview_empty_placeholder);
-        if (comments > 0) {
-            textview_empty_placeholder.setText("");
-            textview_empty_placeholder.setVisibility(View.GONE);
-        } else {
-            textview_empty_placeholder.setVisibility(View.VISIBLE);
-            textview_empty_placeholder.setText(R.string.comments_empty_recyclerview);
-        }
-
-        textEditor.getEditText().addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!isTextValid(s)) {
-                    allowPost = false;
-                    textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24);
-                    textEditor.setEndIconTintList(getColorStateList(R.color.disabledSend));
-                    textEditor.setHint("Comment");
-                } else {
-                   allowPost = true;
-                    textEditor.setEndIconDrawable(R.drawable.ic_baseline_arrow_circle_up_24_success);
-                    textEditor.setEndIconTintList(getColorStateList(R.color.BTCPrimary));
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                setReplyTag(s);
-            }
-        });
-
-        textEditor.setEndIconOnClickListener(view ->{
-            if (allowPost){
-                textEditor.setEnabled(false);
-                setProgressBar(true);
-                addCommentToFirebase(textEditor.getEditText().getText().toString(), (String) textEditor.getTag());
-                textEditor.setTag(null);
-            }
-        }
-        );
-
     }
 
-    public void setReplyTag(Editable s) {
-        Spannable textSpan = s;
+    public void setIfUserHeart(Confession model) {
+        if (model.getHearts().contains(currentUser.getUid())) {
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_filled);
+        } else {
+            ((MaterialButton) heart).setIconResource(R.drawable.ic_heart_outline);
+        }
+    }
+
+    public void setTime(TextView time) {
+        Date now = new Date(System.currentTimeMillis());
+        long timeElapsed = getDateDiff(model.getDate(), now, TimeUnit.MINUTES);
+        String timeLessThan60minutes = timeElapsed + " Minute" + ((timeElapsed == 1) ? "" : "s") + " Ago";
+        String lessThan24Hours = timeElapsed / 60 + " Hour" + ((timeElapsed / 60 == 1) ? "" : "s") + " Ago";
+        String MoreThan24Hours = timeElapsed / 1440 + " Day" + ((timeElapsed / 1440 == 1) ? "" : "s") + " Ago";
+
+        if (timeElapsed < 60) {
+            if (timeElapsed == 0) {
+                time.setText(R.string.date_recent_post);
+            } else {
+                time.setText(timeLessThan60minutes);
+            }
+        } else if (timeElapsed < 1440) {
+            time.setText(lessThan24Hours);
+        } else {
+            time.setText(MoreThan24Hours);
+        }
+    }
+
+    public void setReplyTag(Spannable s) {
         String[] str;
         str = String.valueOf(s).split("\\s+");
-        int size = 0;
+        int size;
         if (str.length > 0 && str[0].length() > 0) {
             size = getReplyTagSize(str[0]);
         } else {
-            textEditor.setHint("Comment");
+            textEditor.setHint(R.string.comments_textviewplaceholder);
             textEditor.setTag(null);
             return;
         }
         if (str[0].length() == size) {
-            textEditor.setHint("Reply");
-            textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textEditor.setHint(R.string.comments_textviewplaceholder_reply);
+            s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.BTCPrimary)), 0, size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
-            textEditor.setHint("Comment");
+            textEditor.setHint(R.string.comments_textviewplaceholder);
             textEditor.setTag(null);
-            textSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 
@@ -199,7 +201,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         return 0;
     }
 
-    private boolean isTextValid(CharSequence text){
+    private boolean isTextValid(CharSequence text) {
         return text.length() >= 1;
     }
 
@@ -248,10 +250,7 @@ public class CommentsActivity extends FirebaseAuthentication {
         db.collection("confessions")
                 .document(model.getDocumentId())
                 .update("popularityIndex", model.getPopularityIndex());
-
-        setProgressBar(false);
     }
-
 
 
     private void handleFirebaseQuery() {
@@ -280,11 +279,4 @@ public class CommentsActivity extends FirebaseAuthentication {
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    private void setProgressBar(Boolean value) {
-        if (value) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
 }
