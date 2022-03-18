@@ -118,7 +118,7 @@ public class ProfileActivity extends FirebaseAuthentication {
         usernameTextInputLayout = findViewById(R.id.TextInputLayout_profile_username);
         usernameTextView = usernameTextInputLayout.getEditText();
         usernameTextView.setText(auth.getCurrentUser()
-                .getDisplayName());
+                .getDisplayName().split("#")[1]);
 
         oldPasswordTextInputLayout = findViewById(R.id.TextInputLayout_profile_oldpassword);
         oldPasswordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
