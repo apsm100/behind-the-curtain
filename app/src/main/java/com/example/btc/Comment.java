@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Comment  implements Serializable {
+@SuppressWarnings("unused")
+public class Comment implements Serializable {
     @DocumentId
     private String documentId;
     private String userId;
@@ -18,17 +19,58 @@ public class Comment  implements Serializable {
     private String commentDocumentId;
     private String replyDocumentId;
 
+    public Comment() {
+        // Empty constructor needed for firebase.
+    }
+
+    public Comment(String userId, String data, Date date, ArrayList<String> upVoteIds, ArrayList<String> downVoteIds, String commentDocumentId, String replyDocumentId) {
+        this.date = date;
+        this.userId = userId;
+        this.data = data;
+        this.upVoteIds = upVoteIds;
+        this.downVoteIds = downVoteIds;
+        this.commentDocumentId = commentDocumentId;
+        this.replyDocumentId = replyDocumentId;
+    }
+
     public String getDocumentId() {
         return documentId;
     }
 
-    public Comment(){}
     public String getUserId() {
         return userId;
     }
 
     public String getReplyDocumentId() {
         return replyDocumentId;
+    }
+
+    public void setVoteCount() {
+        voteCount = upVoteIds.size() - downVoteIds.size();
+    }
+
+    public ArrayList<String> getUpVoteIds() {
+        return upVoteIds;
+    }
+
+    public ArrayList<String> getDownVoteIds() {
+        return downVoteIds;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getCommentDocumentId() {
+        return commentDocumentId;
+    }
+
+    public String getData() {
+        return data;
     }
 
     public boolean addUpVote(String userId) {
@@ -67,41 +109,4 @@ public class Comment  implements Serializable {
         return false;
     }
 
-    public void setVoteCount() {
-        voteCount = upVoteIds.size() - downVoteIds.size();
-    }
-
-    public ArrayList<String> getUpVoteIds() {
-        return upVoteIds;
-    }
-
-    public ArrayList<String> getDownVoteIds() {
-        return downVoteIds;
-    }
-
-    public int getVoteCount() {
-        return voteCount;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getCommentDocumentId() {
-        return commentDocumentId;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public Comment(String userId, String data, Date date, ArrayList<String> upVoteIds, ArrayList<String> downVoteIds, String commentDocumentId, String replyDocumentId) {
-        this.date = date;
-        this.userId = userId;
-        this.data = data;
-        this.upVoteIds = upVoteIds;
-        this.downVoteIds = downVoteIds;
-        this.commentDocumentId = commentDocumentId;
-        this.replyDocumentId =replyDocumentId;
-    }
 }

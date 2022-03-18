@@ -21,13 +21,15 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class SignupActivity extends FirebaseAuthentication {
 
-    String[] listOfSchools = new String[]{"BCIT", "SFU", "UBC"};
+    final String[] listOfSchools = new String[]{"BCIT", "SFU", "UBC"};
     String currentlySelectedSchool;
 
     LinearProgressIndicator progressBar;
@@ -67,7 +69,7 @@ public class SignupActivity extends FirebaseAuthentication {
         // USERNAME //
         usernameTextInputLayout = findViewById(R.id.editTextLayout_signup_username);
         usernameTextView = usernameTextInputLayout.getEditText();
-        usernameTextView.setText(getRandomNumberString());
+        Objects.requireNonNull(usernameTextView).setText(getRandomNumberString());
 
         usernameTextInputLayout.setHelperText("Username should be a 6 digit number");
         usernameTextInputLayout.setFocusable(false);
@@ -94,7 +96,7 @@ public class SignupActivity extends FirebaseAuthentication {
         passwordTextInputLayout = findViewById(R.id.editTextLayout_signup_password);
         passwordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
         passwordTextView = passwordTextInputLayout.getEditText();
-        passwordTextView.addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(passwordTextView).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -116,7 +118,7 @@ public class SignupActivity extends FirebaseAuthentication {
         passwordConfirmTextInputLayout = findViewById(R.id.editTextLayout_signup_confirm_password);
         passwordConfirmTextInputLayout.setHelperText("Password must match password entered above");
         passwordConfirmTextView = passwordConfirmTextInputLayout.getEditText();
-        passwordConfirmTextView.addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(passwordConfirmTextView).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -258,8 +260,10 @@ public class SignupActivity extends FirebaseAuthentication {
                     if(task.isSuccessful()){
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(user.getDisplayName()).build();
-                        auth.getCurrentUser().updateProfile(profileUpdates)
+                        Objects.requireNonNull(auth.getCurrentUser()).updateProfile(profileUpdates)
                                 .addOnCompleteListener(success -> addUserToCollection(user));
+                    }else {
+                        setErrorMessageFromException(task.getException());
                     }
                 });
     }
@@ -281,11 +285,6 @@ public class SignupActivity extends FirebaseAuthentication {
                     EditText editTextName = findViewById(R.id.editText_signup_username);
                     editTextName.setText(user.getUsername());
                 });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     public static String getRandomNumberString() {

@@ -18,8 +18,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class ProfileActivity extends FirebaseAuthentication {
 
     LinearProgressIndicator progressBar;
@@ -63,7 +65,7 @@ public class ProfileActivity extends FirebaseAuthentication {
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             Snackbar.make(findViewById(R.id.ContraintLayout_profile),
-                    e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
             disableUpdateButton();
             setProgressBar(false);
         }
@@ -71,6 +73,7 @@ public class ProfileActivity extends FirebaseAuthentication {
 
     private void updateButtonClicked(View view) {
         if (isValidProfile()) {
+            setProgressBar(true);
             String oldPassword = oldPasswordTextView.getText().toString();
             reAuthUser(currentUser.getEmail(), oldPassword);
         }
@@ -117,13 +120,13 @@ public class ProfileActivity extends FirebaseAuthentication {
         // USERNAME //
         usernameTextInputLayout = findViewById(R.id.TextInputLayout_profile_username);
         usernameTextView = usernameTextInputLayout.getEditText();
-        usernameTextView.setText(auth.getCurrentUser()
-                .getDisplayName().split("#")[1]);
+        Objects.requireNonNull(usernameTextView).setText(Objects.requireNonNull(Objects.requireNonNull(auth.getCurrentUser())
+                .getDisplayName()).split("#")[1]);
 
         oldPasswordTextInputLayout = findViewById(R.id.TextInputLayout_profile_oldpassword);
         oldPasswordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
         oldPasswordTextView = oldPasswordTextInputLayout.getEditText();
-        oldPasswordTextView.addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(oldPasswordTextView).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -144,7 +147,7 @@ public class ProfileActivity extends FirebaseAuthentication {
         newPasswordTextInputLayout = findViewById(R.id.TextInputLayout_profile_newpassword);
         newPasswordTextInputLayout.setHelperText("Password must be between 6 to 15 characters long");
         newPasswordTextView = newPasswordTextInputLayout.getEditText();
-        newPasswordTextView.addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(newPasswordTextView).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -220,11 +223,11 @@ public class ProfileActivity extends FirebaseAuthentication {
                         updatePassword();
                     }else {
                         oldPasswordTextInputLayout.setError("Current password is incorrect");
+                        setProgressBar(false);
                     }
                 });
     }
 
-    @Override
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {

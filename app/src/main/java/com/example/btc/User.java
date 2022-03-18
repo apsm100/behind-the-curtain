@@ -2,6 +2,7 @@ package com.example.btc;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class User implements Serializable {
 
     private String email;
@@ -17,11 +18,13 @@ public class User implements Serializable {
     }
 
     public String getSchool() {
+
+        // empty getter for firebase.
         return school;
     }
 
     public User() {
-        // empty overloaded constructor
+        // empty overloaded constructor for firebase
     }
 
     public String getUsername() {

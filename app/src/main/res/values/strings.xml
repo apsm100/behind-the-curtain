@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">BTC</string>
     <string name="all_label_username">Username</string>
     <string name="all_label_password">Password</string>
@@ -21,30 +21,32 @@
     <string name="profile_button_update">Update</string>
     <string name="profile_button_cancel">Cancel</string>
     <string name="profile_button_signout">Sign out</string>
-    <string name="text_oldPass">Old Password</string>
+    <string name="text_oldPass" tools:keep="@string/text_oldPass">Old Password</string>
     <string name="all_label_oldPassword">Old Password</string>
     <string name="all_label_newPassword">New Password</string>
     <string name="new_confession_enter_text">Enter your confession here…</string>
     <string name="new_confession_post">Post</string>
-    <string name="new_confession_close">Close</string>
-    <string name="login_errormessageplaceholder">Error Message Placeholder</string>
+    <string name="login_errormessageplaceholder" tools:keep="@string/login_errormessageplaceholder">Error Message Placeholder</string>
     <string name="login_blockedmessage">We have blocked all request from this device due to unusual activity. Try again later</string>
     <string name="newconfession_cancel">Cancel</string>
     <string name="itemcomment_text_placeholder">This is a placeholder comment!</string>
     <string name="itemcomment_timeplaceholder">1 HOUR AGO</string>
     <string name="itemcomment_displaynameplaceholder">BCIT#495898</string>
-    <string name="confessions_close">Close</string>
-    <string name="comments_addnewcommentplaceholder">Add New Comment</string>
+    <string name="confessions_close" tools:keep="@string/confessions_close">Close</string>
+    <string name="comments_addnewcommentplaceholder" tools:keep="@string/comments_addnewcommentplaceholder">Add New Comment</string>
     <string name="comments_textplaceholder">This is a placeholder for a post text</string>
     <string name="comments_empty_recyclerview">No comments</string>
-    <string name="editText_comment_field">Comment</string>
+    <string name="editText_comment_field" tools:keep="@string/editText_comment_field">Comment</string>
     <string name="comments_textviewplaceholder">Comment</string>
     <string name="comments_textviewplaceholder_reply">Reply</string>
-    <string name="comments_done_button">Close</string>
-    <string name="comments_report">Report</string>
+    <string name="comments_done_button" tools:keep="@string/comments_done_button">Close</string>
+    <string name="comments_report" tools:keep="@string/comments_report">Report</string>
     <string name="date_recent_post">Just now</string>
     <string name="comments_op">✪ OP</string>
     <string name="comments_you_op">✪ YOU</string>
     <string name="comments_you">YOU</string>
     <string name="comment_reply_button">REPLY</string>
+    <string name="all_at">\@</string>
+    <string name="all_space"> </string>
+
 </resources>

@@ -15,8 +15,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class LoginActivity extends FirebaseAuthentication {
 
     LinearProgressIndicator progressBar;
@@ -46,7 +48,7 @@ public class LoginActivity extends FirebaseAuthentication {
 
         usernameTextInputLayout = findViewById(R.id.TextInputLayout_login_username);
         usernameTextView = usernameTextInputLayout.getEditText();
-        usernameTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(usernameTextInputLayout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -69,7 +71,7 @@ public class LoginActivity extends FirebaseAuthentication {
 
         passwordTextInputLayout = findViewById(R.id.TextInputLayout_login_password);
         passwordTextView = passwordTextInputLayout.getEditText();
-        passwordTextView.addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(passwordTextView).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -206,7 +208,6 @@ public class LoginActivity extends FirebaseAuthentication {
 
 
 
-    @Override
     protected void onStart() {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Confession implements Serializable {
+    @SuppressWarnings("unused")
     @DocumentId
     private String documentId;
     private String displayName;
@@ -47,11 +48,6 @@ public class Confession implements Serializable {
 
     public void addComment() {
         comments += 1;
-        setPopularityIndex();
-    }
-
-    public void removeComment() {
-        comments -= 1;
         setPopularityIndex();
     }
 

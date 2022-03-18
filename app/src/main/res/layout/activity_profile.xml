@@ -12,7 +12,8 @@
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
     android:theme="@style/Theme.BTC"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/imageView"
@@ -67,7 +68,6 @@
         tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_profile_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -98,7 +98,6 @@
         tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_profile_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -128,7 +127,6 @@
         tools:layout_conversion_absoluteWidth="351dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_profile_newpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

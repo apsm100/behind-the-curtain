@@ -6,7 +6,6 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_item_confession"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="4dp"
@@ -82,7 +81,6 @@
                         app:iconTint="#E6E1E5" />
 
                     <Button
-                        android:id="@+id/Button_itemconfession_more"
                         style="?attr/borderlessButtonStyle"
                         android:layout_width="48dp"
                         android:layout_height="match_parent"

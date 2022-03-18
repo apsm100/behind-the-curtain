@@ -11,7 +11,8 @@
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
     android:theme="@style/Theme.BTC"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -49,7 +50,6 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -72,7 +72,6 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -112,7 +111,6 @@
         android:textColor="#E88181" />
 
     <TextView
-        android:id="@+id/TextView_login_bottomhelptext"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"

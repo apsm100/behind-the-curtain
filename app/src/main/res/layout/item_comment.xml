@@ -5,7 +5,8 @@
     android:id="@+id/constraintLayout_item_comment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#1C1B1F">
+    android:background="#1C1B1F"
+    tools:ignore="Overdraw">
 
     <TextView
         android:id="@+id/textView_itemcomment_time"
@@ -51,7 +52,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView_itemcomment_time" />
 
     <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/MaterialDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dividerColor="#454545"

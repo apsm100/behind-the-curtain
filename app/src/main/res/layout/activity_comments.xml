@@ -3,17 +3,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1B1F"
     android:backgroundTint="#14D0BCFF"
     android:backgroundTintMode="screen"
     android:fitsSystemWindows="true"
-    android:theme="@style/Theme.BTC">
+    android:theme="@style/Theme.BTC"
+    tools:ignore="Overdraw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
@@ -161,7 +160,6 @@
                 app:placeholderTextColor="#D0BCFF">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TextView_comments_newcomment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
@@ -182,7 +180,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
