@@ -175,7 +175,6 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
        });
         replyPath.setVisibility(View.GONE);
        if (model.getReplyDocumentId() != null) {
-           System.out.println(model.getReplyDocumentId());
            replyPath.setVisibility(View.VISIBLE);
        }
     }
