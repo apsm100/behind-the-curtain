@@ -57,18 +57,54 @@
         app:dividerColor="#454545"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:gravity="end"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_itemcomment_text">
+
+        <TextView
+            android:id="@+id/textView_comment_vote_count"
+            android:layout_width="30dp"
+            android:layout_height="19dp"
+            android:minWidth="30dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_comment_downvote"
+            app:layout_constraintStart_toEndOf="@+id/button_comment_upvote"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_comment_reply_path"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:icon="@drawable/ic_reply_path"
+            app:iconGravity="textEnd"
+            app:iconSize="24dp"
+            app:iconTint="@color/BTCPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_comment_downvote"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/button_comment_reply"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/comment_reply_button"
+            android:textColor="@color/voteInactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_comment_upvote"
@@ -79,14 +115,10 @@
             app:iconGravity="textEnd"
             app:iconSize="30dp"
             app:iconTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
-
-        <TextView
-            android:id="@+id/textView_comment_vote_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="30dp"
-            android:textAlignment="center" />
 
         <Button
             android:id="@+id/button_comment_downvote"
@@ -97,32 +129,9 @@
             app:iconGravity="textEnd"
             app:iconSize="30dp"
             app:iconTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_comment_vote_count"
             tools:ignore="SpeakableTextPresentCheck" />
-
-        <Button
-            android:id="@+id/button_comment_reply_path"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="6dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="visible"
-            app:icon="@drawable/ic_reply_path"
-            app:iconGravity="textEnd"
-            app:iconSize="24dp"
-            app:iconTint="@color/BTCPrimary"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <Button
-            android:id="@+id/button_comment_reply"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:text="@string/comment_reply_button"
-            android:textAlignment="textEnd"
-            android:textColor="@color/voteInactive" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
