@@ -16,7 +16,6 @@
     <string name="item_confession_textplaceholder">Placeholder comment!</string>
     <string name="item_confession_usernameplaceholder">SCH#123456</string>
     <string name="item_confession_heartplaceholder">20</string>
-    <string name="main_newconfessionplaceholder">New Confession</string>
     <string name="profile_remindermessageplaceholder">Make sure to screenshot this in case you forget your username</string>
     <string name="profile_button_update">Update</string>
     <string name="profile_button_cancel">Cancel</string>
@@ -46,7 +45,5 @@
     <string name="comments_you_op">✪ YOU</string>
     <string name="comments_you">YOU</string>
     <string name="comment_reply_button">REPLY</string>
-    <string name="all_at">\@</string>
-    <string name="all_space"> </string>
 
 </resources>
