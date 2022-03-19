@@ -41,9 +41,12 @@
         android:id="@+id/TabLayout_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="0.5"
         android:background="#001C1B1F"
+        android:paddingBottom="10dp"
+        app:tabGravity="fill"
+        app:tabIndicatorGravity="bottom"
         tools:layout_editor_absoluteY="75dp">
 
         <com.google.android.material.tabs.TabItem
@@ -80,15 +83,15 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.01" />
+        android:layout_weight="0" />
 
     <Button
         android:id="@+id/button_home_newconfession"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="0.35"
         android:backgroundTint="#4A4458"
         android:textColor="#E8DEF8"
@@ -97,14 +100,5 @@
         app:iconPadding="0dp"
         app:iconSize="32dp"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="0.2"
-        android:text="@string/main_newconfessionplaceholder"
-        android:textColor="#E8DEF8" />
 
 </LinearLayout>
