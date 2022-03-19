@@ -72,13 +72,14 @@
 
         <Button
             android:id="@+id/button_comment_upvote"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="54dp"
             android:layout_height="48dp"
-            android:background="#00FFFFFF"
             app:icon="@drawable/ic_upvote_inactive"
             app:iconGravity="textEnd"
             app:iconSize="30dp"
-            app:iconTint="@null" />
+            app:iconTint="@null"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/textView_comment_vote_count"
@@ -89,33 +90,35 @@
 
         <Button
             android:id="@+id/button_comment_downvote"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="#00FFFFFF"
             app:icon="@drawable/ic_downvote_inactive"
             app:iconGravity="textEnd"
             app:iconSize="30dp"
-            app:iconTint="@null" />
+            app:iconTint="@null"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/button_comment_reply_path"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="6dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#00FFFFFF"
             android:visibility="visible"
             app:icon="@drawable/ic_reply_path"
             app:iconGravity="textEnd"
             app:iconSize="24dp"
-            app:iconTint="@color/BTCPrimary" />
+            app:iconTint="@color/BTCPrimary"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/button_comment_reply"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_weight="1"
-            android:backgroundTint="#00FFFFFF"
             android:text="@string/comment_reply_button"
             android:textAlignment="textEnd"
             android:textColor="@color/voteInactive" />
