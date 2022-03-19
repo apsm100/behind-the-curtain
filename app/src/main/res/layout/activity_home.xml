@@ -59,7 +59,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_baseline_refresh_24"
+            android:icon="@drawable/ic_recents"
             android:text="@string/main_tabbarrecent"
             tools:ignore="ImageContrastCheck" />
 
