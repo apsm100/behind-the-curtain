@@ -54,7 +54,7 @@ public class HomeActivity extends FirebaseAuthentication {
                         tab.setIcon(R.drawable.ic_baseline_trending_up_24);
                     }else {
                         tab.setText("Recent");
-                        tab.setIcon(R.drawable.ic_baseline_refresh_24);
+                        tab.setIcon(R.drawable.ic_recents);
 
                     }
                 });
