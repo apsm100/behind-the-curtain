@@ -25,17 +25,26 @@
 
     <Button
         android:id="@+id/button_home_profile"
+        style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_gravity="start"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="2dp"
         android:layout_weight="0.4"
-        android:backgroundTint="#00C80000"
-        app:icon="@drawable/ic_baseline_person_outline_24"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="#BTC"
+        android:textSize="18sp"
+        app:icon="@drawable/logo"
+        app:iconGravity="textEnd"
         app:iconPadding="0dp"
         app:iconSize="30dp"
         app:iconTint="@color/BTCPrimary"
+        app:iconTintMode="src_in"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.tabs.TabLayout
