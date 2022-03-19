@@ -216,10 +216,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment, CommentHo
         Button replyButton = viewHolder.getReply();
         String username = model.getUserId();
         EditText editText = textView.getEditText();
-        String usernameString = R.string.all_at + username + R.string.all_space;
 
         replyButton.setOnClickListener(view -> {
-            Objects.requireNonNull(editText).setText(usernameString);
+            Objects.requireNonNull(editText).setText("@" + username + " ");
             textView.setHint("Reply");
             editText.setSelection(editText.getText().length());
             editText.requestFocus();
