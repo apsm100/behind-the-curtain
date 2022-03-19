@@ -140,7 +140,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_comments_newcomment"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:hint="@string/comments_textviewplaceholder"
                 android:textColorHint="#D0BCFF"
