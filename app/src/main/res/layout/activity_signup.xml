@@ -16,6 +16,7 @@
     tools:ignore="Overdraw">
 
     <ImageView
+        android:id="@+id/imageView_signup_logo"
         android:layout_width="250dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
@@ -27,7 +28,7 @@
         android:textColorHint="#D0BCFF"
         app:hintTextColor="#D0BCFF"
         app:placeholderTextColor="#D0BCFF"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/ic_logo"
         tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -46,7 +47,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.30"
         android:hint="@string/all_label_school"
         android:textColorHint="#D0BCFF"
         app:boxStrokeColor="#D0BCFF"
@@ -60,9 +61,9 @@
             style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:dropDownHeight="wrap_content"
             android:focusable="false"
-            android:cursorVisible="false"
             android:hint="@string/all_label_school"
             android:isScrollContainer="false"
             android:textColor="@color/white" />
@@ -75,7 +76,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.30"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -99,7 +100,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.30"
         android:hint="@string/all_label_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -122,7 +123,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.30"
         android:hint="@string/all_label_confirm_password"
         android:textColorHint="#D0BCFF"
         app:boxStrokeWidth="2dp"
@@ -132,15 +133,16 @@
         app:placeholderTextColor="#D0BCFF">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:nextFocusDown="@+id/button_signup_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:nextFocusDown="@+id/button_signup_signup"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_signup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
@@ -178,11 +180,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/textview_signup_helpertext"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
-        android:layout_weight="0.15"
+        android:layout_weight=".20"
         android:gravity="center"
         android:text="@string/signup_helpmessageplaceholder"
         android:textColor="#848083"

@@ -16,19 +16,16 @@
     tools:ignore="Overdraw">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:id="@+id/imageView_profile_logo"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="24dp"
         android:contentDescription="@string/all_logo_description"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/TextInputLayout_profile_username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/ic_logo"
         tools:ignore="ImageContrastCheck"
         tools:layout_conversion_absoluteHeight="122dp"
         tools:layout_conversion_absoluteWidth="351dp" />
@@ -36,22 +33,21 @@
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/ProgressBar_profile"
-        app:indicatorColor="@color/purple_200"
-        app:trackColor="@color/BTCPrimary"
-        android:indeterminate="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        android:indeterminate="true"
+        app:indicatorColor="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/TextInputLayout_profile_username"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_profile_logo"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/imageView_profile_logo"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profile_logo"
+        app:trackColor="@color/BTCPrimary" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputLayout_profile_username"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginTop="5dp"
         android:enabled="false"
         android:hint="@string/all_label_username"
         android:textColorHint="#D0BCFF"
@@ -60,9 +56,8 @@
         app:endIconTint="#CAC4D0"
         app:hintTextColor="#D0BCFF"
         app:layout_constraintBottom_toTopOf="@+id/TextInputLayout_profile_oldpassword"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/ProgressBar_profile"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_profile_logo"
+        app:layout_constraintStart_toStartOf="@+id/imageView_profile_logo"
         app:placeholderTextColor="#D0BCFF"
         tools:layout_conversion_absoluteHeight="107dp"
         tools:layout_conversion_absoluteWidth="351dp">
@@ -185,8 +180,10 @@
         tools:layout_conversion_absoluteWidth="101dp" />
 
     <TextView
+        android:id="@+id/textview_profile_helpmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"
         android:text="@string/profile_remindermessageplaceholder"
@@ -205,6 +202,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="168dp" />
+        app:layout_constraintGuide_begin="182dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

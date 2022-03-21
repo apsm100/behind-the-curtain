@@ -15,6 +15,7 @@
     tools:ignore="Overdraw">
 
     <ImageView
+        android:id="@+id/imageview_login_logo"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
@@ -23,7 +24,7 @@
         android:layout_weight="1"
         android:contentDescription="@string/all_logo_description"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/ic_logo"
         tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -112,6 +113,7 @@
         android:textColor="#E88181" />
 
     <TextView
+        android:id="@+id/textview_login_helpmessage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
