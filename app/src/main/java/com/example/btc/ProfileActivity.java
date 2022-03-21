@@ -222,7 +222,7 @@ public class ProfileActivity extends FirebaseAuthentication {
                         updatePassword();
                     }else {
                         oldPasswordTextInputLayout.setError("Current password is incorrect");
-                        
+                        setProgressBar(false);
                     }
                 });
     }

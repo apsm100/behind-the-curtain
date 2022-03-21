@@ -64,7 +64,6 @@
             android:cursorVisible="false"
             android:dropDownHeight="wrap_content"
             android:focusable="false"
-            android:hint="@string/all_label_school"
             android:isScrollContainer="false"
             android:textColor="@color/white" />
 
@@ -146,7 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.16"
         app:layout_constraintEnd_toEndOf="@+id/button_signup_cancel"
         app:layout_constraintStart_toEndOf="@+id/button_signup_cancel">
 
@@ -160,6 +159,7 @@
             android:backgroundTint="#4A4458"
             android:text="@string/all_cancel"
             android:textColor="#E8DEF8"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_signup_signup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -173,6 +173,7 @@
             android:backgroundTint="@color/BTCPrimary"
             android:text="@string/all_label_signup"
             android:textColor="#381E72"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_signup_cancel"
             app:layout_constraintTop_toTopOf="parent" />

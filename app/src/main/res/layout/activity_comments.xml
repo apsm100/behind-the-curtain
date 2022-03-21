@@ -41,11 +41,12 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/rounded_background"
             android:backgroundTintMode="multiply"
             android:fitsSystemWindows="true"
             android:textAlignment="textStart"
-            app:layout_constraintBottom_toTopOf="@+id/button_comments_done"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,10 +68,10 @@
 
             <Button
                 android:id="@+id/button_comments_heart"
+                style="?attr/borderlessButtonStyle"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:backgroundTint="@color/fui_transparent"
                 app:icon="@drawable/ic_heart_outline"
                 app:iconGravity="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -171,17 +172,6 @@
             <!-- Buttons -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/button_comments_done"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:backgroundTint="#00D0BCFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
