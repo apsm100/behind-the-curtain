@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null">
+    android:background="@color/BTCSecondaryDark"
+    android:backgroundTint="#14D0BCFF"
+    android:backgroundTintMode="screen"
+    android:orientation="vertical"
+    android:theme="@style/Theme.BTC"
+    tools:context=".HomeActivity"
+    tools:ignore="Overdraw">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="match_parent"
@@ -19,177 +23,97 @@
         app:indicatorColor="@color/purple_200"
         app:trackColor="@color/BTCPrimary" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <Button
+        android:id="@+id/button_home_profile"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:layout_weight="0.4"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="#BTC"
+        android:textSize="18sp"
+        app:icon="@drawable/logo"
+        app:iconGravity="textEnd"
+        app:iconPadding="0dp"
+        app:iconSize="30dp"
+        app:iconTint="@color/BTCPrimary"
+        app:iconTintMode="src_in"
+        tools:ignore="SpeakableTextPresentCheck" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TabLayout_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.5"
+        android:background="#001C1B1F"
+        android:paddingBottom="10dp"
+        app:tabGravity="fill"
+        app:tabIndicatorGravity="bottom"
+        tools:layout_editor_absoluteY="75dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_trending_up_24"
+            android:text="@string/main_tabbarpopular" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_recents"
+            android:text="@string/main_tabbarrecent"
+            tools:ignore="ImageContrastCheck" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/ViewPager_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="3.5"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollbarSize="0dp"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="165dp" />
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/BTCSecondaryDark"
-        android:backgroundTint="#14D0BCFF"
-        android:backgroundTintMode="screen">
+        android:background="#991C1B1F">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button_home_newconfession"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:contentScrim="#2C2832"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#4A4458"
+            android:textColor="#E8DEF8"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="32dp"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+    </FrameLayout>
 
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:scrimAnimationDuration="250"
-            app:toolbarId="@+id/toolbar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0"
-                android:paddingTop="15dp">
-
-                <Button
-                    android:id="@+id/button_home_profile"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="48dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
-                    android:textSize="18sp"
-                    app:icon="@drawable/ic_profile"
-                    app:iconGravity="textEnd"
-                    app:iconPadding="0dp"
-                    app:iconSize="30dp"
-                    app:iconTint="@color/BTCPrimary"
-                    app:iconTintMode="src_in"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_home_newconfession"
-                    app:layout_constraintStart_toEndOf="@+id/button_home_profile"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="50dp"
-                        android:layout_height="60dp"
-                        android:contentDescription="@string/all_logo_description"
-                        android:tintMode="multiply"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_logo" />
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:fontFamily="sans-serif-thin"
-                        android:gravity="center"
-                        android:text="@string/home_title"
-                        android:textColor="@color/BTCPrimary"
-                        android:textSize="24sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <Button
-                    android:id="@+id/button_home_newconfession"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="#E8DEF8"
-                    app:icon="@drawable/ic_baseline_add_24"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="32dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/TabLayout_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="#001C1B1F"
-                    android:paddingBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-                    app:tabGravity="fill"
-                    app:tabIndicatorGravity="bottom">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:icon="@drawable/ic_baseline_trending_up_24"
-                        android:text="@string/main_tabbarpopular" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:icon="@drawable/ic_recents"
-                        android:text="@string/main_tabbarrecent"
-                        tools:ignore="ImageContrastCheck" />
-
-
-                </com.google.android.material.tabs.TabLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/BTCSecondaryDark"
-            android:backgroundTint="#14D0BCFF"
-            android:backgroundTintMode="screen"
-            android:orientation="vertical"
-            android:theme="@style/Theme.BTC"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-            tools:context=".HomeActivity"
-            tools:ignore="Overdraw">
-
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/ViewPager_home"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="2dp"
-                android:layout_weight="3.5"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:scrollbarSize="0dp"
-                tools:layout_editor_absoluteX="6dp"
-                tools:layout_editor_absoluteY="165dp">
-
-            </androidx.viewpager2.widget.ViewPager2>
-
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
