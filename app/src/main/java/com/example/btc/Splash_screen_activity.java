@@ -19,7 +19,7 @@ public class Splash_screen_activity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(Splash_screen_activity.this,LoginActivity.class));
             finish();
-        },3500);
+        },2500);
 
     }
 }
