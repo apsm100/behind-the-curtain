@@ -20,7 +20,7 @@ public class Splash_screen_activity extends AppCompatActivity {
             startActivity(new Intent(Splash_screen_activity.this,LoginActivity.class));
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finishAfterTransition();
-        },2500);
+        },2300);
 
     }
 }
