@@ -46,5 +46,6 @@
     <string name="comments_you">YOU</string>
     <string name="comment_reply_button">REPLY</string>
     <string name="home_title">#BTC</string>
+    <string name="all_contentDescriptionPlaceholder">Image Place Holder</string>
 
 </resources>
