@@ -18,6 +18,7 @@ public class HomeActivity extends FirebaseAuthentication {
             Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(profileIntent);
         });
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
         Button newConfessionButton = findViewById(R.id.button_home_newconfession);
         newConfessionButton.setOnClickListener(this::newConfession);
