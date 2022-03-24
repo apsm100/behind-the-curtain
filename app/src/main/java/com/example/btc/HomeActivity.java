@@ -1,10 +1,15 @@
 package com.example.btc;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -19,12 +24,33 @@ public class HomeActivity extends FirebaseAuthentication {
             startActivity(profileIntent);
         });
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        floatingActionBarInit();
 
         Button newConfessionButton = findViewById(R.id.button_home_newconfession);
         newConfessionButton.setOnClickListener(this::newConfession);
         setViewAdapter();
+
     }
 
+    private void floatingActionBarInit(){
+        // register the floating action Button
+        final FloatingActionButton extendedFloatingActionButton = findViewById(R.id.floatingactionbar_home_newpost);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.appBarLayout_home);
+        AppBarLayout appBarLayout = findViewById(R.id.appbar);
+
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
+            boolean isContentHide = collapsingToolbarLayout.getScrimVisibleHeightTrigger() + Math.abs(verticalOffset) > collapsingToolbarLayout.getHeight();
+            if (isContentHide){
+                extendedFloatingActionButton.show();
+            }else {
+                extendedFloatingActionButton.hide();
+            }
+        });
+
+
+        extendedFloatingActionButton.setOnClickListener(this::newConfession);
+    }
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(firebaseAuth -> {
