@@ -1,6 +1,5 @@
 package com.example.btc;
 
-import androidx.core.widget.NestedScrollView;
 import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
