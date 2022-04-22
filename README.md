@@ -1,7 +1,7 @@
 ## Behind the Curtain
 An anonymous confession app for BCIT, UBC, and SFU students; built for Android. 
 
-* [General info](#general-info)
+* [General Info](#general-info)
 * [Screenshots](#screenshots)
 * [Technologies](#technologies)
 * [Dependencies](#dependencies)
