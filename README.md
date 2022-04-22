@@ -2,12 +2,14 @@
 An annonymous confession app for BCIT, UBC, and SFU students; built for Android. 
 
 * [General info](#general-info)
+* [Screenshots](#screenshots)
 * [Technologies](#technologies)
 * [Dependencies](#dependencies)
 
 ## General Info
 This app was developed for a Mobile Dev for Android class at BCIT. 
 
+## Screenshots
 ###### App - Main View
 <img src="https://i.imgur.com/46NpT2B.png" width="300">
 
